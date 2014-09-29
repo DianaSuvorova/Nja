@@ -1,0 +1,32 @@
+{
+    "course_sections": [
+        {
+            "staff_name": "DAVIS, L.L.",
+            "section_id": "UCLA_AERO_ST_AERO_ST__A_LAB_1",
+            "school_id": 1,
+            "section_name": "LAB 1",
+            "course_id": "UCLA_AERO_ST_AERO_ST__A",
+            "events": [
+                {
+                    "status": "Open",
+                    "event_type": "LAB 1",
+                    "school_specific_event_id": "102001200",
+                    "event_id": "UCLA_AERO_ST_AERO_ST__A_LAB_1_102001200",
+                    "times_and_locations": [
+                        {
+                            "timeInterval": "7:50A - 10:50A",
+                            "weekdays": "FRI",
+                            "location": "HAINES A18"
+                        }
+                    ],
+                    "section_id": "UCLA_AERO_ST_AERO_ST__A_LAB_1",
+                    "enrollment_cap": 120,
+                    "number_waitlisted": 0,
+                    "number_enrolled": 30,
+                    "waitlist_capacity": 0,
+                    "school_id": 1
+                }
+            ]
+        }
+    ]
+}

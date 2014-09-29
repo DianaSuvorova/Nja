@@ -1,0 +1,49 @@
+{
+    "department_courses": [
+        {
+            "index_within_department": 0,
+            "name": "Leadership Laboratory",
+            "context": "http://www.registrar.ucla.edu/schedule/detselect.aspx?termsel=14F&subareasel=AERO%20ST&idxcrs=0000A%20%20%20",
+            "course_id": "UCLA_AERO_ST_AERO_ST__A",
+            "department_specific_course_id": "AERO ST  A",
+            "school_id": 1,
+            "department_id": "UCLA_AERO_ST"
+        },
+        {
+            "index_within_department": 1,
+            "name": "Foundation of U.S. Air Force",
+            "context": "http://www.registrar.ucla.edu/schedule/detselect.aspx?termsel=14F&subareasel=AERO%20ST&idxcrs=0001A%20%20%20",
+            "course_id": "UCLA_AERO_ST_AERO_ST_1A",
+            "department_specific_course_id": "AERO ST 1A",
+            "school_id": 1,
+            "department_id": "UCLA_AERO_ST"
+        },
+        {
+            "index_within_department": 2,
+            "name": "Evolution of U.S. Air Force Air and Space Power",
+            "context": "http://www.registrar.ucla.edu/schedule/detselect.aspx?termsel=14F&subareasel=AERO%20ST&idxcrs=0020A%20%20%20",
+            "course_id": "UCLA_AERO_ST_AERO_ST_20A",
+            "department_specific_course_id": "AERO ST 20A",
+            "school_id": 1,
+            "department_id": "UCLA_AERO_ST"
+        },
+        {
+            "index_within_department": 3,
+            "name": "Air Force Leadership Studies",
+            "context": "http://www.registrar.ucla.edu/schedule/detselect.aspx?termsel=14F&subareasel=AERO%20ST&idxcrs=0130A%20%20%20",
+            "course_id": "UCLA_AERO_ST_AERO_ST_130A",
+            "department_specific_course_id": "AERO ST 130A",
+            "school_id": 1,
+            "department_id": "UCLA_AERO_ST"
+        },
+        {
+            "index_within_department": 4,
+            "name": "National Security Affairs/Preparation for Active Duty",
+            "context": "http://www.registrar.ucla.edu/schedule/detselect.aspx?termsel=14F&subareasel=AERO%20ST&idxcrs=0140A%20%20%20",
+            "course_id": "UCLA_AERO_ST_AERO_ST_140A",
+            "department_specific_course_id": "AERO ST 140A",
+            "school_id": 1,
+            "department_id": "UCLA_AERO_ST"
+        }
+    ]
+}
