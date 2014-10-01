@@ -1,6 +1,7 @@
 var vendorJs = ['components/vendor/js/zepto.js',
                 'components/vendor/js/react.js',
                 'components/vendor/js/underscore.js',
+                'components/vendor/js/backbone.js',
                 'components/vendor/js/d3.v3.js'
                 ];
 
@@ -10,7 +11,7 @@ module.exports = function (grunt) {
     react: {
       files: {
         expand: true,
-        cwd: 'JSX',
+        cwd: 'app/views/',
         src: ['*.jsx'],
         dest: 'dist',
         ext: '.js'
@@ -19,8 +20,12 @@ module.exports = function (grunt) {
 
     concat: {
       js:{
-        src: [vendorJs, 'dist/index.js'],
+        src: [vendorJs, 'app/views/*.js', 'app/models/*.js', 'app/helpers/*.js', 'dist/index.js'],
         dest: 'dist/build.js'
+      },
+      all:{
+        src: ['blocks/header.html','dist/bootstrap.css','blocks/body.html','dist/build.js','blocks/footer.html'],
+        dest: 'index.html'
       }
     },
 
@@ -43,7 +48,8 @@ module.exports = function (grunt) {
     },
 
     watch: {
-      js: {files: ['JSX/*.jsx'], tasks: ['react', 'concat']},
+      js: {files: ['JSX/*.jsx','app/**/.*js', 'app/views/*.js', 'app/models/*.js', 'app/helpers/.*js'],
+      tasks: ['react', 'concat:js','concat:all']},
     }
   
   });
@@ -54,5 +60,5 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-concurrent');
   grunt.loadNpmTasks('grunt-nodemon');
 
-  grunt.registerTask('app', ['react', 'concat', 'concurrent:app']);
+  grunt.registerTask('app', ['react', 'concat:js', 'concat:all', 'concurrent:app']);
 };

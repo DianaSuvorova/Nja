@@ -140,6 +140,7 @@
       }
     });
 
+
      var departments = [
         {
             "school_specific_id": "AERO ST",
@@ -1121,4 +1122,10 @@
         }
     ];
 
-    React.renderComponent(FilterableDepartmentTable({departments: departments}), document.getElementById('container'));
+    var RView = React.createClass({displayName: 'RView',
+      render: function () {
+        return(
+        FilterableDepartmentTable({departments: departments})
+      )
+      }
+    });

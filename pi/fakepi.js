@@ -3,23 +3,18 @@ var http = require('http'),
     departments = require('./data/departments.json'),
     department = require('./data/department.json'),
     course = require('./data/course.json'),
-    error = require('./data/course.json')
-    port = 8102,
-    getId = function () { return Math.floor(Math.random() * 500).toString(); };
+    port = 8000;
 
 var app = express();
   app.use(express.json({limit: '20mb'}));
   app.use(app.router);
 
-app.all('*', function (req, res, next) { setTimeout(next, 1000); }); // Delay everything so we see loading states, etc.
+app.get('*', function (req, res) { res.sendfile('index.html'); });
 
-// Error states
-
-// Fake data to get the app up and running
-app.get('/v0/login', function (req, res) { res.send(200); });
-app.get('/v0/school/:id', function (req, res) { res.send(departments); });
-app.get('/v0/departments/:id', function (req, res) { res.send(department); });
-app.get('/v0/courses/:id', function (req, res) { res.send(course); });
+app.get('/login', function (req, res) { res.send(200); });
+app.get('/departments', function (req, res) { res.send(departments); });
+app.get('/departments/:id', function (req, res) { res.send(department); });
+app.get('/courses/:id', function (req, res) { res.send(course); });
 
 
 var httpServer = http.createServer(app).listen(port, function () {
