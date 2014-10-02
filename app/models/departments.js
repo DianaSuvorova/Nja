@@ -1,3 +1,6 @@
 Ninja.Models.Departments = Backbone.Collection.extend ({
-  url: '/departments'
+  url: '/departments',
+
+  initialize: function () { this.fetch({reset: true}); }
+
 });

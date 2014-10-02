@@ -13,14 +13,14 @@ module.exports = function (grunt) {
         expand: true,
         cwd: 'app/views/',
         src: ['*.jsx'],
-        dest: 'dist',
+        dest: 'dist/react',
         ext: '.js'
       }
     },
 
     concat: {
       js:{
-        src: [vendorJs, 'app/views/*.js', 'app/models/*.js', 'app/helpers/*.js', 'dist/index.js'],
+        src: [vendorJs, 'app/views/*.js', 'app/models/*.js', 'app/helpers/*.js', 'dist/react/*.js'],
         dest: 'dist/build.js'
       },
       all:{

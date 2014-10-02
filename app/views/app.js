@@ -2,12 +2,13 @@ Ninja.Views.App = Backbone.View.extend({
   el: 'body',
 
   initialize: function () {
-    this.departmentsView = null;
-    //new Ninja.Views.Departments({model: this.model.departments});
+    this.departmentsView = new Ninja.Views.Departments( {model: new Ninja.Models.Departments()});
+    this.listenTo(this.model, 'change:school', this.build);
   },
 
   build: function () {
     this.currentView = this.departmentsView;
+    this.render();
   },
 
   render: function () {

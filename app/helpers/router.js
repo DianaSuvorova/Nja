@@ -4,7 +4,6 @@ Ninja.Router = Backbone.Router.extend({
   },
 
   routeLogin: function () {
-  React.renderComponent(new RView(), document.body);
-
+    globals.app.model.setSchool('ucla');
   }
 });
