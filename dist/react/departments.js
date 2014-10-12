@@ -7,7 +7,7 @@ Ninja.Views.Departments = Backbone.View.extend({
   },
 
   render : function () {
-    React.renderComponent(FilterableDepartmentTable({departments: this.model.models}) , document.body);
+    React.renderComponent(Ninja.Views.FilterableDepartmentTable({departments: this.model}) , document.body);
   }
 
 });

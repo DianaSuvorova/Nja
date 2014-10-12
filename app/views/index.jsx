@@ -4,7 +4,11 @@
       render: function () {
         return (
           <tr>
-            <td>{this.props.department.get('name')}</td>
+            <td>
+            <a href='#' >
+            </a>
+            {this.props.department.get('name')}
+            </td>
           </tr>
         );
       }
@@ -61,7 +65,6 @@
       render: function () {
         var rows = this.props.departments
         .filter(function (department){
-          console.log(department);
           return department.get('name').toLowerCase().indexOf(this.props.filterText.toLowerCase()) > -1;
         }.bind(this))
         .sort(this.orderByTitle)
@@ -111,33 +114,4 @@
       }
     });
 
-
-    var FilterableDepartmentTable = React.createClass({
-
-      getInitialState: function(){
-        return {filterText: ""};
-      },
-
-      handleUserInput: function(filterText) {
-        this.setState({
-            filterText: filterText,
-          });
-        },
-      
-      render : function () {
-        return (
-        <div className = 'spacer'>
-          <SearchBar 
-            filterText = {this.state.filterText}
-            onUserInput = {this.handleUserInput} 
-          />
-          <DepartmentTable
-            filterText = {this.state.filterText}
-            departments = {this.props.departments}
-            orderByTitleDesc = {this.state.orderByTitleDesc}
-          />
-        </div>
-        )
-      }
-    });
 

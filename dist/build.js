@@ -32520,18 +32520,71 @@ Ninja.Models.App = Backbone.Model.extend({
 Ninja.Models.Departments = Backbone.Collection.extend ({
   url: '/departments',
 
-  initialize: function () { this.fetch({reset: true}); }
-
 });
 
-Ninja.Router = Backbone.Router.extend({
-  routes: {
-    '': 'routeLogin'
+Ninja.BackboneMixin = {
+  componentDidMount: function() {
+    // Whenever there may be a change in the Backbone data, trigger a reconcile.
+    this.getBackboneModels().forEach(function(model) {
+      model.on('add change remove', this.forceUpdate.bind(this, null), this);
+    }, this);
   },
 
-  routeLogin: function () {
-    globals.app.model.setSchool('ucla');
+  componentWillUnmount: function() {
+    // Ensure that we clean up any dangling references when the component is
+    // destroyed.
+    this.getBackboneModels().forEach(function(model) {
+      model.off(null, null, this);
+    }, this);
   }
+};
+    /** @jsx React.DOM **/
+Ninja.Views.FilterableDepartmentTable = React.createClass({displayName: 'FilterableDepartmentTable',
+
+  mixins: [Ninja.BackboneMixin],
+
+  getInitialState: function(){
+    return {filterText: ""};
+  },
+
+  componentDidMount: function() {
+    this.props.departments.fetch();
+  },
+
+  // componentDidUpdate: function() {
+  //   // If saving were expensive we'd listen for mutation events on Backbone and
+  //   // do this manually. however, since saving isn't expensive this is an
+  //   // elegant way to keep it reactively up-to-date.
+  //   this.props.departments.forEach(function(department) {
+  //     department.save();
+  //   });
+  // },
+
+  getBackboneModels: function() {
+    return [this.props.departments];
+  },
+
+  handleUserInput: function(filterText) {
+    this.setState({
+        filterText: filterText,
+      });
+    },
+  
+  render : function () {
+    return (
+      React.DOM.div({className: "spacer"}, 
+        SearchBar({
+          filterText: this.state.filterText, 
+          onUserInput: this.handleUserInput}
+        ), 
+        DepartmentTable({
+          filterText: this.state.filterText, 
+          departments: this.props.departments, 
+          orderByTitleDesc: this.state.orderByTitleDesc}
+        )
+      )
+      )
+    }
 });
 
 /** @jsx React.DOM **/
@@ -32543,7 +32596,7 @@ Ninja.Views.Departments = Backbone.View.extend({
   },
 
   render : function () {
-    React.renderComponent(FilterableDepartmentTable({departments: this.model.models}) , document.body);
+    React.renderComponent(Ninja.Views.FilterableDepartmentTable({departments: this.model}) , document.body);
   }
 
 });
@@ -32554,7 +32607,11 @@ Ninja.Views.Departments = Backbone.View.extend({
       render: function () {
         return (
           React.DOM.tr(null, 
-            React.DOM.td(null, this.props.department.get('name'))
+            React.DOM.td(null, 
+            React.DOM.a({href: "#"}
+            ), 
+            this.props.department.get('name')
+            )
           )
         );
       }
@@ -32611,7 +32668,6 @@ Ninja.Views.Departments = Backbone.View.extend({
       render: function () {
         var rows = this.props.departments
         .filter(function (department){
-          console.log(department);
           return department.get('name').toLowerCase().indexOf(this.props.filterText.toLowerCase()) > -1;
         }.bind(this))
         .sort(this.orderByTitle)
@@ -32662,32 +32718,16 @@ Ninja.Views.Departments = Backbone.View.extend({
     });
 
 
-    var FilterableDepartmentTable = React.createClass({displayName: 'FilterableDepartmentTable',
 
-      getInitialState: function(){
-        return {filterText: ""};
-      },
+/** @jsx React.DOM **/
+Ninja.Router = Backbone.Router.extend({
+  routes: {
+    '': 'routeLogin'
+  },
 
-      handleUserInput: function(filterText) {
-        this.setState({
-            filterText: filterText,
-          });
-        },
-      
-      render : function () {
-        return (
-        React.DOM.div({className: "spacer"}, 
-          SearchBar({
-            filterText: this.state.filterText, 
-            onUserInput: this.handleUserInput}
-          ), 
-          DepartmentTable({
-            filterText: this.state.filterText, 
-            departments: this.props.departments, 
-            orderByTitleDesc: this.state.orderByTitleDesc}
-          )
-        )
-        )
-      }
-    });
+  routeLogin: function () {
+//    globals.app.model.setSchool('ucla');
+    React.renderComponent(Ninja.Views.FilterableDepartmentTable({departments: new Ninja.Models.Departments()}) , document.body);
+  }
 
+});
