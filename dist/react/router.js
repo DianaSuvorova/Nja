@@ -1,12 +1,14 @@
-/** @jsx React.DOM **/
 Ninja.Router = Backbone.Router.extend({
   routes: {
-    '': 'routeLogin'
+    '': 'home',
+    ':schoolId': 'goToSchool',
+    ':schoolId/:departmentId': 'goToDepartment',
+    ':schoolId/:departmentId/:courseId': 'goToCourse'
   },
 
-  routeLogin: function () {
-//    globals.app.model.setSchool('ucla');
-    React.renderComponent(Ninja.Views.FilterableDepartmentTable({departments: new Ninja.Models.Departments()}) , document.body);
+  goToSchool: function (schoolId) { globals.app.set('school', schoolId); },
+  goToDepartment: function (schoolId, departmentId) {
+    globals.app.set('school', schoolId);
+    globals.app.set('department', departmentId);
   }
-
 });

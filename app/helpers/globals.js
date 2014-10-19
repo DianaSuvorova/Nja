@@ -1,3 +1,6 @@
+var Ninja = {Models: {}, Views: {}};
+var globals = {};
+
 Ninja.BackboneMixin = {
   componentDidMount: function() {
     // Whenever there may be a change in the Backbone data, trigger a reconcile.

@@ -32487,40 +32487,8 @@ d3 = function() {
   });
   return d3;
 }();
-Ninja.Views.App = Backbone.View.extend({
-  el: 'body',
-
-  initialize: function () {
-    this.departmentsView = new Ninja.Views.Departments( {model: new Ninja.Models.Departments()});
-    this.listenTo(this.model, 'change:school', this.build);
-  },
-
-  build: function () {
-    this.currentView = this.departmentsView;
-    this.render();
-  },
-
-  render: function () {
-    if (this.previousView) this.previousView.$el.remove();
-    this.$el.append(this.currentView.el);
-    this.currentView.render();
-  }
-
-});
-
-Ninja.Models.App = Backbone.Model.extend({
-  
-  setSchool: function (school) {
-    this.set('school', school);
-    this.trigger('change:school');
-  }
-
-});
-
-Ninja.Models.Departments = Backbone.Collection.extend ({
-  url: '/departments',
-
-});
+var Ninja = {Models: {}, Views: {}};
+var globals = {};
 
 Ninja.BackboneMixin = {
   componentDidMount: function() {
@@ -32538,196 +32506,287 @@ Ninja.BackboneMixin = {
     }, this);
   }
 };
+Ninja.Models.App = Backbone.Model.extend({
+
+  initialize: function () {
+    this.departments = new Ninja.Models.Departments();
+    this.courses = new Ninja.Models.Courses();
+  }
+});
+
+Ninja.Models.Courses = Backbone.Collection.extend ({ url: '/courses'});
+
+Ninja.Models.Departments = Backbone.Collection.extend ({ url: '/departments' });
+
+/** @jsx React.DOM **/
+Ninja.Views.Item = React.createClass({displayName: 'Item',
+  
+  onSelect: function() {
+    this.props.onSelect();
+    this.refs.item.getDOMNode().focus();
+  },
+
+  render: function(){
+    return(
+          React.DOM.tr(null, 
+            React.DOM.td(null, 
+            React.DOM.a({href: "#", 
+              className: "btn btn-default btn-block", 
+              ref: "item", 
+              onClick: this.onSelect
+            }, 
+            this.props.item.get('name')
+            )
+            )
+          )
+      )
+  }
+});
+
+/** @jsx React.DOM **/
+Ninja.Views.Item = React.createClass({displayName: 'Item',
+  
+  onSelect: function() {
+    this.props.onSelect();
+    this.refs.item.getDOMNode().focus();
+  },
+
+  render: function(){
+    return(
+          React.DOM.tr(null, 
+            React.DOM.td(null, 
+            React.DOM.a({href: "#", 
+              className: "btn btn-default btn-block", 
+              ref: "item", 
+              onClick: this.onSelect
+            }, 
+            this.props.item.get('name')
+            )
+            )
+          )
+      )
+  }
+});
+
+/** @jsx React.DOM */
+Ninja.Views.App = React.createClass({displayName: 'App',
+
+  componentDidMount: function () {
+    this.props.model.on('change', this.onChange);
+  },
+
+  onChange: function () {
+    this.forceUpdate(); 
+  },
+  
+  render: function () {
+    var model = this.props.model,
+         view = 'Loading Data...',
+         departments, courses;
+
+    console.log(model.has('school'),model.has('department'));
+    
+    if (model.has('school')) {
+      departments = Ninja.Views.List({
+          list: model.departments, 
+          school: model.get('school'), 
+           key: 'school'}
+        );
+      if (model.has('department')) {
+          courses = Ninja.Views.List({
+            list: model.courses, 
+            school: model.get('school'), 
+            department: model.get('department'), 
+           key: 'department'}
+          );
+       }
+   }
+    return (
+      React.DOM.div({className: "col-lg-10"}, 
+        React.DOM.div({className: "col-lg-4"}, 
+          departments
+        ), 
+        React.DOM.div({className: "col-lg-4"}, 
+          courses
+        )
+      )
+      )
+  }
+});
+/** @jsx React.DOM */
+  $(document).ready(function () {
+    globals.router = new Ninja.Router();
+    globals.app = new Ninja.Models.App();
+    Backbone.history.start({pushState: true});
+    React.renderComponent(Ninja.Views.App({model: globals.app}), document.body);
+
+  });
+    // /** @jsx React.DOM **/
+
+    // var DepartmentRow = React.createClass({
+    //   render: function () {
+    //     return (
+    //       <tr>
+    //         <td>
+    //         <a href='#' >
+    //         </a>
+    //         {this.props.department.get('name')}
+    //         </td>
+    //       </tr>
+    //     );
+    //   }
+    // });
+
+    // var TableHeader = React.createClass({
+
+    //   handleClick : function () {
+    //     this.props.onSort(
+    //       !this.props.orderByTitleDesc
+    //     );
+    //   },
+
+    //   render: function () {
+    //     var title = this.props.orderByTitleDesc ?  <span style={{color: 'red'}}> Title </span> : 'Title';
+    //     return (
+    //       <thead>
+    //         <tr>
+    //           <th> <a 
+    //               href='#'
+    //               ref = "orderByTitle"
+    //               onClick  = {this.handleClick} 
+    //             >
+    //             {title}
+    //             </a>
+    //             </th>
+    //         </tr>
+    //     </thead>
+    //    );
+    //   }
+    // });
+
+    // var DepartmentTable = React.createClass({
+ 
+    //   getInitialState: function () {
+    //        return {orderByTitleDesc: true}
+    //      },
+
+    //   orderByTitle: function (a, b) {
+    //     var aTitle = a.get('name').toLowerCase();
+    //     var bTitle = b.get('name').toLowerCase(); 
+    //     if (this.state.orderByTitleDesc) return ((aTitle < bTitle) ? -1 : ((aTitle > bTitle) ? 1 : 0));
+    //     return ((aTitle < bTitle) ? 1 : ((aTitle > bTitle) ? -1 : 0))
+    //   },
+
+
+    //   handleSort: function (orderByTitleDesc) {
+    //     this.setState({
+    //       orderByTitleDesc : orderByTitleDesc
+    //     })
+    //   },
+
+
+    //   render: function () {
+    //     var rows = this.props.departments
+    //     .filter(function (department){
+    //       return department.get('name').toLowerCase().indexOf(this.props.filterText.toLowerCase()) > -1;
+    //     }.bind(this))
+    //     .sort(this.orderByTitle)
+    //     .map(function (department) {
+    //       return <DepartmentRow key = {department.cid} department = {department} />;
+    //     });
+  
+    //     return (
+    //       <div className = "col-lg-4 col-lg-offset-4">
+    //         <table width="100%">
+    //         <TableHeader 
+    //           orderByTitleDesc = {this.state.orderByTitleDesc}
+    //           onSort = {this.handleSort}
+    //           />
+    //           <tbody>
+    //             {rows}
+    //           </tbody>
+    //         </table>
+    //       </div>
+    //       );
+    //   }
+    // });
+
+
+    // var SearchBar = React.createClass({
+      
+    //   handleChange: function () {
+    //     this.props.onUserInput(
+    //       this.refs.filterTextInput.getDOMNode().value
+    //       );
+    //   },
+
+    //   render: function () {
+    //     return (
+    //       <div className = "row ">
+    //         <div className = "col-lg-4 col-lg-offset-4">
+    //           <input 
+    //             ref="filterTextInput" 
+    //             value = {this.props.filterText} 
+    //             onChange = {this.handleChange} 
+    //             className = "form-control" 
+    //             placeholder="Search for department" 
+    //             />
+    //         </div>
+    //       </div>
+    //       );
+    //   }
+    // });
+
+
+
     /** @jsx React.DOM **/
-Ninja.Views.FilterableDepartmentTable = React.createClass({displayName: 'FilterableDepartmentTable',
+Ninja.Views.List = React.createClass({displayName: 'List',
 
-  mixins: [Ninja.BackboneMixin],
-
-  getInitialState: function(){
-    return {filterText: ""};
+  componentDidMount: function () {
+    this.props.list.fetch().then(this.onSync);
   },
 
-  componentDidMount: function() {
-    this.props.departments.fetch();
+  onSync: function () {
+      this.props.synced = true;
+      this.forceUpdate();
   },
 
-  // componentDidUpdate: function() {
-  //   // If saving were expensive we'd listen for mutation events on Backbone and
-  //   // do this manually. however, since saving isn't expensive this is an
-  //   // elegant way to keep it reactively up-to-date.
-  //   this.props.departments.forEach(function(department) {
-  //     department.save();
-  //   });
-  // },
-
-  getBackboneModels: function() {
-    return [this.props.departments];
+  onSelect: function(model) {
+    var router = '/' + (this.props.school ? (this.props.school + '/' + ( this.props.department ? this.props.department : model.get('name'))) : model.get('name'));
+    globals.router.navigate(router,{pushState: true});
   },
-
-  handleUserInput: function(filterText) {
-    this.setState({
-        filterText: filterText,
-      });
-    },
   
   render : function () {
+    var list = this.props.list,
+        viewList = list.models.map(function(model) {
+        return (
+          Ninja.Views.Item({
+            key: model.cid, 
+            item: model, 
+            onSelect: this.onSelect.bind(this,model)}
+          )
+          )
+      }, this)
+
     return (
       React.DOM.div({className: "spacer"}, 
-        SearchBar({
-          filterText: this.state.filterText, 
-          onUserInput: this.handleUserInput}
-        ), 
-        DepartmentTable({
-          filterText: this.state.filterText, 
-          departments: this.props.departments, 
-          orderByTitleDesc: this.state.orderByTitleDesc}
-        )
+          viewList
       )
       )
     }
 });
 
-/** @jsx React.DOM **/
-
-Ninja.Views.Departments = Backbone.View.extend({
-
-  initialize : function () {
-    this.listenTo(this.model, 'reset', this.render);
-  },
-
-  render : function () {
-    React.renderComponent(Ninja.Views.FilterableDepartmentTable({departments: this.model}) , document.body);
-  }
-
-});
-
-    /** @jsx React.DOM **/
-
-    var DepartmentRow = React.createClass({displayName: 'DepartmentRow',
-      render: function () {
-        return (
-          React.DOM.tr(null, 
-            React.DOM.td(null, 
-            React.DOM.a({href: "#"}
-            ), 
-            this.props.department.get('name')
-            )
-          )
-        );
-      }
-    });
-
-    var TableHeader = React.createClass({displayName: 'TableHeader',
-
-      handleClick : function () {
-        this.props.onSort(
-          !this.props.orderByTitleDesc
-        );
-      },
-
-      render: function () {
-        var title = this.props.orderByTitleDesc ?  React.DOM.span({style: {color: 'red'}}, " Title ") : 'Title';
-        return (
-          React.DOM.thead(null, 
-            React.DOM.tr(null, 
-              React.DOM.th(null, " ", React.DOM.a({
-                  href: "#", 
-                  ref: "orderByTitle", 
-                  onClick: this.handleClick
-                }, 
-                title
-                )
-                )
-            )
-        )
-       );
-      }
-    });
-
-    var DepartmentTable = React.createClass({displayName: 'DepartmentTable',
- 
-      getInitialState: function () {
-           return {orderByTitleDesc: true}
-         },
-
-      orderByTitle: function (a, b) {
-        var aTitle = a.get('name').toLowerCase();
-        var bTitle = b.get('name').toLowerCase(); 
-        if (this.state.orderByTitleDesc) return ((aTitle < bTitle) ? -1 : ((aTitle > bTitle) ? 1 : 0));
-        return ((aTitle < bTitle) ? 1 : ((aTitle > bTitle) ? -1 : 0))
-      },
-
-
-      handleSort: function (orderByTitleDesc) {
-        this.setState({
-          orderByTitleDesc : orderByTitleDesc
-        })
-      },
-
-
-      render: function () {
-        var rows = this.props.departments
-        .filter(function (department){
-          return department.get('name').toLowerCase().indexOf(this.props.filterText.toLowerCase()) > -1;
-        }.bind(this))
-        .sort(this.orderByTitle)
-        .map(function (department) {
-          return DepartmentRow({key: department.cid, department: department});
-        });
-  
-        return (
-          React.DOM.div({className: "col-lg-4 col-lg-offset-4"}, 
-            React.DOM.table({width: "100%"}, 
-            TableHeader({
-              orderByTitleDesc: this.state.orderByTitleDesc, 
-              onSort: this.handleSort}
-              ), 
-              React.DOM.tbody(null, 
-                rows
-              )
-            )
-          )
-          );
-      }
-    });
-
-
-    var SearchBar = React.createClass({displayName: 'SearchBar',
-      
-      handleChange: function () {
-        this.props.onUserInput(
-          this.refs.filterTextInput.getDOMNode().value
-          );
-      },
-
-      render: function () {
-        return (
-          React.DOM.div({className: "row "}, 
-            React.DOM.div({className: "col-lg-4 col-lg-offset-4"}, 
-              React.DOM.input({
-                ref: "filterTextInput", 
-                value: this.props.filterText, 
-                onChange: this.handleChange, 
-                className: "form-control", 
-                placeholder: "Search for department"}
-                )
-            )
-          )
-          );
-      }
-    });
-
-
-
-/** @jsx React.DOM **/
 Ninja.Router = Backbone.Router.extend({
   routes: {
-    '': 'routeLogin'
+    '': 'home',
+    ':schoolId': 'goToSchool',
+    ':schoolId/:departmentId': 'goToDepartment',
+    ':schoolId/:departmentId/:courseId': 'goToCourse'
   },
 
-  routeLogin: function () {
-//    globals.app.model.setSchool('ucla');
-    React.renderComponent(Ninja.Views.FilterableDepartmentTable({departments: new Ninja.Models.Departments()}) , document.body);
+  goToSchool: function (schoolId) { globals.app.set('school', schoolId); },
+  goToDepartment: function (schoolId, departmentId) {
+    globals.app.set('school', schoolId);
+    globals.app.set('department', departmentId);
   }
-
 });

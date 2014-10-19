@@ -1,4 +1,1 @@
-Ninja.Models.Departments = Backbone.Collection.extend ({
-  url: '/departments',
-
-});
+Ninja.Models.Departments = Backbone.Collection.extend ({ url: '/departments' });

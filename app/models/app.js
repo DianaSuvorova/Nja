@@ -1,8 +1,7 @@
 Ninja.Models.App = Backbone.Model.extend({
-  
-  setSchool: function (school) {
-    this.set('school', school);
-    this.trigger('change:school');
-  }
 
+  initialize: function () {
+    this.departments = new Ninja.Models.Departments();
+    this.courses = new Ninja.Models.Courses();
+  }
 });

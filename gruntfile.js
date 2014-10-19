@@ -20,12 +20,8 @@ module.exports = function (grunt) {
 
     concat: {
       js:{
-        src: [vendorJs, 'app/views/*.js', 'app/models/*.js', 'app/helpers/*.js', 'dist/react/*.js'],
+        src: [vendorJs, 'app/helpers/*.js', 'app/models/*.js', 'dist/react/*.js'],
         dest: 'dist/build.js'
-      },
-      all:{
-        src: ['blocks/header.html','dist/bootstrap.css','blocks/body.html','dist/build.js','blocks/footer.html'],
-        dest: 'index.html'
       }
     },
 
@@ -49,7 +45,7 @@ module.exports = function (grunt) {
 
     watch: {
       js: {files: ['JSX/*.jsx','app/**/.*js', 'app/views/*.js', 'app/models/*.js', 'app/helpers/.*js'],
-      tasks: ['react', 'concat:js','concat:all']},
+      tasks: ['react', 'concat:js']},
     }
   
   });
@@ -60,5 +56,5 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-concurrent');
   grunt.loadNpmTasks('grunt-nodemon');
 
-  grunt.registerTask('app', ['react', 'concat:js', 'concat:all', 'concurrent:app']);
+  grunt.registerTask('app', ['react', 'concat:js', 'concurrent:app']);
 };
