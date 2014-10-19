@@ -6,7 +6,7 @@ Ninja.Views.App = React.createClass({
   },
 
   onChange: function () {
-    this.forceUpdate(); 
+    this.forceUpdate();
   },
   
   render: function () {
