@@ -10,6 +10,11 @@ Ninja.Views.List = React.createClass({
       this.forceUpdate();
   },
 
+  shouldComponentUpdate: function (nextProps, nextState) {
+    var listIdentifier = this.props.key;
+    return (nextProps[listIdentifier] != this.props[listIdentifier]);
+  },
+
   onSelect: function(model) {
     var router = '/' + (this.props.school ? (this.props.school + '/' + ( this.props.department ? this.props.department : model.get('name'))) : model.get('name'));
     globals.router.navigate(router,{pushState: true});

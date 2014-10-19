@@ -20,14 +20,14 @@ Ninja.Views.App = React.createClass({
       departments = < Ninja.Views.List
           list = {model.departments}
           school = {model.get('school')}
-           key = {'school'} 
+          key = {'school'} 
         />;
       if (model.has('department')) {
           courses = < Ninja.Views.List 
             list = {model.courses} 
             school = {model.get('school')} 
             department = {model.get('department')}
-           key = {'department'} 
+            key = {'department'} 
           />;
        }
    }
