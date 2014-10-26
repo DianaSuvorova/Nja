@@ -8,12 +8,15 @@ Ninja.Router = Backbone.Router.extend({
 
   goToSchool: function (schoolId) {
     this.school = schoolId;
+    this.department = null;
+    this.course = null;
 
   },
   
   goToDepartment: function (schoolId, departmentId) {
     this.school = schoolId;
     this.department = departmentId;
+    this.course = null;
   },
   
   goToCourse: function (schoolId, departmentId, courseId) {
