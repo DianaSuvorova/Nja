@@ -6,9 +6,20 @@ Ninja.Router = Backbone.Router.extend({
     ':schoolId/:departmentId/:courseId': 'goToCourse'
   },
 
-  goToSchool: function (schoolId) { globals.app.set('school', schoolId); },
+  goToSchool: function (schoolId) {
+    this.school = schoolId;
+
+  },
+  
   goToDepartment: function (schoolId, departmentId) {
-    globals.app.set('school', schoolId);
-    globals.app.set('department', departmentId);
+    this.school = schoolId;
+    this.department = departmentId;
+  },
+  
+  goToCourse: function (schoolId, departmentId, courseId) {
+    this.school = schoolId;
+    this.department = departmentId;
+    this.course = courseId;
   }
+
 });

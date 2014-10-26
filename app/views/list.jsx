@@ -2,27 +2,22 @@
 Ninja.Views.List = React.createClass({
 
   componentDidMount: function () {
-    this.props.list.fetch().then(this.onSync);
+    this.props.model.fetch().then(this.onSync);
   },
 
-  onSync: function () {
-      this.props.synced = true;
-      this.forceUpdate();
-  },
+  onSync: function () { this.forceUpdate(); },
 
   shouldComponentUpdate: function (nextProps, nextState) {
-    var listIdentifier = this.props.key;
-    return (nextProps[listIdentifier] != this.props[listIdentifier]);
+    if (this.props[this.props.key] && nextProps[this.props.key] != this.props[this.props.key])
+      this.props.model.fetch().then(this.onSync);
+    else return false;
   },
 
-  onSelect: function(model) {
-    var router = '/' + (this.props.school ? (this.props.school + '/' + ( this.props.department ? this.props.department : model.get('name'))) : model.get('name'));
-    globals.router.navigate(router,{pushState: true});
-  },
+  onSelect: function (model) { this.props.onNavigate(model.get('name')) },
   
-  render : function () {
-    var list = this.props.list,
-        viewList = list.models.map(function(model) {
+  render: function () {
+    var list = this.props.model,
+        viewList = list.models.map(function (model) {
         return (
           <Ninja.Views.Item
             key = {model.cid}

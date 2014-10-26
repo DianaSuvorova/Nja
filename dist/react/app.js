@@ -1,44 +1,63 @@
 /** @jsx React.DOM */
 Ninja.Views.App = React.createClass({displayName: 'App',
 
-  componentDidMount: function () {
-    this.props.model.on('change', this.onChange);
+  getInitialState: function () {
+    return {
+      school: this.props.router.school,
+      department: this.props.router.department,
+      course: this.props.router.course
+    };
   },
 
-  onChange: function () {
-    this.forceUpdate(); 
+  onNavigate: function () {
+    var url ;
+    if (this.state.school) url = '/' + this.state.school ;
+    if (this.state.department) url = '/' + this.state.department ;
+    if (this.state.course) url = '/' + this.state.course ;
+    this.props.router.navigate(url);
+  },
+
+
+  onSelectDepartment: function (department) {
+    this.setState({ department: department})
+    this.onNavigate();
+  },
+
+  onSelectCourse: function (course) {
+    this.setState({ course: course})
+  },
+
+  componentDidMount : function() {
+    this.onChange = (function () {this.forceUpdate();}).bind(this);
+    this.props.model.on("change", this.onChange);
   },
   
   render: function () {
-    var model = this.props.model,
+    var  model = this.props.model,
          view = 'Loading Data...',
-         departments, courses;
+         departments, courses, course;
 
-    console.log(model.has('school'),model.has('department'));
-    
-    if (model.has('school')) {
-      departments = Ninja.Views.List({
-          list: model.departments, 
-          school: model.get('school'), 
-           key: 'school'}
-        );
-      if (model.has('department')) {
+        if (this.state.school) 
+          departments = Ninja.Views.List({
+                            model: model.departments, 
+                            key: 'school', 
+                            school: this.state.school, 
+                            onNavigate: this.onSelectDepartment}
+                          );
+        if (this.state.department)
           courses = Ninja.Views.List({
-            list: model.courses, 
-            school: model.get('school'), 
-            department: model.get('department'), 
-           key: 'department'}
-          );
-       }
-   }
+                        model: model.courses, 
+                        key: 'department', 
+                        school: this.state.school, 
+                        department: this.state.department, 
+                        onNavigate: this.onSelectCourse}
+                      );
+        course = Ninja.Views.Course({model: model, key: 'course'});
+
     return (
-      React.DOM.div({className: "col-lg-10"}, 
-        React.DOM.div({className: "col-lg-4"}, 
-          departments
-        ), 
-        React.DOM.div({className: "col-lg-4"}, 
-          courses
-        )
+      React.DOM.div({className: "col-lg-12"}, 
+         React.DOM.div({className: "col-lg-3"}, " ", departments, " "), 
+         React.DOM.div({className: "col-lg-3"}, " ", courses, " ")
       )
       )
   }

@@ -12,6 +12,7 @@ var app = express();
 app.get('/login', function (req, res) { res.send(200); });
 app.get('/departments', function (req, res) { res.send(departments); });
 app.get('/courses', function (req, res) { res.send(courses); });
+app.get('/courses/:id', function (red, res) { res.send(course); });
 app.get('/dist/build.js', function (req, res) { res.sendfile('dist/build.js'); });
 app.get('/dist/bootstrap.css', function (req, res) { res.sendfile('dist/bootstrap.css'); });
 app.get('/*/dist/build.js', function (req, res) { res.sendfile('dist/build.js'); });
