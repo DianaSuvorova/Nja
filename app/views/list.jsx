@@ -5,7 +5,10 @@ Ninja.Views.List = React.createClass({
     this.props.model.fetch().then(this.onSync);
   },
 
-  onSync: function () { this.forceUpdate(); },
+  onSync: function () {
+     if (this.props.model.onSync) this.props.model.onSync();
+    this.forceUpdate(); 
+  },
 
   shouldComponentUpdate: function (nextProps, nextState) {
     if (this.props[this.props.key] && nextProps[this.props.key] != this.props[this.props.key])

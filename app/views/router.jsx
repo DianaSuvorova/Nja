@@ -10,6 +10,7 @@ Ninja.Router = Backbone.Router.extend({
     this.school = schoolId;
     this.department = null;
     this.course = null;
+    globals.model.setDepartments(schoolId);
 
   },
   

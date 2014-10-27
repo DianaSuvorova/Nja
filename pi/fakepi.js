@@ -1,5 +1,6 @@
 var http = require('http'),
     express = require('express'),
+    schools = require('./data/schools.json'),
     departments = require('./data/departments.json'),
     courses = require('./data/courses.json'),
     course = require('./data/course.json'),
@@ -10,7 +11,8 @@ var app = express();
   app.use(app.router);
 
 app.get('/login', function (req, res) { res.send(200); });
-app.get('/departments', function (req, res) { res.send(departments); });
+app.get('/school', function (req, res) { res.send(schools); });
+app.get('/school/:id', function (req, res) { res.send(departments); });
 app.get('/courses', function (req, res) { res.send(courses); });
 app.get('/courses/:id', function (red, res) { res.send(course); });
 app.get('/dist/build.js', function (req, res) { res.sendfile('dist/build.js'); });

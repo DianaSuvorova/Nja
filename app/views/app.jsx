@@ -9,17 +9,6 @@ Ninja.Views.App = React.createClass({
     };
   },
 
-  onNavigate: function () {
-    var url;
-    if (this.state.school) {
-      url = '/' + this.state.school;
-      if (this.state.department) {
-        url = url + '/' + this.state.department ;
-        if (this.state.course) url = url + '/' + this.state.course;
-      }
-    }
-    this.props.router.navigate(url);
-  },
 
   componentWillUpdate: function (nextProps, nextState) {
     var url;
@@ -34,21 +23,29 @@ Ninja.Views.App = React.createClass({
     this.setState({ department: department, course : null }) 
   },
 
-  onSelectCourse: function (course) { this.setState({course: course}) },
 
-  componentDidMount : function() {
-    this.onChange = (function () {this.forceUpdate();}).bind(this);
-    this.props.model.on("change", this.onChange);
+  onSelectSchool: function (school) { 
+    this.setState({ school: school, department: null, course : null }) 
   },
+
+  onSelectCourse: function (course) { this.setState({course: course}) },
   
   render: function () {
     var  model = this.props.model,
          view = 'Loading Data...',
-         departments, courses, course;
+         schools, departments, courses, course;
 
-        if (this.state.school) 
+         console.log(model);
+        
+          schools = < Ninja.Views.List 
+                          model = {model.schools} 
+                          key = {'app'} 
+                          onNavigate = {this.onSelectSchool}
+                        />;
+
+          if (this.state.school)
           departments = < Ninja.Views.List 
-                            model = {model.departments} 
+                            model = { model.departments }
                             key = {'school'} 
                             school = {this.state.school} 
                             onNavigate = {this.onSelectDepartment}
@@ -60,17 +57,19 @@ Ninja.Views.App = React.createClass({
                         department = {this.state.department}
                         onNavigate = {this.onSelectCourse}
                       />;
-        if (this.state.department)
+      if (this.state.course)
         course = < Ninja.Views.Course
-                      model = {model}
+                      model = {model.course}
                       key = {'course'}
                       course = {this.state.course}
                   />;
 
     return (
       <div className = "col-lg-12">
-         <div className = "col-lg-3"> {departments} </div>
-         <div className = "col-lg-3"> {courses} </div>
+          <div className = "col-lg-1"> {schools} </div>
+          <div className = "col-lg-3"> {departments} </div>
+          <div className = "col-lg-3"> {courses} </div>
+          <div className = "col-lg-3"> {course} </div>
       </div>
       )
   }
