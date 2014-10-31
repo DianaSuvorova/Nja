@@ -1,39 +1,31 @@
     /** @jsx React.DOM **/
 Ninja.Views.List = React.createClass({
 
-  componentDidMount: function () {
-    this.props.model.fetch().then(this.onSync);
-  },
+  componentDidMount: function () { this.props.model.sublist.hydrate().then(this.onSync); },
 
-  onSync: function () {
-     if (this.props.model.onSync) this.props.model.onSync();
-    this.forceUpdate(); 
-  },
+  onSync: function () { this.forceUpdate(); },
 
-  shouldComponentUpdate: function (nextProps, nextState) {
-    if (this.props[this.props.key] && nextProps[this.props.key] != this.props[this.props.key])
-      this.props.model.fetch().then(this.onSync);
-    else return false;
+  onSelect: function (model) {
+    if (model.sublist) {
+      React.renderComponent(
+        < Ninja.Views.List  model = {model} key = {model.cid}/>, 
+        document.getElementById(this.props.model.cid)
+      );
+    }
   },
-
-  onSelect: function (model) { this.props.onNavigate(model.get('name')) },
   
   render: function () {
-    var list = this.props.model,
-        viewList = list.models.map(function (model) {
+    var list = this.props.model.sublist,
+        subView ='If there is some..',
+        view = list.models.map(function (model) {
         return (
-          <Ninja.Views.Item
-            key = {model.cid}
-            item = {model}
-            onSelect = {this.onSelect.bind(this,model)}
-          />
+          < Ninja.Views.Item key = {model.cid} item = {model} onSelect = {this.onSelect.bind(this,model)} />
           )
       }, this)
-
-    return (
-      <div className = "spacer">
-          {viewList}
-      </div>
-      )
+        return (
+            <div>
+              <div className = "col-lg-3"> {view} </div>
+              <div id = {this.props.model.cid} > </div> 
+            </div>)
     }
 });

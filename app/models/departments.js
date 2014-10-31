@@ -1,12 +1,19 @@
 Ninja.Models.Departments = Backbone.Collection.extend ({
+  name: 'departments',
+  model: Ninja.Models.Department,
 
   initialize: function (models, options) { _.extend(this, options); },
 
-  url: function () {
-    console.log('/school/' + this.school_id);
-    return '/school/' + this.school_id;
-  },
+  url: function () { return '/school/' + this.id;},
 
-  parse: function (response) { return response.school_departments; }
+  parse: function (response) { return response.school_departments; },
+
+  getByName: function (name) { return this.findWhere({name: name}); },
+
+    hydrate: function () {
+    var deferred = $.Deferred();
+    this.fetch({ success: function(model, response, options) { deferred.resolveWith(this, model);} });
+    return deferred.promise();
+  },
 
 });
