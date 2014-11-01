@@ -6,9 +6,18 @@ Ninja.Views.List = React.createClass({
   onSync: function () { this.forceUpdate(); },
 
   onSelect: function (model) {
+    var route = this.props.route.slice(0);
+    route.push(model.get('name'));
+
+    globals.router.navigate(route.join("/"));
+    
     if (model.sublist) {
       React.renderComponent(
-        < Ninja.Views.List  model = {model} key = {model.cid}/>, 
+        < Ninja.Views.List
+          model = {model}
+          key = {model.cid}
+          route = {route}
+        />, 
         document.getElementById(this.props.model.cid)
       );
     }
@@ -19,13 +28,18 @@ Ninja.Views.List = React.createClass({
         subView ='If there is some..',
         view = list.models.map(function (model) {
         return (
-          < Ninja.Views.Item key = {model.cid} item = {model} onSelect = {this.onSelect.bind(this,model)} />
+          < Ninja.Views.Item 
+            key = {model.cid} 
+            item = {model} 
+            onSelect = {this.onSelect.bind(this,model)} 
+          />
           )
-      }, this)
-        return (
+    }, this);
+
+    return (
             <div>
               <div className = "col-lg-3"> {view} </div>
               <div id = {this.props.model.cid} > </div> 
             </div>)
-    }
+  }
 });
