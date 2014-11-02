@@ -16,9 +16,8 @@ app.get('/school/:id', function (req, res) { res.send(departments); });
 app.get('/department/:id', function (req, res) { res.send(courses); });
 app.get('/courses/:id', function (red, res) { res.send(course); });
 app.get('/dist/build.js', function (req, res) { res.sendfile('dist/build.js'); });
-app.get('/dist/bootstrap.css', function (req, res) { res.sendfile('dist/bootstrap.css'); });
 app.get('/*/dist/build.js', function (req, res) { res.sendfile('dist/build.js'); });
-app.get('/*/dist/bootstrap.css', function (req, res) { res.sendfile('dist/bootstrap.css'); });
+app.get('/dist/build.css', function (req, res) { res.sendfile('dist/build.css'); });
 app.get('*', function (req, res) { res.sendfile('index.html'); });
 
 

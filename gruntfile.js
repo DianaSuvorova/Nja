@@ -22,9 +22,19 @@ module.exports = function (grunt) {
       js:{
         src: [vendorJs, 'app/helpers/*.js', 'app/models/*.js', 'dist/react/*.js'],
         dest: 'dist/build.js'
+      },
+      css: {
+        src: ['components/vendor/css/bootstrap/dist/css/bootstrap.css', 'dist/build.css'],
+        dest: 'dist/build.css'
       }
     },
-
+    sass: {
+      dist: {
+        files: {
+          'dist/build.css':  'app/assets/sass/custom.scss',
+        }
+      }
+    },
     nodemon: {
       fakepi: {
         script: 'pi/fakepi.js',
@@ -45,7 +55,7 @@ module.exports = function (grunt) {
 
     watch: {
       js: {files: ['app/views/*.jsx', 'app/models/*.js', 'app/helpers/.*js'],
-      tasks: ['react', 'concat:js']},
+      tasks: ['react', 'sass', 'concat']},
     }
   
   });
@@ -55,6 +65,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-concurrent');
   grunt.loadNpmTasks('grunt-nodemon');
+  grunt.loadNpmTasks('grunt-contrib-sass');
 
-  grunt.registerTask('app', ['react', 'concat:js', 'concurrent:app']);
+  grunt.registerTask('app', ['react','sass', 'concat', 'concurrent:app']);
 };

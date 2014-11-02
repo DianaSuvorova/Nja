@@ -37,8 +37,8 @@ Ninja.Views.List = React.createClass({
 
     return (
             <div>
-              <div className = "col-lg-3"> {view} </div>
-              <div id = {this.props.model.cid} > {subView} </div> 
+              <ul className = "col-lg-3"> {view} </ul>
+              <ul id = {this.props.model.cid} > {subView} </ul> 
             </div>)
   }
 });

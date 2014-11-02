@@ -6,19 +6,12 @@ Ninja.Views.Item = React.createClass({
     this.refs.item.getDOMNode().focus();
   },
 
-  render: function(){
+  render: function () {
+    var style = {cursor: 'pointer' }
     return(
-          <tr>
-            <td>
-            <a href='#'
-              className = "btn btn-default btn-block"
-              ref = "item"
-              onClick = {this.onSelect}
-            >
+            <li style = {style} className="list-group-item" ref = "item" onClick = {this.onSelect}>
             {this.props.item.get('name')}
-            </a>
-            </td>
-          </tr>
+           </li>
       )
   }
 });

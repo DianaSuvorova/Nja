@@ -11,7 +11,7 @@ Ninja.Views.Navbar = React.createClass({
               <span className="icon-bar"></span>
               <span className="icon-bar"></span>
             </button>
-            <a className="navbar-brand" href="#">Brand</a>
+            <a className="navbar-brand" href="#">Ninja</a>
           </div>
 
           <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -35,7 +35,6 @@ Ninja.Views.Navbar = React.createClass({
               <div className="form-group">
                 <input type="text" className="form-control" placeholder="Search"/> 
               </div>
-              <button type="submit" className="btn btn-default">Submit</button>
             </form>
             <ul className="nav navbar-nav navbar-right">
               <li><a href="#">Link</a></li>
