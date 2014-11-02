@@ -1,9 +1,10 @@
 Ninja.Router = Backbone.Router.extend({
   routes: { '*anyRoute': 'proceedTo'},
 
+  initialize: function () { this.route = []; },
+
   proceedTo: function (route) {
-    if (route) console.log(route.split(/[//]+/));
-    if (route) globals.app.route = route.split(/[//]+/);
+    if (route) { this.route = route.split(/[//]+/).slice(0); }
   }
 
 });
