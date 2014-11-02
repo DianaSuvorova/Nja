@@ -2,10 +2,10 @@
 Ninja.Views.App = React.createClass({
 
   componentWillMount : function() {
-    this.callback = (function() { console.log('forceUpdate'); this.forceUpdate(); }).bind(this);
+    this.callback = (function() { this.forceUpdate(); }).bind(this);
     this.props.router.on("route", this.callback);
   },
-  
+
   render: function () {
 
     var  model = this.props.model,
@@ -14,6 +14,12 @@ Ninja.Views.App = React.createClass({
                   key = {model.cid}
                   upRoute = {''}
                   route = {this.props.router.route.slice(0)} />;
-    return ( <div className = "col-lg-12"> {view} </div> )
+    var navbar = < Ninja.Views.Navbar />
+    return ( 
+            <div>
+            {navbar}
+            <div className = "col-lg-12"> {view} </div> 
+            </div>
+            )
   }
 });
