@@ -18,7 +18,7 @@ Ninja.Views.App = React.createClass({
     return ( 
             <div>
             {navbar}
-            <div className = "col-lg-12 btn-group-vertical"> {view} </div> 
+            <div className = "col-lg-15"> {view} </div> 
             </div>
             )
   }

@@ -7,9 +7,8 @@ Ninja.Views.Item = React.createClass({
   },
 
   render: function () {
-    var style = {cursor: 'pointer' }
     return(
-            <li style = {style} className="list-group-item" ref = "item" onClick = {this.onSelect}>
+            <li className="list-group-item" ref = "item" onClick = {this.onSelect}>
             {this.props.item.get('name')}
            </li>
       )
