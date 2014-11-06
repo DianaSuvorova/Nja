@@ -14,7 +14,7 @@ app.get('/login', function (req, res) { res.send(200); });
 app.get('/school', function (req, res) { res.send(schools); });
 app.get('/school/:id', function (req, res) { res.send(departments); });
 app.get('/department/:id', function (req, res) { res.send(courses); });
-app.get('/courses/:id', function (red, res) { res.send(course); });
+app.get('/course/:id', function (red, res) { res.send(course); });
 app.get('/dist/build.js', function (req, res) { res.sendfile('dist/build.js'); });
 app.get('/dist/build.css', function (req, res) { res.sendfile('dist/build.css'); });
 app.get('/*/dist/build.js', function (req, res) { res.sendfile('dist/build.js'); });

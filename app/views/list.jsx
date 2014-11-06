@@ -25,23 +25,12 @@ Ninja.Views.List = React.createClass({
     if (this.props.route.length) { 
       model = list.getByName(this.props.route[0]);
       if (model) {
-          if (model.sublist) {
-          subView = < Ninja.Views.List 
-              model = {model} 
-              key = {model.cid} 
-              upRoute = {this.props.upRoute + '/' + model.get('name')} 
-              route = {this.props.route.slice(1)}
-              />
-          }
-        else  {
-          console.log('else');
-          subView = < Ninja.Views.Course
-              model = {model} 
-              key = {model.cid} 
-              upRoute = {this.props.upRoute + '/' + model.get('name')} 
-              route = {this.props.route.slice(1)}
+        subView = < Ninja.Views.List 
+            model = {model} 
+            key = {model.cid} 
+            upRoute = {this.props.upRoute + '/' + model.get('name')} 
+            route = {this.props.route.slice(1)}
             />
-        }
       }
     }
 

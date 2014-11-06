@@ -1,28 +1,84 @@
 {
     "course_sections": [
         {
-            "staff_name": "DAVIS, L.L.",
-            "section_id": "UCLA_AERO_ST_AERO_ST__A_LAB_1",
+            "staff_name": "REYES, A.L.",
+            "section_id": "UCLA_AERO_ST_AERO_ST_1A_LEC_1",
             "school_id": 1,
-            "section_name": "LAB 1",
-            "course_id": "UCLA_AERO_ST_AERO_ST__A",
+            "section_name": "LEC 1",
+            "course_id": "UCLA_AERO_ST_AERO_ST_1A",
             "events": [
                 {
                     "status": "Open",
-                    "event_type": "LAB 1",
-                    "school_specific_event_id": "102001200",
-                    "event_id": "UCLA_AERO_ST_AERO_ST__A_LAB_1_102001200",
+                    "event_type": "LEC 1",
+                    "school_specific_event_id": "102048200",
+                    "event_id": "UCLA_AERO_ST_AERO_ST_1A_LEC_1_102048200",
                     "times_and_locations": [
                         {
-                            "timeInterval": "7:50A - 10:50A",
+                            "timeInterval": "12:00P - 1:50P",
                             "weekdays": "FRI",
                             "location": "HAINES A18"
                         }
                     ],
-                    "section_id": "UCLA_AERO_ST_AERO_ST__A_LAB_1",
-                    "enrollment_cap": 120,
+                    "section_id": "UCLA_AERO_ST_AERO_ST_1A_LEC_1",
+                    "enrollment_cap": 20,
                     "number_waitlisted": 0,
-                    "number_enrolled": 30,
+                    "number_enrolled": 14,
+                    "waitlist_capacity": 0,
+                    "school_id": 1
+                }
+            ]
+        },
+        {
+            "staff_name": "REYES, A.L.",
+            "section_id": "UCLA_AERO_ST_AERO_ST_1A_LEC_2",
+            "school_id": 1,
+            "section_name": "LEC 2",
+            "course_id": "UCLA_AERO_ST_AERO_ST_1A",
+            "events": [
+                {
+                    "status": "Open",
+                    "event_type": "LEC 2",
+                    "school_specific_event_id": "102048201",
+                    "event_id": "UCLA_AERO_ST_AERO_ST_1A_LEC_2_102048201",
+                    "times_and_locations": [
+                        {
+                            "timeInterval": "9:00A - 9:50A",
+                            "weekdays": "TUE",
+                            "location": "KAUFMAN 101"
+                        }
+                    ],
+                    "section_id": "UCLA_AERO_ST_AERO_ST_1A_LEC_2",
+                    "enrollment_cap": 20,
+                    "number_waitlisted": 0,
+                    "number_enrolled": 2,
+                    "waitlist_capacity": 0,
+                    "school_id": 1
+                }
+            ]
+        },
+        {
+            "staff_name": "",
+            "section_id": "UCLA_AERO_ST_AERO_ST_1A_LEC_3",
+            "school_id": 1,
+            "section_name": "LEC 3",
+            "course_id": "UCLA_AERO_ST_AERO_ST_1A",
+            "events": [
+                {
+                    "status": "Cancelled",
+                    "event_type": "LEC 3",
+                    "school_specific_event_id": "102048203",
+                    "event_id": "UCLA_AERO_ST_AERO_ST_1A_LEC_3_102048203",
+                    "times_and_locations": [
+                        {
+                            "timeInterval": "1:00P - 1:50P",
+                            "weekdays": "FRI",
+                            "location": "HAINES "
+                        }
+                    ],
+                    "section_id": "UCLA_AERO_ST_AERO_ST_1A_LEC_3",
+                    "enrollment_cap": 0,
+                    "number_waitlisted": 0,
+                    "number_enrolled": 0,
                     "waitlist_capacity": 0,
                     "school_id": 1
                 }
