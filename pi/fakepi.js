@@ -19,6 +19,8 @@ app.get('/dist/build.js', function (req, res) { res.sendfile('dist/build.js'); }
 app.get('/dist/build.css', function (req, res) { res.sendfile('dist/build.css'); });
 app.get('/*/dist/build.js', function (req, res) { res.sendfile('dist/build.js'); });
 app.get('/*/dist/build.css', function (req, res) { res.sendfile('dist/build.css'); });
+
+
 app.get('*', function (req, res) { res.sendfile('index.html'); });
 
 
