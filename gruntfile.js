@@ -22,16 +22,12 @@ module.exports = function (grunt) {
       js:{
         src: [vendorJs, 'app/helpers/*.js', 'app/models/*.js', 'dist/react/*.js'],
         dest: 'dist/build.js'
-      },
-      css: {
-        src: ['components/vendor/css/bootstrap/dist/css/bootstrap.css', 'dist/build.css'],
-        dest: 'dist/build.css'
       }
     },
-    sass: {
+    less: {
       dist: {
         files: {
-          'dist/build.css':  'app/assets/sass/custom.scss',
+          'dist/build.css':  'app/assets/less/main.less',
         }
       }
     },
@@ -55,7 +51,7 @@ module.exports = function (grunt) {
 
     watch: {
       js: {files: ['app/views/*.jsx', 'app/models/*.js', 'app/helpers/.*js'], tasks: ['react', 'concat:js']},
-      css: {files: [' app/assets/sass/*.scss'], tasks: ['sass', 'concat:css']},
+      css: {files: [' app/assets/less/*.less'], tasks: ['less']},
 
     }
   
@@ -66,7 +62,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-concurrent');
   grunt.loadNpmTasks('grunt-nodemon');
-  grunt.loadNpmTasks('grunt-contrib-sass');
+  grunt.loadNpmTasks('grunt-contrib-less');
 
-  grunt.registerTask('app', ['react','sass', 'concat', 'concurrent:app']);
+  grunt.registerTask('app', ['react','less', 'concat', 'concurrent:app']);
 };
