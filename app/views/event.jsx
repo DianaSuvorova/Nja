@@ -1,5 +1,15 @@
     /** @jsx React.DOM **/
 Ninja.Views.Event = React.createClass({
+
+  getStatusColor: function () {
+    var model = this.props.model;
+    if (model.status === 'Open') return 'green';
+    if (model.status === 'Cancelled') return 'gray';
+    if (model.status === 'Cancelled' || model.status === 'Closed') return 'red';
+    if (model.status === 'W-List') return 'yellow';
+  },
+
+
   render: function () {
     var model = this.props.model;
 
@@ -26,10 +36,12 @@ Ninja.Views.Event = React.createClass({
       return (  <div className = 'row'> {header} </div>);
     });
 
+    var statusColor = {color: this.getStatusColor()}
+
     return (
       <div className = 'col-xs-12'>
         <div className = 'row'>
-          <span className = "col-xs-1 glyphicon glyphicon-play"/>
+          <span  style = {statusColor} className = "col-xs-1 glyphicon glyphicon-play"/>
           <input className = 'col-xs-1' type = "checkbox"/>
           <span className = 'col-xs-3'>{model.event_type}</span> 
           <div className = 'times_and_location col-xs-5'> {timeAndLocation} </div>
