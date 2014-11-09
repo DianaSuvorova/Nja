@@ -54,8 +54,9 @@ module.exports = function (grunt) {
     },
 
     watch: {
-      js: {files: ['app/views/*.jsx', 'app/models/*.js', 'app/helpers/.*js'],
-      tasks: ['react', 'sass', 'concat']},
+      js: {files: ['app/views/*.jsx', 'app/models/*.js', 'app/helpers/.*js'], tasks: ['react', 'concat:js']},
+      css: {files: [' app/assets/sass/*.scss'], tasks: ['sass', 'concat:css']},
+
     }
   
   });
