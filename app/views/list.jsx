@@ -6,7 +6,7 @@ Ninja.Views.List = React.createClass({
   onSync: function () { this.forceUpdate(); },
 
   onSelect: function (model) {
-      globals.router.navigate(this.props.upRoute + '/' + model.get('name'), {trigger: true});
+      globals.router.navigate(this.props.upRoute + '/' + encodeURI(model.get('name')), {trigger: true});
   },
   
   render: function () {
@@ -23,7 +23,7 @@ Ninja.Views.List = React.createClass({
     }, this);
     
     if (this.props.route.length) { 
-      model = list.getByName(this.props.route[0]);
+      model = list.getByName(decodeURI(this.props.route[0]));
       if (model) {
         subView = < Ninja.Views.List 
             model = {model} 
