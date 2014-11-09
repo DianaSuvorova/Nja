@@ -16,9 +16,13 @@ Ninja.Views.App = React.createClass({
                   route = {this.props.router.route.slice(0)} />;
     var navbar = < Ninja.Views.Navbar />
     return ( 
-            <div>
-            {navbar}
-            <div className = "col-lg-15"> {view} </div> 
+            <div className= 'container-fluid'>
+              <div className= 'row'>
+                <div className = "col-xs-12"> {navbar} </div>
+              </div>
+              <div className= 'row'>
+                <div className = "col-xs-12"> {view} </div> 
+              </div>
             </div>
             )
   }
