@@ -1,3 +1,13 @@
 .list-group-item {
   cursor: pointer;
 }
+
+li#section {
+  div.header {@extend .text-center;}
+  div.event_list {
+    div.summary {
+      div.event_header {width: 20%}
+      div.times_and_location{width: 60%}
+    }
+  }
+}
