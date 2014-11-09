@@ -17,12 +17,8 @@ Ninja.Views.App = React.createClass({
     var navbar = < Ninja.Views.Navbar />
     return ( 
             <div className= 'container-fluid'>
-              <div className= 'row'>
-                <div className = "col-xs-12"> {navbar} </div>
-              </div>
-              <div className= 'row'>
-                <div className = "col-xs-12"> {view} </div> 
-              </div>
+              <div className= 'row'> {navbar} </div>
+              <div className= 'row'> {view} </div> 
             </div>
             )
   }
