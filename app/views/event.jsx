@@ -30,14 +30,14 @@ Ninja.Views.Event = React.createClass({
     var statusColor = {color: model.getStatusColor()}
 
     return (
-      <div>
+      <div className = 'event'>
         <div className = 'row event-header'>
-          <span  style = {statusColor} className = "col-xs-1 status-marker"/>
-          <span className = 'col-xs-3 col-xs-offset-1'>{model.get('event_type')}</span> 
+          <span  style = {statusColor} className = "col-xs-1"/>
+          <span className = 'col-xs-3 '> {this.props.sectionType} </span> 
           <div className = 'times_and_location col-xs-6'> {timeAndLocation} </div>
-          <i className= "col-xs-1 glyphicon glyphicon-chevron-down"/> 
+          <i className= "col-xs-1 glyphicon glyphicon-chevron-down" /> 
         </div> 
-        <div className = 'row'>
+        <div className = 'row event-detail'>
           <div className = 'col-xs-2'/>
           <div className = 'col-xs-3'> {detailHeader} </div>
           <div className = 'col-xs-5'>
