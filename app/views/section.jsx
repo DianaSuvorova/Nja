@@ -5,14 +5,14 @@ Ninja.Views.Section = React.createClass({
     var model = this.props.model;
 
     var events = model.sublist.models.map( function (event) {
-      return (<Ninja.Views.Event model = {event} key = {event.cid} />);
+      return (<Ninja.Views.Event model = {event} key = {event.cid} sectionId = {model.sectionId}/>);
     });
 
-    var sectionHeader = model.get('section_name') + ': ' + model.get('staff_name');
+    var sectionHeader = model.sectionType + ((model.get('staff_name').length > 1) ? (': ' + model.get('staff_name')) : '');
 
-    return ( <li id='section' className='list-group-item col-xs-12'>
-                <div className = 'row'> {sectionHeader} </div>
-                <div className = 'row'> {events} </div>
+    return ( <li className='list-group-item col-xs-12 section '>
+                <div className = 'row section-header'> {sectionHeader} </div>
+                <div className = 'row section-detail'> {events} </div>
             </li>)
   }
 });

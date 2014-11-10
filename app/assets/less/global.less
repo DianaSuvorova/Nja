@@ -1,1 +1,48 @@
 body { padding-top: 70px; }
+@highlighted-bg: #F0F1F5;
+@text-gray: #787878;
+
+.selected {
+  background-color: #F0F1F5;
+  color: #455B8E;
+}
+
+.list-group-item.item-name:hover {
+    cursor: pointer;
+    background-color: @highlighted-bg;
+}
+
+.selected {
+  background-color: @highlighted-bg;
+  color: #455B8E;
+}
+
+ li.section { padding-top: 0; }
+
+.section-header {
+  background-color: #F0F0F0;
+  color: @text-gray;
+  padding: 5px;
+}
+
+.section-detail { 
+  background-color: #FFF;
+}
+
+.status-marker {
+  position: absolute;
+  left: 0;
+  width: 0; 
+  height: 0; 
+  border-bottom: 15px solid transparent;
+  border-left: 15px solid ;
+}
+
+.event-header {
+  color: @text-gray;
+  padding-bottom: 5px;
+}
+
+.detail-header {
+  color: #C2C2C2
+}

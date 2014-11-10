@@ -13,14 +13,17 @@ Ninja.Views.List = React.createClass({
     var list = this.props.model.sublist,
         subView = '',
         view = list.models.map(function (model) {
-        return (
-              < Ninja.Views.Item 
-                key = {model.cid} 
-                item = {model}
-                onSelect = {this.onSelect.bind(this,model)} 
-              />
-          )
-    }, this);
+          //not nice. better done with setting router via global states.
+          var selected = (model.get('name') === this.props.route[0]) ? true : false;
+          return (
+                < Ninja.Views.Item 
+                  key = {model.cid} 
+                  item = {model}
+                  selected = {selected}
+                  onSelect = {this.onSelect.bind(this,model)} 
+                />
+            )
+      }, this);
     
     if (this.props.route.length) { 
       model = list.getByName(decodeURI(this.props.route[0]));
