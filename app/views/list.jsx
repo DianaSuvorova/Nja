@@ -36,7 +36,6 @@ Ninja.Views.List = React.createClass({
             />
       }
     }
-
     return (
             <div>
               <ul className = "col-xs-12 col-md-3"> {view} </ul>

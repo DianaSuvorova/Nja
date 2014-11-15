@@ -1,6 +1,13 @@
     /** @jsx React.DOM **/
 Ninja.Views.Event = React.createClass({
 
+  getInitialState: function() { return {expanded: false}; },
+
+  onSelect: function () {
+    console.log('onSelect');
+    this.setState({expanded : !this.state.expanded});
+  },
+
   render: function () {
     var model = this.props.model;
 
@@ -28,16 +35,26 @@ Ninja.Views.Event = React.createClass({
     });
 
     var statusColor = {color: model.getStatusColor()}
+    var cx = React.addons.classSet;
+    var eventDetailCLasses = cx({
+      'event-detail row' : true,
+      'expanded': this.state.expanded
+    });
+
+    var expandErrowClass = cx({
+      'col-xs-1 fa fa-angle-down fa-lg' : true,
+      'fa-flip-vertical': this.state.expanded
+    })
 
     return (
-      <div className = 'event'>
+      <div className = 'event' onClick = {this.onSelect.bind(this)}>
         <div className = 'row event-header'>
-          <span  style = {statusColor} className = "col-xs-1"/>
+          <span style = {statusColor} className = "col-xs-1 status-marker"></span>
           <span className = 'col-xs-3 '> {this.props.sectionType} </span> 
           <div className = 'times_and_location col-xs-6'> {timeAndLocation} </div>
-          <i className= "col-xs-1 glyphicon glyphicon-chevron-down" /> 
+          <i className = {expandErrowClass} /> 
         </div> 
-        <div className = 'row event-detail'>
+        <div className = {eventDetailCLasses} >
           <div className = 'col-xs-2'/>
           <div className = 'col-xs-3'> {detailHeader} </div>
           <div className = 'col-xs-5'>
