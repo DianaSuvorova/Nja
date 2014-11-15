@@ -3,10 +3,7 @@ Ninja.Views.Event = React.createClass({
 
   getInitialState: function() { return {expanded: false}; },
 
-  onSelect: function () {
-    console.log('onSelect');
-    this.setState({expanded : !this.state.expanded});
-  },
+  onSelect: function () { this.setState({expanded : !this.state.expanded}); },
 
   render: function () {
     var model = this.props.model;
