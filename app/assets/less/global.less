@@ -66,3 +66,11 @@ i.fa { transition: transform 0.5s }
 }
 .detail-header { color: @light-gray }
 
+
+@media(min-width: @screen-sm-max) {
+  .previous { -webkit-transform: translateX(percentage((-3 / @grid-columns)));
+    transition: transform 0.5s ease;
+  }
+
+
+}
