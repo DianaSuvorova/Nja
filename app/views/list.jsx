@@ -10,6 +10,34 @@ Ninja.Views.List = React.createClass({
   },
   
   render: function () {
+
+    var ListIndx = this.props.upRoute.split(/[//]+/).length -1 ;
+    var totalLists = this.props.upRoute.split(/[//]+/).length + this.props.route.length ;
+    var pullPushMatrix = [];
+      pullPushMatrix[0] = [];
+      pullPushMatrix[0][1] = [0,0]
+      pullPushMatrix[0][2] = [1,0]
+      pullPushMatrix[0][3] = [2,0]
+      pullPushMatrix[0][4] = [3,0]
+      pullPushMatrix[1] = [];
+      pullPushMatrix[1][1] = [0,0]
+      pullPushMatrix[1][2] = [0,1]
+      pullPushMatrix[1][3] = [0,0]
+      pullPushMatrix[1][4] = [1,0]
+      pullPushMatrix[2] = [];
+      pullPushMatrix[2][1] = [0,0]
+      pullPushMatrix[2][2] = [0,0]
+      pullPushMatrix[2][3] = [0,2]
+      pullPushMatrix[2][4] = [0,1]
+      pullPushMatrix[3] = [];
+      pullPushMatrix[3][1] = [0,0]
+      pullPushMatrix[3][2] = [0,0]
+      pullPushMatrix[3][3] = [0,0]
+      pullPushMatrix[3][4] = [0,3]
+    var classPull = ' col-md-pull-'.concat((pullPushMatrix[ListIndx][totalLists][0]*3).toString());
+    var classPush = ' col-md-push-'.concat((pullPushMatrix[ListIndx][totalLists][1]*3).toString());
+
+    var listClasses = ' col-xs-12 col-md-3'.concat(classPush, classPull)
     var list = this.props.model.sublist,
         subView = '',
         view = list.models.map(function (model) {
@@ -38,8 +66,8 @@ Ninja.Views.List = React.createClass({
     }
     return (
             <div>
-              <ul className = "col-xs-12 col-md-3"> {view} </ul>
               <div id = {this.props.model.cid} > {subView} </div>
+              <ul className = {listClasses} > {view} </ul>
             </div>)
   }
 });
