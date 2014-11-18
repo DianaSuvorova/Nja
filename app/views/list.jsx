@@ -14,31 +14,33 @@ Ninja.Views.List = React.createClass({
   
   render: function () {
     var cx = React.addons.classSet;
+    var csst = React.addons.CSSTransitionGroup;
 
-    var listClasses = cx ({
-      'col-xs-12 col-md-3 ': true,
-      'hidden-sm hidden-xs col-sm-pull-12': !this.state.currentList,
-    });
-
-    var divClasses = cx({
-      'current ': this.state.currentList,
-      'previous': !this.state.currentList
+    var hidden = cx({
+      'col-xs-12 col-md-3': true,
+      'hidden-sm hidden-xs ': !this.state.currentList
     });
 
     var list = this.props.model.sublist,
-        subView = '',
-        view = list.models.map(function (model) {
-          //not nice. better done with setting router via global states.
-          var selected = (model.get('name') === this.props.route[0]) ? true : false;
-          return (
-                < Ninja.Views.Item 
-                  key = {model.cid} 
-                  item = {model}
-                  selected = {selected}
-                  onSelect = {this.onSelect.bind(this,model)} 
-                />
-            )
+        subView,
+        view;
+
+    var listView = list.models.map(function (model) {
+        //not nice. better done with setting router via global states.
+        var selected = (model.get('name') === this.props.route[0]) ? true : false;
+        return (
+            < Ninja.Views.Item 
+              key = {model.cid} 
+              item = {model}
+              selected = {selected}
+              onSelect = {this.onSelect.bind(this,model)} 
+            />
+        )
       }, this);
+
+    if (list.length) {
+      view = <ul key = {'ul-'.concat(this.props.model.cid)} className= {hidden}> {listView} </ul> ;
+    }
     
     if (this.props.route.length) { 
       model = list.getByName(decodeURI(this.props.route[0]));
@@ -52,9 +54,10 @@ Ninja.Views.List = React.createClass({
       }
     }
     return (
-            <div className = {divClasses} >
-              <ul className = {listClasses} > {view} </ul>
-              <div id = {this.props.model.cid}> {subView} </div>
-            </div>)
+              <div key = {'current-div-'.concat(this.props.model.cid)} >
+                 <csst transitionName = "next"> {view} </csst>
+                   <div  key = {this.props.model.cid} id = {this.props.model.cid} > {subView} </div>
+              </div>
+            )
   }
 });

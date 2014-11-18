@@ -1,4 +1,6 @@
-body { padding-top: 70px; }
+body { 
+  padding-top: 70px; 
+}
 @highlighted-bg: #F0F1F5;
 @text-gray: #787878;
 @light-gray: #C2C2C2;
@@ -58,6 +60,7 @@ i.fa { transition: transform 0.5s }
   border-left: 15px solid ;
 }
 
+
 .event-header {
   color: @text-gray;
 }
@@ -67,10 +70,22 @@ i.fa { transition: transform 0.5s }
 .detail-header { color: @light-gray }
 
 
-@media(min-width: @screen-sm-max) {
-  .previous { -webkit-transform: translateX(percentage((-3 / @grid-columns)));
-    transition: transform 0.5s ease;
-  }
+.next-enter {
+  -webkit-transform: translateX(percentage((12 / @grid-columns)));
+}
 
+.next-enter.next-enter-active{
+    transition: transform 1s ease;
+    -webkit-transform: translateX(0);
+}
+
+.current-leave{
+  opacity: 1;
+  transition: transform 10s ease;
 
 }
+
+.current-leave.next-leave-active{
+  opacity: 0.1;
+}
+
