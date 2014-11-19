@@ -1,35 +1,27 @@
     /** @jsx React.DOM **/
 Ninja.Views.List = React.createClass({
 
-  getInitialState: function() { return {currentList: true}; },
+  getInitialState: function() { return {selectedItem: null}; },
 
   componentDidMount: function () { this.props.model.sublist.hydrate().then(this.onSync); },
 
   onSync: function () { this.forceUpdate();},
 
   onSelect: function (model, listIndex) {
-    this.setState({currentList : !this.state.currentList});
+    this.setState({selectedItem : model.cid});
     this.props.onItemSelect(model, listIndex);
   },
   
   render: function () {
-    var cx = React.addons.classSet;
-    var csst = React.addons.CSSTransitionGroup;
-
-    var hidden = cx({
-      'col-xs-12 col-md-3': true,
-      'hidden-sm hidden-xs ': !this.state.currentList
-    });
 
     var list = this.props.model.sublist;
     var listView = list.models.map(function (model) {
-        //not nice. better done with setting router via global states.
-        var selected = false;
+        var selected = model.cid === this.state.selectedItem ? true : false ;
         return (
             < Ninja.Views.Item key = {model.cid} item = {model} selected = {selected} onSelect = {this.onSelect.bind(this,model,this.props.listIndex)} />
         )
       }, this);
     
-    return (<ul key = {'ul-'.concat(this.props.model.cid)} className= {hidden}> {listView} </ul>);
+    return (<ul key = {this.props.model.cid} className= {'col-xs-12 col-md-3'}> {listView} </ul>);
   }
 });
