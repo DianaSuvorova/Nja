@@ -1,23 +1,23 @@
 /** @jsx React.DOM */
 Ninja.Views.App = React.createClass({
 
-  getInitialState: function() { return {listStack: [this.props.model]}; },
+  getInitialState: function() { return {listDict: [this.props.model]}; },
 
   componentWillMount : function() {
     this.callback = (function() { this.forceUpdate(); }).bind(this);
     this.props.router.on("route", this.callback);
   },
 
-  handleSelectItem : function (item) {
-    //should handle push and pop
-     this.setState({ listStack: this.state.listStack.concat(item) })
+  handleSelectItem : function (item, listIndex) {
+    this.state.listDict[listIndex+1] = item;
+    this.setState({listDict: this.state.listDict.slice(0)});
   },
 
   render: function () {
     var navbar = < Ninja.Views.Navbar/>;
 
-    var lists = this.state.listStack.map(function (model) {
-      return < Ninja.Views.List model = {model} key = {model.cid} onItemSelect = {this.handleSelectItem}/>;
+    var lists = this.state.listDict.map(function (model, i) {
+      return < Ninja.Views.List listIndex = {i} model = {model} key = {model.cid} onItemSelect = {this.handleSelectItem}/>;
     },this);
 
     

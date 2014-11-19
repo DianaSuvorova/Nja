@@ -7,9 +7,9 @@ Ninja.Views.List = React.createClass({
 
   onSync: function () { this.forceUpdate();},
 
-  onSelect: function (model) {
+  onSelect: function (model, listIndex) {
     this.setState({currentList : !this.state.currentList});
-    this.props.onItemSelect(model);
+    this.props.onItemSelect(model, listIndex);
   },
   
   render: function () {
@@ -26,7 +26,7 @@ Ninja.Views.List = React.createClass({
         //not nice. better done with setting router via global states.
         var selected = false;
         return (
-            < Ninja.Views.Item key = {model.cid} item = {model} selected = {selected} onSelect = {this.onSelect.bind(this,model)} />
+            < Ninja.Views.Item key = {model.cid} item = {model} selected = {selected} onSelect = {this.onSelect.bind(this,model,this.props.listIndex)} />
         )
       }, this);
     
