@@ -61,6 +61,7 @@ i.fa { transition: transform 0.5s }
 }
 
 
+
 .event-header {
   color: @text-gray;
 }
@@ -81,6 +82,12 @@ i.fa { transition: transform 0.5s }
 
 }
 
+.hidden {
+  width: 0;
+  transition: width 0.5s ease-in;
+ 
+}
+
 @media(min-width: @screen-sm-max) {
   .next-enter {
     opacity: 1;
@@ -92,5 +99,16 @@ i.fa { transition: transform 0.5s }
     transition: opacity 0.5s ease-in;
     transition: transform 0.5s ease-in;
     -webkit-transform: translateX(percentage(0));
+  }
+
+  .next-leave {
+    opacity: 0.1;
+    -webkit-transform: translateX(percentage((12 / @grid-columns)));
+
+  }
+
+  .next-leave.next-leave-active{
+    transition: opacity 0.5s ease-in;
+    transition: transform 0.5s ease-in;
   }
 }
