@@ -9,7 +9,7 @@ Ninja.Models.Departments = Backbone.Collection.extend ({
 
   getByName: function (name) { return this.findWhere({name: name}); },
 
-    hydrate: function () {
+  hydrate: function () {
     var deferred = $.Deferred();
     this.fetch({ success: function(model, response, options) { deferred.resolveWith(this, model);} });
     return deferred.promise();

@@ -1,22 +1,29 @@
 /** @jsx React.DOM */
 Ninja.Views.App = React.createClass({
 
-  getInitialState: function() { return {listDict: [this.props.model]}; },
+  getInitialState: function () { return {listDict: []}; },
 
-  componentWillMount : function() {
-    this.callback = (function() { this.forceUpdate(); }).bind(this);
+  componentDidMount : function () {
+    this.callback = (function() { this.setState({listDict: this.props.routerStack}) }).bind(this);
     this.props.router.on("route", this.callback);
   },
 
+  getListModelNames : function (lists) {
+    return lists.map(function (model) {return model.get('name');});
+  },
+
   handleSelectItem : function (item, listIndex) {
-    this.state.listDict[listIndex+1] = item;
-    this.setState({listDict: this.state.listDict.slice(0)});
+    this.state.listDict[listIndex] = item; 
+    var newListDict = this.state.listDict.slice(0,listIndex+1);
+    this.props.router.navigate(this.getListModelNames(newListDict).join('/') , {trigger: false});    
+    this.setState({listDict: newListDict});
   },
 
   render: function () {
     var navbar = < Ninja.Views.Navbar/>;
 
-    var lists = this.state.listDict.map(function (model, i) {
+    var models = [this.props.model].concat(this.state.listDict);
+    var lists = models.map(function (model, i) {
       return < Ninja.Views.List listIndex = {i} model = {model} key = {model.cid} onItemSelect = {this.handleSelectItem}/>;
     },this);
 
