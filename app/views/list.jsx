@@ -11,14 +11,21 @@ Ninja.Views.List = React.createClass({
     this.setState({selectedItem : model.cid});
     this.props.onItemSelect(model, listIndex);
   },
+
+  componentDidUpdate: function (prevProps, prevState) {
+    var routedModel = this.props.model.sublist.getByName(this.props.routedName);
+    if (routedModel) this.props.onItemRoute(routedModel, this.props.listIndex);
+  },
+
   
   render: function () {
+    var routedModel = this.props.model.sublist.getByName(this.props.routedName);
 
     var list = this.props.model.sublist;
     var listView = list.models.map(function (model) {
-        var selected = model.cid === this.state.selectedItem ? true : false ;
+        var selected =  (model.cid === this.state.selectedItem || model.cid ===  routedModel) ? true : false ;
         return (
-            < Ninja.Views.Item key = {model.cid} item = {model} selected = {selected} onSelect = {this.onSelect.bind(this,model,this.props.listIndex)} />
+            < Ninja.Views.Item key = {model.cid} item = {model} selected = {selected} onSelect = {this.onSelect.bind(this, model, this.props.listIndex)} />
         )
       }, this);
     
