@@ -1,4 +1,4 @@
-var vendorJs = ['components/vendor/js/zepto.js',
+var vendorJs = ['components/vendor/js/jquery-2.1.1.min.js',
                 'components/vendor/js/react.js',
                 'components/vendor/js/underscore.js',
                 'components/vendor/js/backbone.js',
