@@ -46,9 +46,9 @@ Ninja.Views.App = React.createClass({
       },this);
 
     return ( 
-      <div className= 'containert'>
-        <div className= 'rowt'> {navbar} </div>
-        <div className= 'rowt lists'> 
+      <div>
+        <div> {navbar} </div>
+        <div> 
           <globals.ReactTransitionGroup transitionName="list">
             {lists} 
           </globals.ReactTransitionGroup>
