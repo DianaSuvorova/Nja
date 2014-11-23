@@ -32,13 +32,12 @@ Ninja.Views.Event = React.createClass({
     });
 
     var statusColor = {color: model.getStatusColor()}
-    var cx = React.addons.classSet;
-    var eventDetailCLasses = cx({
+    var eventDetailCLasses = globals.cx({
       'event-detail row' : true,
       'expanded': this.state.expanded
     });
 
-    var expandErrowClass = cx({
+    var expandErrowClass = globals.cx({
       'col-xs-1 fa fa-angle-down fa-lg' : true,
       'fa-flip-vertical': this.state.expanded
     })

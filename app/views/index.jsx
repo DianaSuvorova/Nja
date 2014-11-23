@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
   $(document).ready(function () {
-    var cx = React.addons.classSet;
-    var csst = React.addons.CSSTransitionGroup;
+    globals.cx = React.addons.classSet;
+    globals.csst = React.addons.CSSTransitionGroup;
 
     globals.app = new Ninja.Models.App();
     globals.router = new Ninja.Router();

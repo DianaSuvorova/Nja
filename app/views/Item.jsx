@@ -3,15 +3,13 @@ Ninja.Views.Item = React.createClass({
   
   onSelect: function () {
     this.props.onSelect();
-    this.refs.item.getDOMNode().focus();
   },
 
-  onHref: function () {return false;},
-
   render: function () {
-    var itemClass = 'list-group-item item-name'
-    if (this.props.selected)  itemClass = itemClass + ' selected';
-
+    var itemClass = globals.cx({
+      'list-group-item item-name' : true,
+      'selected' : this.props.selected
+    });
     var item = this.props.item;
     var view = <li key = {this.props.key} className = {itemClass} ref = "item" onClick = {this.onSelect}> {item.get('name')} </li>;
     if (this.props.item.has('section_id')) view = <Ninja.Views.Section model = {item} key = {item.cid} />
