@@ -37,17 +37,22 @@ Ninja.Views.App = React.createClass({
 
   render: function () {
     var navbar = < Ninja.Views.Navbar/>;
-
+    
+    var isSmallScreen = globals.isBreakpoint('xs') || globals.isBreakpoint('sm') ? true : false  ;
     var models = [this.props.model].concat(this.state.listDict);
-    var lists = models.map(function (model, i) {
-      var routedName = (this.state.routeStack ) ? this.state.routeStack[0] : null;
-      return < Ninja.Views.List listIndex = {i} model = {model} key = {model.cid} onItemRoute = {this.handleRoute} routedName = {routedName} onItemSelect = {this.handleSelect} selectedItemDict = {this.state.selectedItemDict}/>;
-    },this);
+      var lists = models.map(function (model, i) {
+        var routedName = (this.state.routeStack ) ? this.state.routeStack[0] : null;
+        return < Ninja.Views.List  totalLists = {models.length} listIndex = {i} model = {model} key = {model.cid} onItemRoute = {this.handleRoute} routedName = {routedName} onItemSelect = {this.handleSelect} selectedItemDict = {this.state.selectedItemDict}/>;
+      },this);
 
     return ( 
-      <div className= 'container-fluid'>
-        <div className= 'row'> {navbar} </div>
-        <div className= 'row'> {lists} </div> 
+      <div className= 'containert'>
+        <div className= 'rowt'> {navbar} </div>
+        <div className= 'rowt lists'> 
+          <globals.ReactTransitionGroup transitionName="list">
+            {lists} 
+          </globals.ReactTransitionGroup>
+        </div> 
       </div>
     )
   }
