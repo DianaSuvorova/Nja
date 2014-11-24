@@ -73,25 +73,18 @@ i.fa { transition: transform 0.5s }
 }
 
 .list{
-  transition: transform 1s ease;
-  float: left;
+  transition: transform 5s linear;
   top: 70px;
   position: absolute;
 }
 
 @media(min-width: @screen-sm-max) {
-  .list {width: 25%;}
 }
 
 @media(max-width: @screen-sm-max) {
-  .list { 
-    width: 100%;
-    // position: absolute;
-    // top: 70px;
-  }
-  .previous {-webkit-transform:translateX(-100%)}
-  .current {-webkit-transform:left(0)}
-  .next{-webkit-transform:left(-100%)}
+  // .previous {-webkit-transform:translateX(-100%)}
+  // .current {-webkit-transform:left(0)}
+  // .next{-webkit-transform:left(-100%)}
 }
 
 // @media(max-width: @screen-sm-max) {
