@@ -6,6 +6,7 @@ Ninja.Router = Backbone.Router.extend({
     if (path) {
       this.stack = path.split(/[//]+/);
     }
+    else this.stack = [];
   }
 
 });
