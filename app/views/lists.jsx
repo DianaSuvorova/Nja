@@ -1,7 +1,7 @@
     /** @jsx React.DOM **/
 Ninja.Views.Lists = React.createClass({
 
-  getInitialState: function () { return {listDict: this.props.model}; },
+  getInitialState: function () { return {listDict: [], animate: true}; },
 
   syncAll: function() {
     var deferred = $.Deferred();
@@ -11,7 +11,6 @@ Ninja.Views.Lists = React.createClass({
       listDict[i].sublist.hydrate().then(function () {
         listDict[i+1] = listDict[i].sublist.getByName(name)
         if( this.props.router.stack.length - 1 > i) {
-          console.log(this.props.router.stack.length - 1 , i);
           this.sync(listDict, this.props.router.stack[i+1],i+1)
         }
         else {
@@ -29,8 +28,12 @@ Ninja.Views.Lists = React.createClass({
 
   componentWillMount: function () {
     this.updateStateToRoute = (function() {
+      var animate = true;
+      if (_.intersection(this.props.router.stack, this.props.router.previousStack).length < 1  ) {
+        animate = false;
+      }
       this.syncAll().then(function (listDict) {
-        this.setState({listDict: listDict})
+        this.setState({listDict: listDict, animate: animate})
       }.bind(this))
     }.bind(this));
 
@@ -43,16 +46,16 @@ Ninja.Views.Lists = React.createClass({
     var newListDict = this.state.listDict.slice(0,listIndex+1);
     newListDict[listIndex+1] = item;
     this.props.router.navigate(this.getListModelNames(newListDict).join('/') , {trigger: false, pushState: true});
-    this.setState({listDict: newListDict});
-  },
+    this.setState({listDict: newListDict, animate: true});
+  },  
 
   getListModelNames : function (lists) { return lists.map(function (model) {return model.get('name');});},
 
   render: function () {
     var lists = this.state.listDict.map(function (model, i) {
-      return < Ninja.Views.List key = {'list_'+i} listCount = {this.state.listDict.length} listIndex = {i} model = {model}  onItemSelect = {this.handleSelect} />;
+      return < Ninja.Views.List key = {'list_'+i} listCount = {this.state.listDict.length} listIndex = {i} model = {model}  onItemSelect = {this.handleSelect}  animate = {this.state.animate} mobile = {this.props.mobile}/>;
     },this);
-    
+
     return (
       <div id ='lists'>
         <globals.ReactTransitionGroup transitionName="list">
