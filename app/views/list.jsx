@@ -12,14 +12,18 @@ Ninja.Views.List = React.createClass({
   componentWillEnter: function (cb) {
     var $el = $(this.getDOMNode());
     $el.offset({left: $el.width()});
-    $el.animate({'left': '0'}, 1000, cb);
+    $el.animate({'left': '0'}, 500, cb);
+  },
+
+  componentWillLeave: function (cb) {
+    var $el = $(this.getDOMNode());
+    $el.animate({'left':  $el.width()}, 1500, cb);
   },
   
   componentDidUpdate: function () {
     var $el = $(this.getDOMNode()); 
-    $el.css({left: 0});
     var offset = this.props.listCount - this.props.listIndex - 1
-    $el.animate({'left':  -$el.width() * offset }, 1000);
+    $el.animate({'left':  -$el.width() * offset }, 500);
   },
 
   render: function () {
