@@ -9,30 +9,13 @@ Ninja.Views.List = React.createClass({
 
   onSelect: function (model, listIndex) { this.props.onItemSelect(model, listIndex); },
 
-  componentWillEnter: function (cb) {
-    var $el = $(this.getDOMNode());
-    if(this.props.animate && this.props.mobile) {
-      $el.offset({left: $el.width()});
-      $el.animate({'left': '0'}, 500, cb);
-    }
-    else if (!this.props.mobile) {
-      $el.offset({left: $el.width() * (this.props.listIndex-1)});
-      $el.animate({'left': $el.width() * this.props.listIndex}, 500, cb);
-    }
-    else {cb};
-  },
-  
-
   componentDidUpdate: function () {
-    var $el = $(this.getDOMNode()); 
-    var offset = this.props.listCount - this.props.listIndex - 1
-    var left = this.props.mobile ? {'left':  -$el.width() * offset } : {'left':  $el.width() * this.props.listIndex }  
-    if (this.props.animate) {
-      $el.animate(left, 500)
-    }
-    else {
-      $el.offset(left)
-    }
+    var margin = 5;
+    var $el = $(this.getDOMNode());
+    var offset = this.props.listCount - this.props.listIndex - 1;
+    var left = this.props.mobile ? {'left':  -offset * ($el.width() + margin)  } : {'left':  ($el.width() + margin) * this.props.listIndex }  
+    if (this.props.animate) { $el.animate(left, 500); }
+    else { $el.css(left);}
   },
 
   render: function () {

@@ -57,11 +57,7 @@ Ninja.Views.Lists = React.createClass({
     },this);
 
     return (
-      <div id ='lists'>
-        <globals.ReactTransitionGroup transitionName="list">
-          {lists} 
-         </globals.ReactTransitionGroup>
-      </div>
+      <div id ='lists'> {lists} </div>
     )
   }
 

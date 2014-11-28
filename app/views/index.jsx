@@ -1,5 +1,7 @@
 /** @jsx React.DOM */
   $(document).ready(function () {
+    React.initializeTouchEvents(true);
+
     globals.cx = React.addons.classSet;
     globals.csst = React.addons.CSSTransitionGroup;
     globals.ReactTransitionGroup = React.addons.TransitionGroup;
