@@ -1,6 +1,7 @@
 body { 
   padding-top: 70px; 
 }
+
 @highlighted-bg: #F0F1F5;
 @text-gray: #787878;
 @light-gray: #C2C2C2;
@@ -20,8 +21,10 @@ body {
   color: #455B8E;
 }
 
- li.section { 
-  padding: 0 5px; 
+li.section { 
+  padding-top: 0; 
+  padding-bottom: 0;
+  cursor: pointer 
 }
 
 .section-header {
@@ -29,35 +32,34 @@ body {
   color: @text-gray;
 }
 
-.section-detail { 
+.section-detail {
   background-color: #FFF;
-
 }
 .event {
   border-bottom: 1px solid #d5d5d5;
-  padding-top: 5px;
   padding-bottom: 5px;
   .event-detail {
-    max-height: 0;
+    height: auto;
+    max-height:0;
     overflow: hidden;
-    transition: height 0.5s ease;
+    transition: max-height 0.5s ease-in-out;
   }
  }
 
 .event-detail.expanded {
-  max-height: 100%;
-  transition: height 0.2s ease;
+  max-height: 100px;
 } 
 
 i.fa { transition: transform 0.5s }
 
+
+.status-marker-container{
+  top: 13px;
+}
+
 .status-marker {
-  margin-top: -5px;
-  margin-left: 15px;
-  width: 0; 
-  height: 0; 
-  border-bottom: 15px solid transparent;
-  border-left: 15px solid ;
+  border-top: 15px solid ;
+  border-right: 15px solid transparent ;
 }
 
 .event-header {

@@ -45,9 +45,11 @@ Ninja.Views.Event = React.createClass({
     return (
       <div className = 'event' onClick = {this.onSelect.bind(this)}>
         <div className = 'row event-header'>
-          <span style = {statusColor} className = "col-xs-1 status-marker"></span>
+          <div className = "status-marker-container col-xs-2">
+            <span style = {statusColor} className = "status-marker"></span>
+          </div>
           <span className = 'col-xs-3 '> {this.props.sectionType} </span> 
-          <div className = 'times_and_location col-xs-6'> {timeAndLocation} </div>
+          <div className = 'times_and_location col-xs-5'> {timeAndLocation} </div>
           <i className = {expandErrowClass} /> 
         </div> 
         <div className = {eventDetailCLasses} >
