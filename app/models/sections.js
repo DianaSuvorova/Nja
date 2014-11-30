@@ -7,11 +7,9 @@ Ninja.Models.Sections = Backbone.Collection.extend ({
 
   parse: function (response) { return response.course_sections; },
 
-  getByName: function (name) { return this.findWhere({name: name}); },
-
   hydrate: function () {
     var deferred = $.Deferred();
-    this.fetch({ success: function(model, response, options) { deferred.resolveWith(this, model);} });
+    this.fetch({ success: function(model, response, options) { deferred.resolve(model);} });
     return deferred.promise();
   }
 
