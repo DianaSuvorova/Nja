@@ -21,7 +21,6 @@ Ninja.Views.List = React.createClass({
   },
 
   render: function () {
-    console.log('renderList ', this.props.model);
     var listClasses = globals.cx({ 'list col-xs-12 col-md-3': true}); 
     var listView = this.props.model.models.map(function (model, i) {
       return ( < Ninja.Views.Item key = {'item_'+i} item = {model} onSelect = {this.onSelect.bind(this, model, this.props.listIndex)}/> )

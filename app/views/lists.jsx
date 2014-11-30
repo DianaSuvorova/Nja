@@ -3,38 +3,38 @@ Ninja.Views.Lists = React.createClass({
 
   getInitialState: function () { return {modelDict: this.props.model ,listDict: [], animate: true}; },
 
-
-  sync: function (modelDict, listId, i) {
-    var deferred = $.Deferred();
-    var listDict = _.clone(this.state.listDict);
-
+  syncModel: function (deferred, modelDict, listDict, listId, i) {
     modelDict[i].sublist.hydrate().then(function (sublist) {
       listDict[i] = sublist;
       if (listId) {
-        modelDict[i+1] = sublist.get(listId);
+        modelDict[i+1] = sublist.findWhere({id:listId});
         if( this.props.router.stack.length - 1 > i) {
-          this.sync(modelDict,this.props.router.stack[i+1],i+1)
+          this.syncModel(deferred, modelDict, listDict,this.props.router.stack[i+1],i+1)
         }
         else {
           modelDict[i+1].sublist.hydrate().then(function (sublist) {
             listDict[i+1] = sublist;
             deferred.resolve(listDict);
-          })
+          });
         }
       }
-      else {
-        deferred.resolve(listDict);
-      }
+      else deferred.resolve(listDict);
     }.bind(this))
+  },
+
+  sync: function () {
+    var deferred = $.Deferred();
+    this.syncModel(deferred, _.clone(this.props.model), [], this.props.router.stack[0] , 0);
     return deferred.promise();
   },
 
   updateStateToRoute: function () {
     var animate = true;
+    var deferred = $.Deferred();
     if (_.intersection(this.props.router.stack, this.props.router.previousStack).length < 1  ) {
       animate = false;
     }
-    this.sync(this.state.modelDict, this.props.router.stack[0] , 0).then(function (listDict) {
+    this.sync().then(function (listDict) {
       this.setState({listDict: listDict, animate: animate})
     }.bind(this));
   },
@@ -53,10 +53,7 @@ Ninja.Views.Lists = React.createClass({
       }.bind(this))    
   },  
 
-  getListModelIds : function (lists) { return lists.map(function (model) {return model.id;});},
-
   render: function () {
-    console.log(this.state.listDict);
     var lists = this.state.listDict.map(function (model, i) {
       return < Ninja.Views.List key = {'list_'+i} listCount = {this.state.listDict.length} listIndex = {i} model = {model}  onItemSelect = {this.handleSelect}  animate = {this.state.animate} mobile = {this.props.mobile}/>;
     },this);
