@@ -14,11 +14,11 @@ Ninja.Views.Lists = React.createClass({
         else {
           modelDict[i+1].sublist.hydrate().then(function (sublist) {
             listDict[i+1] = sublist;
-            deferred.resolve(listDict);
+            deferred.resolve(listDict,modelDict);
           });
         }
       }
-      else deferred.resolve(listDict);
+      else deferred.resolve(listDict, modelDict);
     }.bind(this))
   },
 
@@ -34,8 +34,8 @@ Ninja.Views.Lists = React.createClass({
     if (_.intersection(this.props.router.stack, this.props.router.previousStack).length < 1  ) {
       animate = false;
     }
-    this.sync().then(function (listDict) {
-      this.setState({listDict: listDict, animate: animate})
+    this.sync().then(function (listDict, modelDict) {
+      this.setState({listDict: listDict, modelDict: modelDict, animate: animate})
     }.bind(this));
   },
 
@@ -46,20 +46,26 @@ Ninja.Views.Lists = React.createClass({
 
   handleSelect: function (item, listIndex) {
     var newListDict = this.state.listDict.slice(0,listIndex+1);
+    var newModelDict = this.state.modelDict.slice(0,listIndex+1);
+    newModelDict[listIndex+1] = item;
     item.sublist.hydrate().then(function (sublist) {
         newListDict[listIndex+1] = sublist;
         this.props.router.navigate((_.pluck(newListDict, 'id')).join('/') , {trigger: false, pushState: true});
-        this.setState({listDict: newListDict, animate: true});
+        this.setState({listDict: newListDict, modelDict: newModelDict, animate: true});
       }.bind(this))    
   },  
 
   render: function () {
     var lists = this.state.listDict.map(function (model, i) {
-      return < Ninja.Views.List key = {'list_'+i} listCount = {this.state.listDict.length} listIndex = {i} model = {model}  onItemSelect = {this.handleSelect}  animate = {this.state.animate} mobile = {this.props.mobile}/>;
+      return < Ninja.Views.List key = {'list_'+i} listCount = {this.state.listDict.length} listIndex = {i} model = {model} modelDict = {this.state.modelDict}  onItemSelect = {this.handleSelect}  animate = {this.state.animate} mobile = {this.props.mobile}/>;
     },this);
 
     return (
-      <div id ='lists'> {lists} </div>
+      <div id ='lists'> 
+        <globals.ReactTransitionGroup transitionName="list">
+          {lists}
+        </globals.ReactTransitionGroup>
+      </div>
     )
   }
 
