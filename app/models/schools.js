@@ -1,6 +1,6 @@
 Ninja.Models.Schools = Backbone.Collection.extend ({
   name: 'schools',
-  url: '/school',
+  url: '/api/school',
   model: Ninja.Models.School,
 
   parse: function (response) { return response.schools; },

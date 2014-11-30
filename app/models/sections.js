@@ -3,7 +3,7 @@ Ninja.Models.Sections = Backbone.Collection.extend ({
 
   initialize: function (models, options) { _.extend(this, options); },
 
-  url: function () { return '/course/' + this.id;},
+  url: function () { return '/api/course/' + this.id;},
 
   parse: function (response) { return response.course_sections; },
 

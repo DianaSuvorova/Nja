@@ -3,7 +3,7 @@ Ninja.Models.Departments = Backbone.Collection.extend ({
 
   initialize: function (models, options) { _.extend(this, options); },
 
-  url: function () { return '/school/' + this.id;},
+  url: function () { return '/api/school/' + this.id;},
 
   parse: function (response) { return response.school_departments; },
 
