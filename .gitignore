@@ -1,4 +1,4 @@
-dist/
+/dist/react
 node_modules/*
 npm-debug.log
 Ninja.sublime-workspace
