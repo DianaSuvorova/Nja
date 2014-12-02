@@ -172,6 +172,36 @@
                             "timeInterval": "10:00A - 11:50A",
                             "weekdays": "THU",
                             "location": "BOELTER 2444"
+                        },
+                        {
+                            "timeInterval": "10:00A - 11:50A",
+                            "weekdays": "TUE",
+                            "location": "BOELTER 2444"
+                        },
+                        {
+                            "timeInterval": "10:00A - 11:50A",
+                            "weekdays": "THU",
+                            "location": "BOELTER 2444"
+                        },
+                        {
+                            "timeInterval": "10:00A - 11:50A",
+                            "weekdays": "TUE",
+                            "location": "BOELTER 2444"
+                        },
+                        {
+                            "timeInterval": "10:00A - 11:50A",
+                            "weekdays": "THU",
+                            "location": "BOELTER 2444"
+                        },
+                        {
+                            "timeInterval": "10:00A - 11:50A",
+                            "weekdays": "TUE",
+                            "location": "BOELTER 2444"
+                        },
+                        {
+                            "timeInterval": "10:00A - 11:50A",
+                            "weekdays": "THU",
+                            "location": "BOELTER 2444"
                         }
                     ],
                     "section_id": "UCLA_COM_SCI_COM_SCI_130_LEC_1",

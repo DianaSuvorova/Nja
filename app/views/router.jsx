@@ -4,10 +4,14 @@ Ninja.Router = Backbone.Router.extend({
   inititalize: function () { this.stack = []; this.previousStack = []; },
 
   proceedTo: function (path) {
+    var stack;
     this.path = path;
     this.previousStack = this.stack ? this.stack : [];
     if (path) {
-      this.stack = path.split(/[//]+/);
+      stack = path.split(/[//]+/);
+      if (stack[0] === "classes") {
+        this.stack = stack.slice(1, stack.length)
+      }
     }
     else this.stack = [];
   }

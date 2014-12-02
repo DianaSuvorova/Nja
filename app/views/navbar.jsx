@@ -1,26 +1,20 @@
 /** @jsx React.DOM **/
 Ninja.Views.Navbar = React.createClass({
   render: function () {
+    //        <a className="navbar-brand" href="#"><img alt="Brand" src="dist/logo@2x.png"/></a>
+
     return (
-      <nav className="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <nav className="navbar navbar-fixed-top" role="navigation">
         <div className="container-fluid">
           <div className="navbar-header">
-            <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-              <span className="sr-only">Toggle navigation</span>
-              <span className="icon-bar"></span>
-              <span className="icon-bar"></span>
-              <span className="icon-bar"></span>
-            </button>
-            <a className="navbar-brand" href="#">Ninja</a>
+            <a class="navbar-brand" href="/">
+              <img alt="Class Radar" src="/dist/logo@2x.png"/>
+            </a>
           </div>
-
-          <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <form className="navbar-form navbar-left" role="search">
-              <div className="form-group">
-                <input type="text" className="form-control" placeholder="Search"/> 
-              </div>
-            </form>
-          </div>
+            <ul className="nav navbar-nav navbar-right">
+              <li><a href="https://itunes.apple.com/us/app/id903690805#"> <i className="fa fa-arrow-down"></i> Get app</a></li>
+              <li><a href="/classes"> <i className="fa fa-align-justify"> </i> See Classes</a></li>
+            </ul>
         </div>
       </nav>
     )

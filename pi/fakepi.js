@@ -19,7 +19,10 @@ app.get('/dist/build.js', function (req, res) { res.sendfile('dist/build.js'); }
 app.get('/dist/build.css', function (req, res) { res.sendfile('dist/build.css'); });
 app.get('/*/dist/build.js', function (req, res) { res.sendfile('dist/build.js'); });
 app.get('/*/dist/build.css', function (req, res) { res.sendfile('dist/build.css'); });
-
+app.get('/dist/phone@2x.png', function (req, res) { res.sendfile('app/assets/less/phone@2x.png'); });
+app.get('/dist/logo@2x.png', function (req, res) { res.sendfile('app/assets/less/logo@2x.png'); });
+app.get('/dist/nav_classes@2x.png', function (req, res) { res.sendfile('app/assets/less/nav_classes@2x.png'); });
+app.get('/dist/nav_download@2x.png', function (req, res) { res.sendfile('app/assets/less/nav_download@2x.png'); });
 
 app.get('*', function (req, res) { res.sendfile('index.html'); });
 

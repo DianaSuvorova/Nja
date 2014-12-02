@@ -29991,15 +29991,26 @@ Ninja.Views.Item = React.createClass({displayName: 'Item',
 /** @jsx React.DOM */
 Ninja.Views.App = React.createClass({displayName: 'App',
 
+  getInitialState: function () {return {landing:true};},
+
+  componentWillMount: function () {
+    Backbone.history.on('route', this.route)
+    this.route();
+  },
+
+  route: function () {
+    if (this.props.router.path === 'classes')
+    this.setState({landing: false});
+  },
+
   render: function () {
-    var navbar = Ninja.Views.Navbar(null);    
-    var mobile = globals.isBreakpoint('xs') || globals.isBreakpoint('sm') ? true : false  ;
-    return ( 
-      React.DOM.div(null, 
-        navbar, 
-        Ninja.Views.Lists({model: [this.props.model], router: this.props.router, mobile: mobile})
-      )
-    )
+    var mobile = globals.isBreakpoint('xs') || globals.isBreakpoint('sm') ? true : false;
+    var navbar = Ninja.Views.Navbar(null);  
+    var landing = Ninja.Views.Landing(null) 
+    var lists = Ninja.Views.Lists({model: [this.props.model], router: this.props.router, mobile: mobile})
+    var content = this.state.landing ? landing : lists;
+
+    return ( React.DOM.div({className: "container-fluid container"}, navbar, content));
   }
 });
 
@@ -30086,6 +30097,22 @@ Ninja.Views.Event = React.createClass({displayName: 'Event',
     React.renderComponent(Ninja.Views.App({model: globals.app, router: globals.router}), document.body);
   
 });
+/** @jsx React.DOM **/
+Ninja.Views.Landing = React.createClass({displayName: 'Landing',
+  render: function () {
+    return (
+      React.DOM.div({className: "row landing-container", id: "landing"}, 
+        React.DOM.div({className: "col-xs-12 col-sm-6 col-md-4 col-md-offset-2 phone"}), 
+        React.DOM.div({className: "col-xs-12 col-sm-6 col-md-6 intro text-center"}, 
+          React.DOM.h1(null, 
+            React.DOM.strong(null, "Class Radar "), " keeps track of classes you want to take that are already full and notifies you when a spot opens up for registration."
+          )
+        )
+      )
+    )
+  }
+});
+
 
     /** @jsx React.DOM **/
 Ninja.Views.List = React.createClass({displayName: 'List',
@@ -30205,26 +30232,20 @@ Ninja.Views.Lists = React.createClass({displayName: 'Lists',
 /** @jsx React.DOM **/
 Ninja.Views.Navbar = React.createClass({displayName: 'Navbar',
   render: function () {
+    //        <a className="navbar-brand" href="#"><img alt="Brand" src="dist/logo@2x.png"/></a>
+
     return (
-      React.DOM.nav({className: "navbar navbar-inverse navbar-fixed-top", role: "navigation"}, 
+      React.DOM.nav({className: "navbar navbar-fixed-top", role: "navigation"}, 
         React.DOM.div({className: "container-fluid"}, 
           React.DOM.div({className: "navbar-header"}, 
-            React.DOM.button({type: "button", className: "navbar-toggle collapsed", 'data-toggle': "collapse", 'data-target': "#bs-example-navbar-collapse-1"}, 
-              React.DOM.span({className: "sr-only"}, "Toggle navigation"), 
-              React.DOM.span({className: "icon-bar"}), 
-              React.DOM.span({className: "icon-bar"}), 
-              React.DOM.span({className: "icon-bar"})
-            ), 
-            React.DOM.a({className: "navbar-brand", href: "#"}, "Ninja")
-          ), 
-
-          React.DOM.div({className: "collapse navbar-collapse", id: "bs-example-navbar-collapse-1"}, 
-            React.DOM.form({className: "navbar-form navbar-left", role: "search"}, 
-              React.DOM.div({className: "form-group"}, 
-                React.DOM.input({type: "text", className: "form-control", placeholder: "Search"})
-              )
+            React.DOM.a({class: "navbar-brand", href: "/"}, 
+              React.DOM.img({alt: "Class Radar", src: "/dist/logo@2x.png"})
             )
-          )
+          ), 
+            React.DOM.ul({className: "nav navbar-nav navbar-right"}, 
+              React.DOM.li(null, React.DOM.a({href: "https://itunes.apple.com/us/app/id903690805#"}, " ", React.DOM.i({className: "fa fa-arrow-down"}), " Get app")), 
+              React.DOM.li(null, React.DOM.a({href: "/classes"}, " ", React.DOM.i({className: "fa fa-align-justify"}, " "), " See Classes"))
+            )
         )
       )
     )
@@ -30236,10 +30257,14 @@ Ninja.Router = Backbone.Router.extend({
   inititalize: function () { this.stack = []; this.previousStack = []; },
 
   proceedTo: function (path) {
+    var stack;
     this.path = path;
     this.previousStack = this.stack ? this.stack : [];
     if (path) {
-      this.stack = path.split(/[//]+/);
+      stack = path.split(/[//]+/);
+      if (stack[0] === "classes") {
+        this.stack = stack.slice(1, stack.length)
+      }
     }
     else this.stack = [];
   }
