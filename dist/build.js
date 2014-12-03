@@ -29991,7 +29991,7 @@ Ninja.Views.Item = React.createClass({displayName: 'Item',
 /** @jsx React.DOM */
 Ninja.Views.App = React.createClass({displayName: 'App',
 
-  getInitialState: function () {return {landing:true};},
+  getInitialState: function () {return {landing:false};},
 
   componentWillMount: function () {
     Backbone.history.on('route', this.route)
@@ -29999,18 +29999,17 @@ Ninja.Views.App = React.createClass({displayName: 'App',
   },
 
   route: function () {
-    if (this.props.router.path === 'classes')
-    this.setState({landing: false});
+    if (!this.props.router.path || this.props.router.path.split(/[//]+/)[0] != "classes") this.setState({landing: true});
+    else this.setState({landing: false});
   },
 
   render: function () {
-    var mobile = globals.isBreakpoint('xs') || globals.isBreakpoint('sm') ? true : false;
-    var navbar = Ninja.Views.Navbar(null);  
+    var navbar = Ninja.Views.Navbar({router: this.props.router});  
     var landing = Ninja.Views.Landing(null) 
-    var lists = Ninja.Views.Lists({model: [this.props.model], router: this.props.router, mobile: mobile})
+    var lists = Ninja.Views.Lists({model: [this.props.model], router: this.props.router})
     var content = this.state.landing ? landing : lists;
 
-    return ( React.DOM.div({className: "container-fluid container"}, navbar, content));
+    return ( React.DOM.div(null, navbar, content));
   }
 });
 
@@ -30200,6 +30199,8 @@ Ninja.Views.Lists = React.createClass({displayName: 'Lists',
   componentWillMount: function () {
     Backbone.history.on('route', this.updateStateToRoute)
     this.updateStateToRoute();
+    this.mobile = globals.isBreakpoint('xs') || globals.isBreakpoint('sm') ? true : false;
+
   },
 
   handleSelect: function (item, listIndex) {
@@ -30208,14 +30209,15 @@ Ninja.Views.Lists = React.createClass({displayName: 'Lists',
     newModelDict[listIndex+1] = item;
     item.sublist.hydrate().then(function (sublist) {
         newListDict[listIndex+1] = sublist;
-        this.props.router.navigate((_.pluck(newListDict, 'id')).join('/') , {trigger: false, pushState: true});
+        this.props.router.navigate('/classes' + (_.pluck(newListDict, 'id')).join('/') , {trigger: false, pushState: true});
         this.setState({listDict: newListDict, modelDict: newModelDict, animate: true});
       }.bind(this))    
   },  
 
   render: function () {
+    console.log(this.mobile);
     var lists = this.state.listDict.map(function (model, i) {
-      return Ninja.Views.List({key: 'list_'+i, listCount: this.state.listDict.length, listIndex: i, model: model, modelDict: this.state.modelDict, onItemSelect: this.handleSelect, animate: this.state.animate, mobile: this.props.mobile});
+      return Ninja.Views.List({key: 'list_'+i, listCount: this.state.listDict.length, listIndex: i, model: model, modelDict: this.state.modelDict, onItemSelect: this.handleSelect, animate: this.state.animate, mobile: this.mobile});
     },this);
 
     return (
@@ -30231,8 +30233,13 @@ Ninja.Views.Lists = React.createClass({displayName: 'Lists',
 
 /** @jsx React.DOM **/
 Ninja.Views.Navbar = React.createClass({displayName: 'Navbar',
+    
+  onClickClasses: function () {
+    this.props.router.navigate('/classes' , {trigger: true, pushState: true});
+    return false;
+  },
+
   render: function () {
-    //        <a className="navbar-brand" href="#"><img alt="Brand" src="dist/logo@2x.png"/></a>
 
     return (
       React.DOM.nav({className: "navbar navbar-fixed-top", role: "navigation"}, 
@@ -30244,7 +30251,7 @@ Ninja.Views.Navbar = React.createClass({displayName: 'Navbar',
           ), 
             React.DOM.ul({className: "nav navbar-nav navbar-right"}, 
               React.DOM.li(null, React.DOM.a({href: "https://itunes.apple.com/us/app/id903690805#"}, " ", React.DOM.i({className: "fa fa-arrow-down"}), " Get app")), 
-              React.DOM.li(null, React.DOM.a({href: "/classes"}, " ", React.DOM.i({className: "fa fa-align-justify"}, " "), " See Classes"))
+              React.DOM.li(null, React.DOM.a({href: "/classes", onClick: this.onClickClasses}, " ", React.DOM.i({className: "fa fa-align-justify"}, " "), " See Classes"))
             )
         )
       )

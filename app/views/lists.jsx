@@ -42,6 +42,8 @@ Ninja.Views.Lists = React.createClass({
   componentWillMount: function () {
     Backbone.history.on('route', this.updateStateToRoute)
     this.updateStateToRoute();
+    this.mobile = globals.isBreakpoint('xs') || globals.isBreakpoint('sm') ? true : false;
+
   },
 
   handleSelect: function (item, listIndex) {
@@ -50,14 +52,15 @@ Ninja.Views.Lists = React.createClass({
     newModelDict[listIndex+1] = item;
     item.sublist.hydrate().then(function (sublist) {
         newListDict[listIndex+1] = sublist;
-        this.props.router.navigate((_.pluck(newListDict, 'id')).join('/') , {trigger: false, pushState: true});
+        this.props.router.navigate('/classes' + (_.pluck(newListDict, 'id')).join('/') , {trigger: false, pushState: true});
         this.setState({listDict: newListDict, modelDict: newModelDict, animate: true});
       }.bind(this))    
   },  
 
   render: function () {
+    console.log(this.mobile);
     var lists = this.state.listDict.map(function (model, i) {
-      return < Ninja.Views.List key = {'list_'+i} listCount = {this.state.listDict.length} listIndex = {i} model = {model} modelDict = {this.state.modelDict}  onItemSelect = {this.handleSelect}  animate = {this.state.animate} mobile = {this.props.mobile}/>;
+      return < Ninja.Views.List key = {'list_'+i} listCount = {this.state.listDict.length} listIndex = {i} model = {model} modelDict = {this.state.modelDict}  onItemSelect = {this.handleSelect}  animate = {this.state.animate} mobile = {this.mobile}/>;
     },this);
 
     return (

@@ -1,7 +1,12 @@
 /** @jsx React.DOM **/
 Ninja.Views.Navbar = React.createClass({
+    
+  onClickClasses: function () {
+    this.props.router.navigate('/classes' , {trigger: true, pushState: true});
+    return false;
+  },
+
   render: function () {
-    //        <a className="navbar-brand" href="#"><img alt="Brand" src="dist/logo@2x.png"/></a>
 
     return (
       <nav className="navbar navbar-fixed-top" role="navigation">
@@ -13,7 +18,7 @@ Ninja.Views.Navbar = React.createClass({
           </div>
             <ul className="nav navbar-nav navbar-right">
               <li><a href="https://itunes.apple.com/us/app/id903690805#"> <i className="fa fa-arrow-down"></i> Get app</a></li>
-              <li><a href="/classes"> <i className="fa fa-align-justify"> </i> See Classes</a></li>
+              <li><a href="/classes" onClick = {this.onClickClasses}> <i className="fa fa-align-justify"> </i> See Classes</a></li>
             </ul>
         </div>
       </nav>
