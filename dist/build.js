@@ -29996,6 +29996,8 @@ Ninja.Views.App = React.createClass({displayName: 'App',
   componentWillMount: function () {
     Backbone.history.on('route', this.route)
     this.route();
+    this.mobile = globals.isBreakpoint('xs') || globals.isBreakpoint('sm') ? true : false;
+
   },
 
   route: function () {
@@ -30006,7 +30008,7 @@ Ninja.Views.App = React.createClass({displayName: 'App',
   render: function () {
     var navbar = Ninja.Views.Navbar({router: this.props.router});  
     var landing = Ninja.Views.Landing(null) 
-    var lists = Ninja.Views.Lists({model: [this.props.model], router: this.props.router})
+    var lists = Ninja.Views.Lists({model: [this.props.model], router: this.props.router, mobile: this.mobile})
     var content = this.state.landing ? landing : lists;
 
     return ( React.DOM.div({className: "holder"}, navbar, content));
@@ -30199,8 +30201,6 @@ Ninja.Views.Lists = React.createClass({displayName: 'Lists',
   componentWillMount: function () {
     Backbone.history.on('route', this.updateStateToRoute)
     this.updateStateToRoute();
-    this.mobile = globals.isBreakpoint('xs') || globals.isBreakpoint('sm') ? true : false;
-
   },
 
   handleSelect: function (item, listIndex) {
@@ -30216,7 +30216,7 @@ Ninja.Views.Lists = React.createClass({displayName: 'Lists',
 
   render: function () {
     var lists = this.state.listDict.map(function (model, i) {
-      return Ninja.Views.List({key: 'list_'+i, listCount: this.state.listDict.length, listIndex: i, model: model, modelDict: this.state.modelDict, onItemSelect: this.handleSelect, animate: this.state.animate, mobile: this.mobile});
+      return Ninja.Views.List({key: 'list_'+i, listCount: this.state.listDict.length, listIndex: i, model: model, modelDict: this.state.modelDict, onItemSelect: this.handleSelect, animate: this.state.animate, mobile: this.props.mobile});
     },this);
 
     return (

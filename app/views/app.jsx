@@ -6,6 +6,8 @@ Ninja.Views.App = React.createClass({
   componentWillMount: function () {
     Backbone.history.on('route', this.route)
     this.route();
+    this.mobile = globals.isBreakpoint('xs') || globals.isBreakpoint('sm') ? true : false;
+
   },
 
   route: function () {
@@ -16,7 +18,7 @@ Ninja.Views.App = React.createClass({
   render: function () {
     var navbar = < Ninja.Views.Navbar router = {this.props.router} />;  
     var landing = <Ninja.Views.Landing/> 
-    var lists = < Ninja.Views.Lists  model = {[this.props.model]} router = {this.props.router}/>
+    var lists = < Ninja.Views.Lists  model = {[this.props.model]} router = {this.props.router} mobile = {this.mobile}/>
     var content = this.state.landing ? landing : lists;
 
     return ( <div className = 'holder'>{navbar}{content}</div>);

@@ -42,8 +42,6 @@ Ninja.Views.Lists = React.createClass({
   componentWillMount: function () {
     Backbone.history.on('route', this.updateStateToRoute)
     this.updateStateToRoute();
-    this.mobile = globals.isBreakpoint('xs') || globals.isBreakpoint('sm') ? true : false;
-
   },
 
   handleSelect: function (item, listIndex) {
@@ -59,7 +57,7 @@ Ninja.Views.Lists = React.createClass({
 
   render: function () {
     var lists = this.state.listDict.map(function (model, i) {
-      return < Ninja.Views.List key = {'list_'+i} listCount = {this.state.listDict.length} listIndex = {i} model = {model} modelDict = {this.state.modelDict}  onItemSelect = {this.handleSelect}  animate = {this.state.animate} mobile = {this.mobile}/>;
+      return < Ninja.Views.List key = {'list_'+i} listCount = {this.state.listDict.length} listIndex = {i} model = {model} modelDict = {this.state.modelDict}  onItemSelect = {this.handleSelect}  animate = {this.state.animate} mobile = {this.props.mobile}/>;
     },this);
 
     return (
