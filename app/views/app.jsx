@@ -19,6 +19,6 @@ Ninja.Views.App = React.createClass({
     var lists = < Ninja.Views.Lists  model = {[this.props.model]} router = {this.props.router}/>
     var content = this.state.landing ? landing : lists;
 
-    return ( <div>{navbar}{content}</div>);
+    return ( <div className = 'holder'>{navbar}{content}</div>);
   }
 });

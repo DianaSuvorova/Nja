@@ -7,7 +7,6 @@ Ninja.Views.Navbar = React.createClass({
   },
 
   render: function () {
-
     return (
       <nav className="navbar navbar-fixed-top" role="navigation">
         <div className="container-fluid">

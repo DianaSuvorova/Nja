@@ -30009,7 +30009,7 @@ Ninja.Views.App = React.createClass({displayName: 'App',
     var lists = Ninja.Views.Lists({model: [this.props.model], router: this.props.router})
     var content = this.state.landing ? landing : lists;
 
-    return ( React.DOM.div(null, navbar, content));
+    return ( React.DOM.div({className: "holder"}, navbar, content));
   }
 });
 
@@ -30215,7 +30215,6 @@ Ninja.Views.Lists = React.createClass({displayName: 'Lists',
   },  
 
   render: function () {
-    console.log(this.mobile);
     var lists = this.state.listDict.map(function (model, i) {
       return Ninja.Views.List({key: 'list_'+i, listCount: this.state.listDict.length, listIndex: i, model: model, modelDict: this.state.modelDict, onItemSelect: this.handleSelect, animate: this.state.animate, mobile: this.mobile});
     },this);
@@ -30240,7 +30239,6 @@ Ninja.Views.Navbar = React.createClass({displayName: 'Navbar',
   },
 
   render: function () {
-
     return (
       React.DOM.nav({className: "navbar navbar-fixed-top", role: "navigation"}, 
         React.DOM.div({className: "container-fluid"}, 

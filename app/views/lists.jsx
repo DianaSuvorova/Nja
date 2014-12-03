@@ -58,7 +58,6 @@ Ninja.Views.Lists = React.createClass({
   },  
 
   render: function () {
-    console.log(this.mobile);
     var lists = this.state.listDict.map(function (model, i) {
       return < Ninja.Views.List key = {'list_'+i} listCount = {this.state.listDict.length} listIndex = {i} model = {model} modelDict = {this.state.modelDict}  onItemSelect = {this.handleSelect}  animate = {this.state.animate} mobile = {this.mobile}/>;
     },this);
