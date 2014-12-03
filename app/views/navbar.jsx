@@ -11,7 +11,7 @@ Ninja.Views.Navbar = React.createClass({
       <nav className="navbar navbar-fixed-top" role="navigation">
         <div className="container-fluid">
           <div className="navbar-header">
-            <a class="navbar-brand" href="/">
+            <a className="navbar-brand" href="/">
               <img alt="Class Radar" src="/dist/logo@2x.png"/>
             </a>
           </div>
