@@ -17,7 +17,6 @@ Ninja.Views.Navbar = React.createClass({
           </div>
             <ul className="nav navbar-nav navbar-right">
               <li><a href="https://itunes.apple.com/us/app/id903690805#"> <i className="fa fa-arrow-down"></i> Get app</a></li>
-              <li><a href="/classes" onClick = {this.onClickClasses}> <i className="fa fa-align-justify"> </i> See Classes</a></li>
             </ul>
         </div>
       </nav>

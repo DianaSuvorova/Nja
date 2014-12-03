@@ -30248,8 +30248,7 @@ Ninja.Views.Navbar = React.createClass({displayName: 'Navbar',
             )
           ), 
             React.DOM.ul({className: "nav navbar-nav navbar-right"}, 
-              React.DOM.li(null, React.DOM.a({href: "https://itunes.apple.com/us/app/id903690805#"}, " ", React.DOM.i({className: "fa fa-arrow-down"}), " Get app")), 
-              React.DOM.li(null, React.DOM.a({href: "/classes", onClick: this.onClickClasses}, " ", React.DOM.i({className: "fa fa-align-justify"}, " "), " See Classes"))
+              React.DOM.li(null, React.DOM.a({href: "https://itunes.apple.com/us/app/id903690805#"}, " ", React.DOM.i({className: "fa fa-arrow-down"}), " Get app"))
             )
         )
       )
