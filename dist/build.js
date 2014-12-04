@@ -30011,7 +30011,7 @@ Ninja.Views.App = React.createClass({displayName: 'App',
     var lists = Ninja.Views.Lists({model: [this.props.model], router: this.props.router, mobile: this.mobile})
     var content = this.state.landing ? landing : lists;
 
-    return ( React.DOM.div({className: "holder"}, navbar, content));
+    return ( React.DOM.div({id: "container"}, navbar, content));
   }
 });
 
@@ -30104,9 +30104,11 @@ Ninja.Views.Landing = React.createClass({displayName: 'Landing',
     return (
       React.DOM.div({className: "row landing-container", id: "landing"}, 
         React.DOM.div({className: "col-xs-12 col-sm-6 col-md-4 col-md-offset-2 phone"}), 
-        React.DOM.div({className: "col-xs-12 col-sm-6 col-md-6 intro text-center"}, 
-          React.DOM.h1(null, 
-            React.DOM.strong(null, "Class Radar "), " keeps track of classes you want to take that are already full and notifies you when a spot opens up for registration."
+        React.DOM.div({className: "col-xs-12 col-sm-6 col-md-4 intro text-center"}, 
+          React.DOM.span({className: "text"}, 
+            React.DOM.h1(null, 
+              React.DOM.strong(null, "Class Radar "), " keeps track of classes you want to take that are already full and notifies you when a spot opens up for registration."
+            )
           )
         )
       )
@@ -30241,15 +30243,13 @@ Ninja.Views.Navbar = React.createClass({displayName: 'Navbar',
   render: function () {
     return (
       React.DOM.nav({className: "navbar navbar-fixed-top", role: "navigation"}, 
-        React.DOM.div({className: "container-fluid"}, 
-          React.DOM.div({className: "navbar-header"}, 
-            React.DOM.a({className: "navbar-brand", href: "/"}, 
-              React.DOM.img({alt: "Class Radar", src: "/dist/logo@2x.png"})
-            )
-          ), 
-            React.DOM.ul({className: "nav navbar-nav navbar-right"}, 
-              React.DOM.li(null, React.DOM.a({href: "https://itunes.apple.com/us/app/id903690805#"}, " ", React.DOM.i({className: "fa fa-arrow-down"}), " Get app"))
-            )
+        React.DOM.div({className: "logo"}, 
+          React.DOM.a({className: "logo navbar-link", href: "/"}, "  ")
+        ), 
+        React.DOM.div({className: "get-app"}, 
+          React.DOM.a({className: "navbar-link", href: "https://itunes.apple.com/us/app/id903690805#"}, 
+            React.DOM.h3(null, " ", React.DOM.i({className: "fa fa-arrow-down"}), " Get App")
+          )
         )
       )
     )

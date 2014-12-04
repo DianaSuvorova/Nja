@@ -1,39 +1,51 @@
-@media screen and (max-device-width: 480px){
-  body{
-    -webkit-text-size-adjust: none;
-  }
-}
-
-html, body { 
-  min-height: 100%; height: 100%; 
-}
-
-body {
-  padding-top: 70px;
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
-  font-size: small;
-  background: @radar-blue; 
-}
-
 @highlighted-bg: #F0F1F5;
 @text-gray: #787878;
 @light-gray: #C2C2C2;
 @radar-blue: #1c95f9;
 @navbar-background: #fafafa;
+@navbar-unit-size: 30px;
 
-.holder {
+
+body {
+  font-size: medium;
+  background: @radar-blue; 
+}
+
+#container {
+  padding-top: 90px;
   width: 100%;
   height: 100%;
 }
 
-
-
 .navbar {
+  div {
+    margin: 0 1rem;
+    a {
+      line-height: @navbar-height;
+    i {padding:10px;}
+    }
+  }
+  .get-app {
+    float: right;
+    a {line-height: 18px;}
+  }
+  
+  div.logo {
+    margin-left: @navbar-unit-size; 
+    float: left;  
+    a{
+      display: inline-block;
+      width: @navbar-unit-size !important;
+      height: @navbar-unit-size !important;
+      margin: (@navbar-height - @navbar-unit-size) / 2;
+      background: center no-repeat;
+      background-image: url(logo@2x.png);
+      background-size: contain;
+    }
+  }
   background: @navbar-background;
   box-shadow: 0px 0px 5px #333333;
-  a:link {
-    color: #3c3c3c;
-  }
+  a:link { color: #3c3c3c; }
   a:visited {
     text-decoration: none;
     color: #3c3c3c;
@@ -41,82 +53,4 @@ body {
   a:hover {
     color: #1c95f9;
   }
-}
-.selected {
-  background-color: #F0F1F5;
-  color: #455B8E;
-}
-
-.list-group-item.item-name:hover {
-    cursor: pointer;
-}
-
-.selected {
-  background-color: @highlighted-bg;
-  color: #455B8E;
-}
-
-li.section { 
-  padding-top: 0; 
-  padding-bottom: 0;
-  cursor: pointer 
-}
-
-.section-header {
-  background-color: #F0F0F0;
-  color: @text-gray;
-}
-
-.section-detail {
-  background-color: #FFF;
-}
-.event {
-  border-bottom: 1px solid #d5d5d5;
-  padding-bottom: 5px;
-  .event-detail {
-    height: auto;
-    max-height:0;
-    overflow: hidden;
-    transition: max-height 0.5s ease-in-out;
-  }
- }
-
-.event-detail.expanded {
-  max-height: 2000px;
-} 
-
-i.fa { transition: transform 0.5s }
-
-
-.status-marker-container{
-  top: 1rem;
-}
-
-.status-marker {
-  border-top: 1rem solid ;
-  border-right: 1rem solid transparent ;
-}
-
-.event-header {
-  color: @text-gray;
-}
-.section-header {
-  border-bottom: 1px solid #d5d5d5;
-}
-.detail-header { color: @light-gray }
-
-#lists {
-  position: absolute;
-  margin: 0px;
-  padding: 0px;
-  width: 100%;
-  height: 100%;
-  overflow: hidden; 
-}
-
-.list{
-  height: 100%;
-  position: absolute;
-  left: 100%;
-  overflow: auto;
 }
