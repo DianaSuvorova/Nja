@@ -23,8 +23,7 @@ Ninja.Views.List = React.createClass({
   componentWillLeave: function (cb) {
     var $el = $(this.getDOMNode());
     var left = {'left':'100%'};
-    if (this.props.animate) { $el.animate(left, 500, cb); }
-    else { $el.animate(left, 500, cb);}
+    $el.animate(left, 500, cb);
   },
 
   render: function () {

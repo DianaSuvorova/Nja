@@ -4,11 +4,13 @@
   color: #455B8E;
 }
 
-.list-group-item.item-name:hover {
+.list-group-item.item-name.hover {
     cursor: pointer;
+      background-color: @highlighted-bg;
+      color: #455B8E;
 }
 
-.selected {
+.selected{
   background-color: @highlighted-bg;
   color: #455B8E;
 }
@@ -64,7 +66,7 @@ i.fa { transition: transform 0.5s }
 
 #lists {
   position: absolute;
-  margin: 0px;
+  margin-top: @navbar-unit-size;
   padding: 0px;
   width: 100%;
   height: 100%;

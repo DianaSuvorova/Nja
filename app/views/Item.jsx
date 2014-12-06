@@ -3,6 +3,15 @@ Ninja.Views.Item = React.createClass({
 
   getInitialState: function () { return {onTouchMove: false}; },
 
+  onMouseEnter: function () {
+    var $el = $(this.getDOMNode());
+    $el.addClass('hover');
+  },
+
+  onMouseLeave: function () {
+    var $el = $(this.getDOMNode());
+    $el.removeClass('hover');
+  },
 
   onSelect: function () {
     if (!this.state.onTouchMove) {
@@ -28,7 +37,7 @@ Ninja.Views.Item = React.createClass({
       'selected' : this.props.selected
     });
     var item = this.props.item;
-    var view = <li key = {this.props.key} className = {itemClass} ref = "item" onClick = {this.onSelect} onTouchEnd = {this.onTouchEnd} onTouchMove= {this.onTouchMove} onTouchStart= {this.onTouchStart} > {item.get('name')} </li>;
+    var view = <li key = {this.props.key} className = {itemClass} ref = "item" onMouseEnter = {this.onMouseEnter}  onMouseLeave   = {this.onMouseLeave} onClick = {this.onSelect} onTouchEnd = {this.onTouchEnd} onTouchMove= {this.onTouchMove} onTouchStart= {this.onTouchStart} > {item.get('name')} </li>;
     if (this.props.item.has('section_id')) view = <Ninja.Views.Section model = {item} key = {item.cid} />
     return view;
   }
