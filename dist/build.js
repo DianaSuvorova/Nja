@@ -29957,6 +29957,15 @@ Ninja.Views.Item = React.createClass({displayName: 'Item',
 
   getInitialState: function () { return {onTouchMove: false}; },
 
+  onMouseEnter: function () {
+    var $el = $(this.getDOMNode());
+    $el.addClass('hover');
+  },
+
+  onMouseLeave: function () {
+    var $el = $(this.getDOMNode());
+    $el.removeClass('hover');
+  },
 
   onSelect: function () {
     if (!this.state.onTouchMove) {
@@ -29982,7 +29991,7 @@ Ninja.Views.Item = React.createClass({displayName: 'Item',
       'selected' : this.props.selected
     });
     var item = this.props.item;
-    var view = React.DOM.li({key: this.props.key, className: itemClass, ref: "item", onClick: this.onSelect, onTouchEnd: this.onTouchEnd, onTouchMove: this.onTouchMove, onTouchStart: this.onTouchStart}, " ", item.get('name'), " ");
+    var view = React.DOM.li({key: this.props.key, className: itemClass, ref: "item", onMouseEnter: this.onMouseEnter, onMouseLeave: this.onMouseLeave, onClick: this.onSelect, onTouchEnd: this.onTouchEnd, onTouchMove: this.onTouchMove, onTouchStart: this.onTouchStart}, " ", item.get('name'), " ");
     if (this.props.item.has('section_id')) view = Ninja.Views.Section({model: item, key: item.cid})
     return view;
   }
@@ -30103,11 +30112,15 @@ Ninja.Views.Landing = React.createClass({displayName: 'Landing',
   render: function () {
     return (
       React.DOM.div({className: "row landing-container", id: "landing"}, 
-        React.DOM.div({className: "col-xs-12 col-sm-6 col-md-4 col-md-offset-2 phone"}), 
-        React.DOM.div({className: "col-xs-12 col-sm-6 col-md-4 intro text-center"}, 
-          React.DOM.span({className: "text"}, 
-            React.DOM.h1(null, 
-              React.DOM.strong(null, "Class Radar "), " keeps track of classes you want to take that are already full and notifies you when a spot opens up for registration."
+        React.DOM.div({className: "col-xs-12 col-sm-6"}, 
+          React.DOM.div({className: "phone"})
+        ), 
+        React.DOM.div({className: "col-xs-12 col-sm-6 text-center"}, 
+          React.DOM.div({className: "intro"}, 
+            React.DOM.span({className: "text"}, 
+              React.DOM.h1(null, 
+                React.DOM.strong(null, "Class Radar "), " keeps track of classes you want to take that are already full and notifies you when a spot opens up for registration."
+              )
             )
           )
         )
@@ -30142,8 +30155,7 @@ Ninja.Views.List = React.createClass({displayName: 'List',
   componentWillLeave: function (cb) {
     var $el = $(this.getDOMNode());
     var left = {'left':'100%'};
-    if (this.props.animate) { $el.animate(left, 500, cb); }
-    else { $el.animate(left, 500, cb);}
+    $el.animate(left, 500, cb);
   },
 
   render: function () {
@@ -30243,8 +30255,11 @@ Ninja.Views.Navbar = React.createClass({displayName: 'Navbar',
   render: function () {
     return (
       React.DOM.nav({className: "navbar navbar-fixed-top", role: "navigation"}, 
-        React.DOM.div({className: "logo"}, 
-          React.DOM.a({className: "logo navbar-link", href: "/"}, "  ")
+        React.DOM.div({className: "logo-container"}, 
+          React.DOM.div({className: "logo spin"}, 
+            React.DOM.a({className: "logo navbar-link", href: "/"}
+            )
+          )
         ), 
         React.DOM.div({className: "get-app"}, 
           React.DOM.a({className: "navbar-link", href: "https://itunes.apple.com/us/app/id903690805#"}, 

@@ -6191,18 +6191,34 @@ body {
 .navbar .get-app a {
   line-height: 18px;
 }
-.navbar div.logo {
+.navbar div.logo-container {
   margin-left: 30px;
   float: left;
+  padding: 25px;
 }
-.navbar div.logo a {
-  display: inline-block;
+.navbar div.logo-container div.logo {
   width: 30px !important;
   height: 30px !important;
-  margin: 25px;
+  margin: 0 ;
+}
+.navbar div.logo-container div.logo a {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
   background: center no-repeat;
   background-image: url(logo@2x.png);
   background-size: contain;
+}
+.navbar div.logo-container div.logo.spin {
+  -webkit-animation: spin 1s infinite linear;
+}
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
 }
 .navbar a:link {
   color: #3c3c3c;
@@ -6221,10 +6237,9 @@ body {
   margin-top: 30px;
 }
 #landing .intro {
-  display: table-cell;
-  text-align: center;
-  vertical-align: middle;
-  height: 400px;
+  margin: auto;
+  height: 500px;
+  width: 400px;
   color: #ffffff;
 }
 #landing .intro .span {
@@ -6246,8 +6261,10 @@ body {
   background-color: #F0F1F5;
   color: #455B8E;
 }
-.list-group-item.item-name:hover {
+.list-group-item.item-name.hover {
   cursor: pointer;
+  background-color: #f0f1f5;
+  color: #455B8E;
 }
 .selected {
   background-color: #f0f1f5;
@@ -6299,7 +6316,7 @@ i.fa {
 }
 #lists {
   position: absolute;
-  margin: 0px;
+  margin-top: 30px;
   padding: 0px;
   width: 100%;
   height: 100%;
