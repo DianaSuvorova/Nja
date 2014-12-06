@@ -9,8 +9,11 @@ Ninja.Views.Navbar = React.createClass({
   render: function () {
     return (
       <nav className="navbar navbar-fixed-top" role="navigation">
-        <div className = "logo">
-          <a className="logo navbar-link" href="/">  </a>
+        <div className = "logo-container">
+          <div className = "logo spin">
+            <a className="logo navbar-link" href="/">
+            </a>
+          </div>
         </div>
         <div className = "get-app">
           <a className = "navbar-link" href="https://itunes.apple.com/us/app/id903690805#"> 
