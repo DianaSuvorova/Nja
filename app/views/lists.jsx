@@ -45,7 +45,6 @@ Ninja.Views.Lists = React.createClass({
   },
 
   handleSelect: function (item, listIndex) {
-    this.props.setSpin(true);
     var newListDict = this.state.listDict.slice(0,listIndex+1);
     var newModelDict = this.state.modelDict.slice(0,listIndex+1);
     newModelDict[listIndex+1] = item;

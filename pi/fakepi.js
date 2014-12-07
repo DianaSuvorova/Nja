@@ -17,12 +17,10 @@ app.get('/api/department/:id', function (req, res) { res.send(courses); });
 app.get('/api/course/:id', function (red, res) { res.send(course); });
 app.get('/dist/build.js', function (req, res) { res.sendfile('dist/build.js'); });
 app.get('/dist/build.css', function (req, res) { res.sendfile('dist/build.css'); });
-app.get('/*/dist/build.js', function (req, res) { res.sendfile('dist/build.js'); });
-app.get('/*/dist/build.css', function (req, res) { res.sendfile('dist/build.css'); });
-app.get('/dist/phone@2x.png', function (req, res) { res.sendfile('app/assets/less/phone@2x.png'); });
-app.get('/dist/logo@2x.png', function (req, res) { res.sendfile('app/assets/less/logo@2x.png'); });
-app.get('/dist/nav_classes@2x.png', function (req, res) { res.sendfile('app/assets/less/nav_classes@2x.png'); });
-app.get('/dist/nav_download@2x.png', function (req, res) { res.sendfile('app/assets/less/nav_download@2x.png'); });
+app.get('/dist/phone@2x.png', function (req, res) { res.sendfile('dist/phone@2x.png'); });
+app.get('/dist/logo@2x.png', function (req, res) { res.sendfile('dist/logo@2x.png'); });
+app.get('/dist/radar-tail.png', function (req, res) { res.sendfile('dist/radar-tail.png'); });
+
 
 app.get('*', function (req, res) { res.sendfile('index.html'); });
 

@@ -29959,11 +29959,13 @@ Ninja.Views.Item = React.createClass({displayName: 'Item',
 
   onMouseEnter: function () {
     var $el = $(this.getDOMNode());
+    this.props.setSpin(true);
     $el.addClass('hover');
   },
 
   onMouseLeave: function () {
     var $el = $(this.getDOMNode());
+    this.props.setSpin(false);
     $el.removeClass('hover');
   },
 
@@ -30234,7 +30236,6 @@ Ninja.Views.Lists = React.createClass({displayName: 'Lists',
   },
 
   handleSelect: function (item, listIndex) {
-    this.props.setSpin(true);
     var newListDict = this.state.listDict.slice(0,listIndex+1);
     var newModelDict = this.state.modelDict.slice(0,listIndex+1);
     newModelDict[listIndex+1] = item;
