@@ -5,13 +5,11 @@ Ninja.Views.Item = React.createClass({
 
   onMouseEnter: function () {
     var $el = $(this.getDOMNode());
-    this.props.setSpin(true);
     $el.addClass('hover');
   },
 
   onMouseLeave: function () {
     var $el = $(this.getDOMNode());
-    this.props.setSpin(false);
     $el.removeClass('hover');
   },
 
