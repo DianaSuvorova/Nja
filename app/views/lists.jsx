@@ -45,19 +45,21 @@ Ninja.Views.Lists = React.createClass({
   },
 
   handleSelect: function (item, listIndex) {
+    this.props.setSpin(true);
     var newListDict = this.state.listDict.slice(0,listIndex+1);
     var newModelDict = this.state.modelDict.slice(0,listIndex+1);
     newModelDict[listIndex+1] = item;
     item.sublist.hydrate().then(function (sublist) {
         newListDict[listIndex+1] = sublist;
         this.props.router.navigate('/classes' + (_.pluck(newListDict, 'id')).join('/') , {trigger: false, pushState: true});
-        this.setState({listDict: newListDict, modelDict: newModelDict, animate: true});
-      }.bind(this))    
+        this.setState({listDict: newListDict, modelDict: newModelDict, animate: true}); 
+        this.props.setSpin(false);
+      }.bind(this))  
   },  
 
   render: function () {
     var lists = this.state.listDict.map(function (model, i) {
-      return < Ninja.Views.List key = {'list_'+i} listCount = {this.state.listDict.length} listIndex = {i} model = {model} modelDict = {this.state.modelDict}  onItemSelect = {this.handleSelect}  animate = {this.state.animate} mobile = {this.props.mobile}/>;
+      return < Ninja.Views.List key = {'list_'+i} listCount = {this.state.listDict.length} listIndex = {i} model = {model} modelDict = {this.state.modelDict}  onItemSelect = {this.handleSelect}  animate = {this.state.animate} mobile = {this.props.mobile} setSpin = {this.props.setSpin}/>;
     },this);
 
     return (

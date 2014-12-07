@@ -13,7 +13,7 @@ Ninja.Views.List = React.createClass({
   },
 
   componentDidMount: function () { 
-    this.transition(); 
+    this.transition();
   },
   
   componentDidUpdate: function () {
@@ -33,7 +33,7 @@ Ninja.Views.List = React.createClass({
       if (this.props.listIndex < (this.props.listCount - 1 ) && this.props.modelDict[this.props.listIndex+1].cid === model.cid) {
         selected = true;
       }
-      return ( < Ninja.Views.Item key = {'item_'+i} item = {model} selected = {selected} onSelect = {this.onSelect.bind(this, model, this.props.listIndex)}/> )
+      return ( < Ninja.Views.Item key = {'item_'+i} item = {model} selected = {selected} onSelect = {this.onSelect.bind(this, model, this.props.listIndex)} setSpin = {this.props.setSpin}/> )
     }, this);  
     return (<ul key = {this.props.key}  className = {listClasses} > {listView} </ul>);
   }
