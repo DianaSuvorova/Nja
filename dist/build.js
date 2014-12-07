@@ -29959,11 +29959,13 @@ Ninja.Views.Item = React.createClass({displayName: 'Item',
 
   onMouseEnter: function () {
     var $el = $(this.getDOMNode());
+    this.props.setSpin(true);
     $el.addClass('hover');
   },
 
   onMouseLeave: function () {
     var $el = $(this.getDOMNode());
+    this.props.setSpin(false);
     $el.removeClass('hover');
   },
 
@@ -30000,13 +30002,16 @@ Ninja.Views.Item = React.createClass({displayName: 'Item',
 /** @jsx React.DOM */
 Ninja.Views.App = React.createClass({displayName: 'App',
 
-  getInitialState: function () {return {landing:false};},
+  getInitialState: function () {return {landing:false, spin: false};},
 
   componentWillMount: function () {
     Backbone.history.on('route', this.route)
     this.route();
     this.mobile = globals.isBreakpoint('xs') || globals.isBreakpoint('sm') ? true : false;
+  },
 
+  setSpin: function (state) {
+    this.setState({spin: state})
   },
 
   route: function () {
@@ -30015,9 +30020,9 @@ Ninja.Views.App = React.createClass({displayName: 'App',
   },
 
   render: function () {
-    var navbar = Ninja.Views.Navbar({router: this.props.router});  
-    var landing = Ninja.Views.Landing(null) 
-    var lists = Ninja.Views.Lists({model: [this.props.model], router: this.props.router, mobile: this.mobile})
+    var navbar = Ninja.Views.Navbar({router: this.props.router, spin: this.state.spin, setSpin: this.setSpin});  
+    var landing = Ninja.Views.Landing({setSpin: this.setSpin}) 
+    var lists = Ninja.Views.Lists({model: [this.props.model], router: this.props.router, mobile: this.mobile, setSpin: this.setSpin})
     var content = this.state.landing ? landing : lists;
 
     return ( React.DOM.div({id: "container"}, navbar, content));
@@ -30109,11 +30114,24 @@ Ninja.Views.Event = React.createClass({displayName: 'Event',
 });
 /** @jsx React.DOM **/
 Ninja.Views.Landing = React.createClass({displayName: 'Landing',
+
+  setLoaingStateTrue: function () {
+    this.props.setSpin(true);
+  },
+
+  setLoaingStateFalse: function () {
+    this.props.setSpin(false);
+  },
+
+  getApp: function () {
+    window.location = 'https://itunes.apple.com/us/app/id903690805#';
+  },
+
   render: function () {
     return (
       React.DOM.div({className: "row landing-container", id: "landing"}, 
         React.DOM.div({className: "col-xs-12 col-sm-6"}, 
-          React.DOM.div({className: "phone"})
+          React.DOM.div({className: "phone", onClick: this.getApp, onMouseEnter: this.setLoaingStateTrue, onMouseLeave: this.setLoaingStateFalse})
         ), 
         React.DOM.div({className: "col-xs-12 col-sm-6 text-center"}, 
           React.DOM.div({className: "intro"}, 
@@ -30145,7 +30163,7 @@ Ninja.Views.List = React.createClass({displayName: 'List',
   },
 
   componentDidMount: function () { 
-    this.transition(); 
+    this.transition();
   },
   
   componentDidUpdate: function () {
@@ -30165,7 +30183,7 @@ Ninja.Views.List = React.createClass({displayName: 'List',
       if (this.props.listIndex < (this.props.listCount - 1 ) && this.props.modelDict[this.props.listIndex+1].cid === model.cid) {
         selected = true;
       }
-      return ( Ninja.Views.Item({key: 'item_'+i, item: model, selected: selected, onSelect: this.onSelect.bind(this, model, this.props.listIndex)}) )
+      return ( Ninja.Views.Item({key: 'item_'+i, item: model, selected: selected, onSelect: this.onSelect.bind(this, model, this.props.listIndex), setSpin: this.props.setSpin}) )
     }, this);  
     return (React.DOM.ul({key: this.props.key, className: listClasses}, " ", listView, " "));
   }
@@ -30218,19 +30236,21 @@ Ninja.Views.Lists = React.createClass({displayName: 'Lists',
   },
 
   handleSelect: function (item, listIndex) {
+    this.props.setSpin(true);
     var newListDict = this.state.listDict.slice(0,listIndex+1);
     var newModelDict = this.state.modelDict.slice(0,listIndex+1);
     newModelDict[listIndex+1] = item;
     item.sublist.hydrate().then(function (sublist) {
         newListDict[listIndex+1] = sublist;
         this.props.router.navigate('/classes' + (_.pluck(newListDict, 'id')).join('/') , {trigger: false, pushState: true});
-        this.setState({listDict: newListDict, modelDict: newModelDict, animate: true});
-      }.bind(this))    
+        this.setState({listDict: newListDict, modelDict: newModelDict, animate: true}); 
+        this.props.setSpin(false);
+      }.bind(this))  
   },  
 
   render: function () {
     var lists = this.state.listDict.map(function (model, i) {
-      return Ninja.Views.List({key: 'list_'+i, listCount: this.state.listDict.length, listIndex: i, model: model, modelDict: this.state.modelDict, onItemSelect: this.handleSelect, animate: this.state.animate, mobile: this.props.mobile});
+      return Ninja.Views.List({key: 'list_'+i, listCount: this.state.listDict.length, listIndex: i, model: model, modelDict: this.state.modelDict, onItemSelect: this.handleSelect, animate: this.state.animate, mobile: this.props.mobile, setSpin: this.props.setSpin});
     },this);
 
     return (
@@ -30252,16 +30272,30 @@ Ninja.Views.Navbar = React.createClass({displayName: 'Navbar',
     return false;
   },
 
+  setLoaingStateTrue: function () {
+    this.props.setSpin(true);
+  },
+
+  setLoaingStateFalse: function () {
+    this.props.setSpin(false);
+  },
+
+
   render: function () {
+    var logoClass = globals.cx({
+      'logo': true,
+      'spin': this.props.spin
+    });
+
     return (
       React.DOM.nav({className: "navbar navbar-fixed-top", role: "navigation"}, 
-        React.DOM.div({className: "logo-container"}, 
-          React.DOM.div({className: "logo spin"}, 
+        React.DOM.div({className: "logo-container", onMouseEnter: this.setLoaingStateTrue, onMouseLeave: this.setLoaingStateFalse}, 
+          React.DOM.div({className: logoClass}, 
             React.DOM.a({className: "logo navbar-link", href: "/"}
             )
           )
         ), 
-        React.DOM.div({className: "get-app"}, 
+        React.DOM.div({className: "get-app", onMouseEnter: this.setLoaingStateTrue, onMouseLeave: this.setLoaingStateFalse}, 
           React.DOM.a({className: "navbar-link", href: "https://itunes.apple.com/us/app/id903690805#"}, 
             React.DOM.h3(null, " ", React.DOM.i({className: "fa fa-arrow-down"}), " Get App")
           )

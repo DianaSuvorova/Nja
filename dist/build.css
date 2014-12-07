@@ -6197,6 +6197,7 @@ body {
   padding: 25px;
 }
 .navbar div.logo-container div.logo {
+  border-radius: 50%;
   width: 30px !important;
   height: 30px !important;
   margin: 0 ;
@@ -6210,7 +6211,9 @@ body {
   background-size: contain;
 }
 .navbar div.logo-container div.logo.spin {
+  background-color: gray;
   -webkit-animation: spin 1s infinite linear;
+  background-image: linear-gradient(180deg, transparent 0%, #ffffff 50%), linear-gradient(90deg, #ffffff 50%, transparent 0%);
 }
 @-webkit-keyframes spin {
   0% {
@@ -6252,7 +6255,10 @@ body {
   display: block;
 }
 #landing .phone {
+  margin: auto;
+  cursor: pointer;
   height: 400px;
+  width: 200px;
   background: center no-repeat;
   background-image: url(phone@2x.png);
   background-size: contain;
