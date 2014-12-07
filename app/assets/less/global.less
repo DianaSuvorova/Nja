@@ -29,12 +29,14 @@ body {
     float: right;
     a {line-height: 18px;}
   }
-  
+ 
   div.logo-container {
     margin-left: @navbar-unit-size; 
     float: left;  
     padding: (@navbar-height - @navbar-unit-size) / 2;
-   div.logo {
+   div.logo {      
+    background-color: gray;
+    border-radius: 50%;
     width: @navbar-unit-size !important;
     height: @navbar-unit-size !important;
     margin:0 ;
@@ -46,8 +48,11 @@ body {
         background-image: url(logo@2x.png);
         background-size: contain;
       } 
-      &.spin {
+      & {
         -webkit-animation: spin 1s infinite linear;
+        background-image:
+          linear-gradient(180deg, transparent 0%, white 50%),
+         linear-gradient(90deg, white 50%, transparent 0%);
       } 
     }
   }
