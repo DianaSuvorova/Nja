@@ -30201,7 +30201,7 @@ Ninja.Views.List = React.createClass({displayName: 'List',
     /** @jsx React.DOM **/
 Ninja.Views.Lists = React.createClass({displayName: 'Lists',
 
-  getInitialState: function () { return {modelDict: this.props.model ,listDict: [], animate: true, loading:false }; },
+  getInitialState: function () { return {modelDict: this.props.model ,listDict: [], animate: true, loading:true }; },
 
   syncModel: function (deferred, modelDict, listDict, listId, i) {
     modelDict[i].sublist.hydrate().then(function (sublist) {
