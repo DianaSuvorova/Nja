@@ -1,7 +1,7 @@
     /** @jsx React.DOM **/
 Ninja.Views.Lists = React.createClass({
 
-  getInitialState: function () { return {modelDict: this.props.model ,listDict: [], animate: true}; },
+  getInitialState: function () { return {modelDict: this.props.model ,listDict: [], animate: true, loading:false }; },
 
   syncModel: function (deferred, modelDict, listDict, listId, i) {
     modelDict[i].sublist.hydrate().then(function (sublist) {
@@ -34,8 +34,9 @@ Ninja.Views.Lists = React.createClass({
     if (_.intersection(this.props.router.stack, this.props.router.previousStack).length < 1  ) {
       animate = false;
     }
+    this.setState({loading: true})
     this.sync().then(function (listDict, modelDict) {
-      this.setState({listDict: listDict, modelDict: modelDict, animate: animate})
+      this.setState({listDict: listDict, modelDict: modelDict, animate: animate, loading: false})
     }.bind(this));
   },
 
@@ -43,6 +44,7 @@ Ninja.Views.Lists = React.createClass({
     Backbone.history.on('route', this.updateStateToRoute)
     this.updateStateToRoute();
   },
+
 
   handleSelect: function (item, listIndex) {
     var newListDict = this.state.listDict.slice(0,listIndex+1);
@@ -60,12 +62,24 @@ Ninja.Views.Lists = React.createClass({
     var lists = this.state.listDict.map(function (model, i) {
       return < Ninja.Views.List key = {'list_'+i} listCount = {this.state.listDict.length} listIndex = {i} model = {model} modelDict = {this.state.modelDict}  onItemSelect = {this.handleSelect}  animate = {this.state.animate} mobile = {this.props.mobile} setSpin = {this.props.setSpin}/>;
     },this);
+    var loading =  (this.state.loading) ? 
+        <div id='loading'> 
+          <div className = "logo-container">         
+            <div className = "logo spin">
+              <a className="logo"></a>
+            </div>
+          </div>
+        </div>
+      : null;
 
     return (
-      <div id ='lists'> 
-        <globals.ReactTransitionGroup transitionName="list">
-          {lists}
-        </globals.ReactTransitionGroup>
+      <div>
+        {loading}
+        <div id ='lists'> 
+          <globals.ReactTransitionGroup transitionName="list">
+            {lists}
+          </globals.ReactTransitionGroup>
+        </div>
       </div>
     )
   }
