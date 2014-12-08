@@ -30232,7 +30232,7 @@ Ninja.Views.Lists = React.createClass({displayName: 'Lists',
     var animate = true;
     var deferred = $.Deferred();
     if (_.intersection(this.props.router.stack, this.props.router.previousStack).length < 1  ) {
-      animate = false;
+      animate = true;
     }
     this.setState({loading: true})
     this.sync().then(function (listDict, modelDict) {
@@ -30252,25 +30252,26 @@ Ninja.Views.Lists = React.createClass({displayName: 'Lists',
     newModelDict[listIndex+1] = item;
     item.sublist.hydrate().then(function (sublist) {
         newListDict[listIndex+1] = sublist;
-        this.props.router.navigate('/classes' + (_.pluck(newListDict, 'id')).join('/') , {trigger: false, pushState: true});
+        this.props.router.navigate('/classes' + (_.pluck(newListDict, 'id')).join('/') , {trigger: false, pushState: false});
         this.setState({listDict: newListDict, modelDict: newModelDict, animate: true}); 
         this.props.setSpin(false);
       }.bind(this))  
   },  
 
   render: function () {
+    var visible = globals.cx({ 'visible' : this.state.loading});
     var lists = this.state.listDict.map(function (model, i) {
       return Ninja.Views.List({key: 'list_'+i, listCount: this.state.listDict.length, listIndex: i, model: model, modelDict: this.state.modelDict, onItemSelect: this.handleSelect, animate: this.state.animate, mobile: this.props.mobile, setSpin: this.props.setSpin});
     },this);
-    var loading =  (this.state.loading) ? 
-        React.DOM.div({id: "loading"}, 
+    
+    var loading =  
+        React.DOM.div({id: "loading", className: visible}, 
           React.DOM.div({className: "logo-container"}, 
             React.DOM.div({className: "logo spin"}, 
               React.DOM.a({className: "logo"})
             )
           )
         )
-      : null;
 
     return (
       React.DOM.div(null, 

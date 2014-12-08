@@ -1,5 +1,8 @@
 
 #loading {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity  0.5s ease-out;
   top: -10px;
   padding: 0;
   margin: 0;
@@ -33,6 +36,10 @@
         -webkit-animation: spin 1s infinite linear;
       } 
     }
+  }
+  &.visible {
+    opacity: 1;
+    pointer-events: all;
   }
 }
 
