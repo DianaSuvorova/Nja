@@ -30044,7 +30044,8 @@ Ninja.Views.Event = React.createClass({displayName: 'Event',
     });
 
     var timeAndLocationDetail = function () {
-      if (model.get('times_and_locations').length < 2 ) {
+      if (!model.get('times_and_locations').length) return null
+      else if (model.get('times_and_locations').length < 2 ) {
         return (React.DOM.div(null, " ", model.get('times_and_locations')[0].location, " "))
         }
       else {
@@ -30334,6 +30335,9 @@ Ninja.Views.Navbar = React.createClass({displayName: 'Navbar',
         React.DOM.div({className: "get-app", onMouseEnter: this.setLoaingStateTrue, onMouseLeave: this.setLoaingStateFalse}, 
           React.DOM.a({className: "navbar-link", href: "https://itunes.apple.com/us/app/id903690805#"}, 
             React.DOM.h3(null, " ", React.DOM.i({className: "fa fa-arrow-down"}), " Get App")
+          ), 
+          React.DOM.a({className: "navbar-link", href: "/classes", onClick: this.onClickClasses}, 
+            React.DOM.h3(null, " ", React.DOM.i({className: "fa fa-align-justify"}, " "), " See Classes")
           )
         )
       )

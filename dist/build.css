@@ -6181,7 +6181,9 @@ body {
   margin: 0 1rem;
 }
 .navbar div a {
+  float: right;
   line-height: 80px;
+  padding-left: 20px;
 }
 .navbar div a i {
   padding: 10px;

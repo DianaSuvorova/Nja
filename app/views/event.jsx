@@ -13,7 +13,8 @@ Ninja.Views.Event = React.createClass({
     });
 
     var timeAndLocationDetail = function () {
-      if (model.get('times_and_locations').length < 2 ) {
+      if (!model.get('times_and_locations').length) return null
+      else if (model.get('times_and_locations').length < 2 ) {
         return (<div> {model.get('times_and_locations')[0].location} </div>)
         }
       else {
