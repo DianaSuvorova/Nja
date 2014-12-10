@@ -35,14 +35,14 @@ Ninja.Views.Navbar = React.createClass({
 
     return (
       <nav className="navbar navbar-fixed-top" role="navigation">
-        <div className = "logo-container" onMouseEnter = {this.setLoaingStateTrue}  onMouseLeave = {this.setLoaingStateFalse}>
+        <div className = "logo-container" onMouseEnter = {this.setLoaingStateTrue} onMouseOver = {this.setLoaingStateTrue}  onMouseLeave = {this.setLoaingStateFalse}>
           <div className = {logoClass}>
             <a className="logo navbar-link" href="/">
             </a>
           </div>
         </div>
-        <div className = "get-app" onMouseEnter = {this.setLoaingStateTrue}  onMouseLeave = {this.setLoaingStateFalse}>
-          <a className = "navbar-link" href="https://itunes.apple.com/us/app/id903690805#"> 
+        <div className = "get-app" onMouseEnter = {this.setLoaingStateTrue} onMouseOver = {this.setLoaingStateTrue}  onMouseLeave = {this.setLoaingStateFalse}>
+          <a className = "c" href="https://itunes.apple.com/us/app/id903690805#"> 
             <h3> <i className="fa fa-arrow-down"></i> Get App</h3>
           </a>
           <a className = "navbar-link" href="/classes" onClick = {this.onClickClasses}> 

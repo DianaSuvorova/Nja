@@ -52,6 +52,7 @@ Ninja.Views.Lists = React.createClass({
     var newModelDict = this.state.modelDict.slice(0,listIndex+1);
     newModelDict[listIndex+1] = item;
     item.sublist.hydrate().then(function (sublist) {
+        this.props.setSpin(false);
         newListDict[listIndex+1] = sublist;
         this.props.router.navigate('/classes' + (_.pluck(newListDict, 'id')).join('/') , {trigger: false, pushState: false});
         this.setState({listDict: newListDict, modelDict: newModelDict, animate: true}); 

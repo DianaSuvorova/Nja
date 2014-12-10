@@ -30253,6 +30253,7 @@ Ninja.Views.Lists = React.createClass({displayName: 'Lists',
     var newModelDict = this.state.modelDict.slice(0,listIndex+1);
     newModelDict[listIndex+1] = item;
     item.sublist.hydrate().then(function (sublist) {
+        this.props.setSpin(false);
         newListDict[listIndex+1] = sublist;
         this.props.router.navigate('/classes' + (_.pluck(newListDict, 'id')).join('/') , {trigger: false, pushState: false});
         this.setState({listDict: newListDict, modelDict: newModelDict, animate: true}); 
@@ -30326,14 +30327,14 @@ Ninja.Views.Navbar = React.createClass({displayName: 'Navbar',
 
     return (
       React.DOM.nav({className: "navbar navbar-fixed-top", role: "navigation"}, 
-        React.DOM.div({className: "logo-container", onMouseEnter: this.setLoaingStateTrue, onMouseLeave: this.setLoaingStateFalse}, 
+        React.DOM.div({className: "logo-container", onMouseEnter: this.setLoaingStateTrue, onMouseOver: this.setLoaingStateTrue, onMouseLeave: this.setLoaingStateFalse}, 
           React.DOM.div({className: logoClass}, 
             React.DOM.a({className: "logo navbar-link", href: "/"}
             )
           )
         ), 
-        React.DOM.div({className: "get-app", onMouseEnter: this.setLoaingStateTrue, onMouseLeave: this.setLoaingStateFalse}, 
-          React.DOM.a({className: "navbar-link", href: "https://itunes.apple.com/us/app/id903690805#"}, 
+        React.DOM.div({className: "get-app", onMouseEnter: this.setLoaingStateTrue, onMouseOver: this.setLoaingStateTrue, onMouseLeave: this.setLoaingStateFalse}, 
+          React.DOM.a({className: "c", href: "https://itunes.apple.com/us/app/id903690805#"}, 
             React.DOM.h3(null, " ", React.DOM.i({className: "fa fa-arrow-down"}), " Get App")
           ), 
           React.DOM.a({className: "navbar-link", href: "/classes", onClick: this.onClickClasses}, 
