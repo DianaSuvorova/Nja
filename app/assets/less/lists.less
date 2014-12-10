@@ -8,12 +8,12 @@
   margin: 0;
   z-index:1;
   position: absolute;
-  height:  calc(~"100% +  "@navbar-unit-size * 5);
+  height:  calc(~"100% +  "@navbar-unit-size * 5 );
   width: 100%;
   background-color: rgba(255, 255, 255, 0.6);
   div.logo-container {
     margin: auto;
-    top: 50%;
+    top: calc(~"50% - "@navbar-unit-size * 3);
     position: relative;
     display: block;
     width: @navbar-unit-size*2 !important;
@@ -116,6 +116,7 @@ i.fa { transition: transform 0.5s }
   width: 100%;
   height: 100%;
   overflow: hidden; 
+  box-shadow: inset 0 20px 20px -20px rgba(0,0,0,0.8);
 }
 
 .list{

@@ -36,7 +36,7 @@ Ninja.Views.Lists = React.createClass({
     }
     this.setState({loading: true})
     this.sync().then(function (listDict, modelDict) {
-      this.setState({listDict: listDict, modelDict: modelDict, animate: animate, loading: false})
+      this.setState({listDict: listDict, modelDict: modelDict, animate: animate, loading: false});
     }.bind(this));
   },
 
@@ -47,13 +47,14 @@ Ninja.Views.Lists = React.createClass({
 
 
   handleSelect: function (item, listIndex) {
+    this.setState({loading: true})
     var newListDict = this.state.listDict.slice(0,listIndex+1);
     var newModelDict = this.state.modelDict.slice(0,listIndex+1);
     newModelDict[listIndex+1] = item;
     item.sublist.hydrate().then(function (sublist) {
         newListDict[listIndex+1] = sublist;
         this.props.router.navigate('/classes' + (_.pluck(newListDict, 'id')).join('/') , {trigger: false, pushState: false});
-        this.setState({listDict: newListDict, modelDict: newModelDict, animate: true}); 
+        this.setState({listDict: newListDict, modelDict: newModelDict, animate: true, loading: false}); 
         this.props.setSpin(false);
       }.bind(this))  
   },  

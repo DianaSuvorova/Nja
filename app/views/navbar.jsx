@@ -1,5 +1,7 @@
 /** @jsx React.DOM **/
 Ninja.Views.Navbar = React.createClass({
+
+  getInitialState: function () {return {spin: false}},
     
   onClickClasses: function () {
     this.props.router.navigate('/classes' , {trigger: true, pushState: true});
@@ -14,11 +16,21 @@ Ninja.Views.Navbar = React.createClass({
     this.props.setSpin(false);
   },
 
+  componentWillReceiveProps: function (nextProps){
+    var $el = $(this.getDOMNode());
+    if (nextProps.spin) {
+      this.setState({spin: true});
+    }
+    else    
+      $("div.logo").one('animationiteration webkitAnimationIteration', function() {
+        this.setState({spin: false});
+      }.bind(this))
+  },
 
   render: function () {
     var logoClass = globals.cx({
       'logo': true,
-      'spin': this.props.spin
+      'spin': this.state.spin
     });
 
     return (

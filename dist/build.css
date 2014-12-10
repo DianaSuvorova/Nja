@@ -6166,6 +6166,7 @@ button.close {
 body {
   font-size: medium;
   background: #1c95f9;
+  overflow: hidden;
 }
 #container {
   padding-top: 90px;
@@ -6207,14 +6208,11 @@ body {
   width: 100%;
   height: 100%;
   background: center no-repeat;
-  background-image: url(/dist/logo@2x.png);
+  background-image: url(/dist/radar-tail.png);
   background-size: contain;
 }
 .navbar div.logo-container div.logo.spin {
   -webkit-animation: spin 1s infinite linear;
-}
-.navbar div.logo-container div.logo.spin a {
-  background-image: url(/dist/radar-tail.png);
 }
 @-webkit-keyframes spin {
   0% {
@@ -6279,7 +6277,7 @@ body {
 }
 #loading div.logo-container {
   margin: auto;
-  top: 50%;
+  top: calc(50% -  90px);
   position: relative;
   display: block;
   width: 60px !important;
@@ -6373,6 +6371,7 @@ i.fa {
   width: 100%;
   height: 100%;
   overflow: hidden;
+  box-shadow: inset 0 20px 20px -20px rgba(0, 0, 0, 0.8);
 }
 .list {
   height: 100%;

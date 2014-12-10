@@ -10,7 +10,7 @@ var app = express();
   app.use(express.json({limit: '20mb'}));
   app.use(app.router);
 
-app.all('*', function (req, res, next) { setTimeout(next, 1000); });
+app.all('*', function (req, res, next) { setTimeout(next, 500); });
 
 app.get('/api/login', function (req, res) { res.send(200); });
 app.get('/api/school', function (req, res) { res.send(schools); });
