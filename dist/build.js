@@ -4305,7 +4305,7 @@ function validateExplicitKey(component) {
   }
 
   message += ' See http://fb.me/react-warning-keys for more information.';
-  console.warn(message);
+ // console.warn(message);
 }
 
 /**
