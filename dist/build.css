@@ -6345,7 +6345,7 @@ i.fa {
 }
 .status-marker-container {
   position: absolute;
-  top: 15px;
+  top: 35px;
   left: -15px;
   width: 15px !important;
 }
