@@ -6249,6 +6249,13 @@ body {
   background-image: url(/dist/phone@2x.png);
   background-size: contain;
 }
+@media (min-width: 992px) {
+  .intro {
+    padding-top: 150px !important;
+    height: 400px;
+    width: 400px;
+  }
+}
 #loading {
   opacity: 0;
   pointer-events: none;

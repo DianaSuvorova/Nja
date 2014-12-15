@@ -30011,7 +30011,7 @@ Ninja.Views.App = React.createClass({displayName: 'App',
   },
 
   isMobile:function () {
-    return (screen.width < 992) ? false : true;
+    return ( $(window).width() < 992) ? true : false;
   },
 
   handleResize: function () {
@@ -30032,6 +30032,7 @@ Ninja.Views.App = React.createClass({displayName: 'App',
   },
 
   render: function () {
+    console.log(this.state.mobile);
     var navbar = Ninja.Views.Navbar({router: this.props.router, spin: this.state.spin, setSpin: this.setSpin});  
     var landing = Ninja.Views.Landing({setSpin: this.setSpin}) 
     var lists = Ninja.Views.Lists({model: [this.props.model], router: this.props.router, mobile: this.state.mobile, setSpin: this.setSpin})
@@ -30144,7 +30145,7 @@ Ninja.Views.Landing = React.createClass({displayName: 'Landing',
     return (
       React.DOM.div({className: "row landing-container", id: "landing"}, 
 
-        React.DOM.div({className: "col-xs-12 col-md-6 col-md-push-6"}, 
+        React.DOM.div({className: "col-xs-12 col-md-4 col-md-push-6"}, 
           React.DOM.div({className: "intro"}, 
             React.DOM.strong(null, "Class Radar "), " keeps track of classes you want to take that are already full and notifies you when a spot opens up for registration."
           )
@@ -30156,7 +30157,7 @@ Ninja.Views.Landing = React.createClass({displayName: 'Landing',
           )
         ), 
 
-        React.DOM.div({className: "col-xs-12 col-md-6 col-md-pull-6"}, 
+        React.DOM.div({className: "col-xs-12 col-md-6 col-md-pull-3"}, 
           React.DOM.div({className: "phone", onClick: this.getApp, onMouseEnter: this.setLoaingStateTrue, onMouseLeave: this.setLoaingStateFalse})
         )
 
@@ -30176,7 +30177,7 @@ Ninja.Views.List = React.createClass({displayName: 'List',
     var $el = $(this.getDOMNode());
     var offset = this.props.listCount - this.props.listIndex - 1;
     var left = this.props.mobile ? {'left':  -offset * ($el.width() + margin )  } : {'left':  ($el.width() + margin ) * this.props.listIndex }  
-    if (this.props.animate && animate && !this.props.mobile) { $el.animate(left, 500); }
+    if (this.props.animate && animate && !this.props.mobile ) { $el.animate(left, 500); }
     else { $el.css(left);}
   },
 
@@ -30188,7 +30189,7 @@ Ninja.Views.List = React.createClass({displayName: 'List',
   componentDidUpdate: function () {
     this.transition(true); 
   },
-  
+
   componentWillLeave: function (cb) {
     var $el = $(this.getDOMNode());
     var left = {'left':'100%'};

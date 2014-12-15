@@ -17,7 +17,7 @@ Ninja.Views.Landing = React.createClass({
     return (
       <div className="row landing-container" id="landing">
 
-        <div className="col-xs-12 col-md-6 col-md-push-6">
+        <div className="col-xs-12 col-md-4 col-md-push-6">
           <div className ='intro'>
             <strong>Class Radar </strong> keeps track of classes you want to take that are already full and notifies you when a spot opens up for registration.
           </div>
@@ -29,7 +29,7 @@ Ninja.Views.Landing = React.createClass({
           </a>
         </div>         
 
-        <div className="col-xs-12 col-md-6 col-md-pull-6">
+        <div className="col-xs-12 col-md-6 col-md-pull-3">
           <div className="phone" onClick = {this.getApp} onMouseEnter = {this.setLoaingStateTrue}  onMouseLeave = {this.setLoaingStateFalse}></div>
         </div>
 

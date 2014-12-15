@@ -8,7 +8,7 @@ Ninja.Views.List = React.createClass({
     var $el = $(this.getDOMNode());
     var offset = this.props.listCount - this.props.listIndex - 1;
     var left = this.props.mobile ? {'left':  -offset * ($el.width() + margin )  } : {'left':  ($el.width() + margin ) * this.props.listIndex }  
-    if (this.props.animate && animate && !this.props.mobile) { $el.animate(left, 500); }
+    if (this.props.animate && animate && !this.props.mobile ) { $el.animate(left, 500); }
     else { $el.css(left);}
   },
 
@@ -20,7 +20,7 @@ Ninja.Views.List = React.createClass({
   componentDidUpdate: function () {
     this.transition(true); 
   },
-  
+
   componentWillLeave: function (cb) {
     var $el = $(this.getDOMNode());
     var left = {'left':'100%'};
