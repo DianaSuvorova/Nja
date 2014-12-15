@@ -6344,11 +6344,17 @@ i.fa {
   transition: transform 0.5s;
 }
 .status-marker-container {
-  top: 1rem;
+  top: 15px;
+  left: -30px;
+}
+@media (min-width: 992px) {
+  .status-marker-container {
+    left: 0 !important;
+  }
 }
 .status-marker {
-  border-top: 1rem solid ;
-  border-right: 1rem solid transparent ;
+  border-top: 15px solid;
+  border-right: 15px solid transparent;
 }
 .event-header {
   color: #787878;

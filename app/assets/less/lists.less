@@ -93,12 +93,19 @@ i.fa { transition: transform 0.5s }
 
 
 .status-marker-container{
-  top: 1rem;
+  top: @navbar-unit-size-small * 1.5 ;
+  left: (-@navbar-unit-size-small * 3) ;
+}
+
+@media (min-width: @screen-md-min) { 
+  .status-marker-container{
+    left: 0 !important;
+  }
 }
 
 .status-marker {
-  border-top: 1rem solid ;
-  border-right: 1rem solid transparent ;
+  border-top: @navbar-unit-size-small * 1.5 solid ;
+  border-right: @navbar-unit-size-small * 1.5 solid transparent ;
 }
 
 .event-header {
