@@ -93,13 +93,14 @@ i.fa { transition: transform 0.5s }
 
 
 .status-marker-container{
+  position: absolute;
   top: @navbar-unit-size-small * 1.5 ;
-  left: (-@navbar-unit-size-small * 3) ;
+  left: -(@navbar-unit-size-small * 1.5);
+  width: @navbar-unit-size-small * 1.5 !important;
 }
 
 @media (min-width: @screen-md-min) { 
   .status-marker-container{
-    left: 0 !important;
   }
 }
 

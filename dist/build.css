@@ -6344,13 +6344,10 @@ i.fa {
   transition: transform 0.5s;
 }
 .status-marker-container {
+  position: absolute;
   top: 15px;
-  left: -30px;
-}
-@media (min-width: 992px) {
-  .status-marker-container {
-    left: 0 !important;
-  }
+  left: -15px;
+  width: 15px !important;
 }
 .status-marker {
   border-top: 15px solid;
