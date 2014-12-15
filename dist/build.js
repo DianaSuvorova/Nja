@@ -3853,10 +3853,10 @@ if ("production" !== "development") {
   if (ExecutionEnvironment.canUseDOM &&
       window.top === window.self &&
       navigator.userAgent.indexOf('Chrome') > -1) {
-    console.debug(
-      'Download the React DevTools for a better development experience: ' +
-      'http://fb.me/react-devtools'
-    );
+    // console.debug(
+    //   'Download the React DevTools for a better development experience: ' +
+    //   'http://fb.me/react-devtools'
+    // );
   }
 }
 
@@ -6288,11 +6288,11 @@ var ReactCompositeComponentMixin = {
             'component instance. See ' + componentName
           );
         } else if (!args.length) {
-          console.warn(
-            'bind(): You are binding a component method to the component. ' +
-            'React does this for you automatically in a high-performance ' +
-            'way, so you can safely remove this call. See ' + componentName
-          );
+          // console.warn(
+          //   'bind(): You are binding a component method to the component. ' +
+          //   'React does this for you automatically in a high-performance ' +
+          //   'way, so you can safely remove this call. See ' + componentName
+          // );
           return boundMethod;
         }
         var reboundMethod = _bind.apply(boundMethod, arguments);
@@ -30032,7 +30032,6 @@ Ninja.Views.App = React.createClass({displayName: 'App',
   },
 
   render: function () {
-    console.log(this.state.mobile);
     var navbar = Ninja.Views.Navbar({router: this.props.router, spin: this.state.spin, setSpin: this.setSpin});  
     var landing = Ninja.Views.Landing({setSpin: this.setSpin}) 
     var lists = Ninja.Views.Lists({model: [this.props.model], router: this.props.router, mobile: this.state.mobile, setSpin: this.setSpin})
