@@ -22,34 +22,29 @@ Ninja.Views.Navbar = React.createClass({
       this.setState({spin: true});
     }
     else    
-      $("div.logo").one('animationiteration webkitAnimationIteration', function() {
+      $("a.logo").one('animationiteration webkitAnimationIteration', function() {
         this.setState({spin: false});
       }.bind(this))
   },
 
   render: function () {
     var logoClass = globals.cx({
-      'logo': true,
+      'logo' : true,
       'spin': this.state.spin
     });
 
     return (
-      <nav className="navbar navbar-fixed-top" role="navigation">
-        <div className = "logo-container" onMouseEnter = {this.setLoaingStateTrue} onMouseOver = {this.setLoaingStateTrue}  onMouseLeave = {this.setLoaingStateFalse}>
-          <div className = {logoClass}>
-            <a className="logo navbar-link" href="/">
-            </a>
-          </div>
+      <div className="row navbar">
+        <div className = "col-xs-6 col-md-2" >
+            <a className={logoClass} onMouseEnter = {this.setLoaingStateTrue} onMouseOver = {this.setLoaingStateTrue}  onMouseLeave = {this.setLoaingStateFalse} href="/"></a>
         </div>
-        <div className = "get-app" onMouseEnter = {this.setLoaingStateTrue} onMouseOver = {this.setLoaingStateTrue}  onMouseLeave = {this.setLoaingStateFalse}>
-          <a className = "c" href="https://itunes.apple.com/us/app/id903690805#"> 
-            <h3> <i className="fa fa-arrow-down"></i> Get App</h3>
-          </a>
-          <a className = "navbar-link" href="/classes" onClick = {this.onClickClasses}> 
-            <h3> <i className="fa fa-align-justify"> </i> See Classes</h3>
-          </a>         
+        <div className = "col-md-offset-6 col-xs-6 col-md-2">
+          <a href="https://itunes.apple.com/us/app/id903690805#"> <i className="fa fa-arrow-down"></i> Get App</a>
         </div>
-      </nav>
+        <div className = "col-md-2 col-xs-12 hidden-xs hidden-sm">
+          <a className = "navbar-link" href="/classes" onClick = {this.onClickClasses}> <i className="fa fa-align-justify"> </i> See Classes</a>
+        </div>         
+      </div>
     )
   }
 })

@@ -30002,12 +30002,24 @@ Ninja.Views.Item = React.createClass({displayName: 'Item',
 /** @jsx React.DOM */
 Ninja.Views.App = React.createClass({displayName: 'App',
 
-  getInitialState: function () {return {landing:false, spin: false};},
+  getInitialState: function () {return {landing:false, spin: false, mobile: this.isMobile() };},
 
   componentWillMount: function () {
     Backbone.history.on('route', this.route)
     this.route();
-    this.mobile = globals.isBreakpoint('xs') || globals.isBreakpoint('sm') ? true : false;
+    window.addEventListener("resize",  this.handleResize);
+  },
+
+  isMobile:function () {
+    return (screen.width < 992) ? false : true;
+  },
+
+  handleResize: function () {
+    this.setState({mobile: this.isMobile()})
+  },
+
+  componentWillUnmount: function() {
+    window.removeEventListener('resize', this.handleResize);
   },
 
   setSpin: function (state) {
@@ -30022,7 +30034,7 @@ Ninja.Views.App = React.createClass({displayName: 'App',
   render: function () {
     var navbar = Ninja.Views.Navbar({router: this.props.router, spin: this.state.spin, setSpin: this.setSpin});  
     var landing = Ninja.Views.Landing({setSpin: this.setSpin}) 
-    var lists = Ninja.Views.Lists({model: [this.props.model], router: this.props.router, mobile: this.mobile, setSpin: this.setSpin})
+    var lists = Ninja.Views.Lists({model: [this.props.model], router: this.props.router, mobile: this.state.mobile, setSpin: this.setSpin})
     var content = this.state.landing ? landing : lists;
 
     return ( React.DOM.div({id: "container"}, navbar, content));
@@ -30131,18 +30143,23 @@ Ninja.Views.Landing = React.createClass({displayName: 'Landing',
   render: function () {
     return (
       React.DOM.div({className: "row landing-container", id: "landing"}, 
-        React.DOM.div({className: "col-xs-12 col-sm-6"}, 
-          React.DOM.div({className: "phone", onClick: this.getApp, onMouseEnter: this.setLoaingStateTrue, onMouseLeave: this.setLoaingStateFalse})
-        ), 
-        React.DOM.div({className: "col-xs-12 col-sm-6 text-center"}, 
+
+        React.DOM.div({className: "col-xs-12 col-md-6 col-md-push-6"}, 
           React.DOM.div({className: "intro"}, 
-            React.DOM.span({className: "text"}, 
-              React.DOM.h1(null, 
-                React.DOM.strong(null, "Class Radar "), " keeps track of classes you want to take that are already full and notifies you when a spot opens up for registration."
-              )
-            )
+            React.DOM.strong(null, "Class Radar "), " keeps track of classes you want to take that are already full and notifies you when a spot opens up for registration."
           )
+        ), 
+              
+        React.DOM.div({className: "col-xs-12 hidden-md hidden-lg see-classes", onClick: this.onClickClasses}, 
+          React.DOM.a({href: "/classes"}, 
+            React.DOM.span(null, " See Classes ", React.DOM.i({className: "fa fa-arrow-right"}, " "), " ")
+          )
+        ), 
+
+        React.DOM.div({className: "col-xs-12 col-md-6 col-md-pull-6"}, 
+          React.DOM.div({className: "phone", onClick: this.getApp, onMouseEnter: this.setLoaingStateTrue, onMouseLeave: this.setLoaingStateFalse})
         )
+
       )
     )
   }
@@ -30155,29 +30172,21 @@ Ninja.Views.List = React.createClass({displayName: 'List',
   onSelect: function (model, listIndex) { this.props.onItemSelect(model, listIndex); },
 
   transition: function (animate) {
-    var margin = 5;
+    var margin = 15;
     var $el = $(this.getDOMNode());
     var offset = this.props.listCount - this.props.listIndex - 1;
-    var left = this.props.mobile ? {'left':  -offset * ($el.width() + margin)  } : {'left':  ($el.width() + margin) * this.props.listIndex }  
-    if (this.props.animate && animate) { $el.animate(left, 500); }
+    var left = this.props.mobile ? {'left':  -offset * ($el.width() + margin )  } : {'left':  ($el.width() + margin ) * this.props.listIndex }  
+    if (this.props.animate && animate && !this.props.mobile) { $el.animate(left, 500); }
     else { $el.css(left);}
   },
 
-  handleResize: function () {
-    this.transition(false);
-  },
 
   componentDidMount: function () { 
     this.transition(true);
-    window.addEventListener("resize",  this.handleResize);
   },
   
   componentDidUpdate: function () {
     this.transition(true); 
-  },
-
-  componentWillUnmount: function() {
-    window.removeEventListener('resize', this.handleResize);
   },
   
   componentWillLeave: function (cb) {
@@ -30314,32 +30323,27 @@ Ninja.Views.Navbar = React.createClass({displayName: 'Navbar',
       this.setState({spin: true});
     }
     else    
-      $("div.logo").one('animationiteration webkitAnimationIteration', function() {
+      $("a.logo").one('animationiteration webkitAnimationIteration', function() {
         this.setState({spin: false});
       }.bind(this))
   },
 
   render: function () {
     var logoClass = globals.cx({
-      'logo': true,
+      'logo' : true,
       'spin': this.state.spin
     });
 
     return (
-      React.DOM.nav({className: "navbar navbar-fixed-top", role: "navigation"}, 
-        React.DOM.div({className: "logo-container", onMouseEnter: this.setLoaingStateTrue, onMouseOver: this.setLoaingStateTrue, onMouseLeave: this.setLoaingStateFalse}, 
-          React.DOM.div({className: logoClass}, 
-            React.DOM.a({className: "logo navbar-link", href: "/"}
-            )
-          )
+      React.DOM.div({className: "row navbar"}, 
+        React.DOM.div({className: "col-xs-6 col-md-2"}, 
+            React.DOM.a({className: logoClass, onMouseEnter: this.setLoaingStateTrue, onMouseOver: this.setLoaingStateTrue, onMouseLeave: this.setLoaingStateFalse, href: "/"})
         ), 
-        React.DOM.div({className: "get-app", onMouseEnter: this.setLoaingStateTrue, onMouseOver: this.setLoaingStateTrue, onMouseLeave: this.setLoaingStateFalse}, 
-          React.DOM.a({className: "c", href: "https://itunes.apple.com/us/app/id903690805#"}, 
-            React.DOM.h3(null, " ", React.DOM.i({className: "fa fa-arrow-down"}), " Get App")
-          ), 
-          React.DOM.a({className: "navbar-link", href: "/classes", onClick: this.onClickClasses}, 
-            React.DOM.h3(null, " ", React.DOM.i({className: "fa fa-align-justify"}, " "), " See Classes")
-          )
+        React.DOM.div({className: "col-md-offset-6 col-xs-6 col-md-2"}, 
+          React.DOM.a({href: "https://itunes.apple.com/us/app/id903690805#"}, " ", React.DOM.i({className: "fa fa-arrow-down"}), " Get App")
+        ), 
+        React.DOM.div({className: "col-md-2 col-xs-12 hidden-xs hidden-sm"}, 
+          React.DOM.a({className: "navbar-link", href: "/classes", onClick: this.onClickClasses}, " ", React.DOM.i({className: "fa fa-align-justify"}, " "), " See Classes")
         )
       )
     )

@@ -6165,10 +6165,11 @@ button.close {
 }
 body {
   background: #1c95f9;
-  overflow: hidden;
+  overflow-x: hidden;
+  text-align: center;
+  min-width: 300px;
 }
 #container {
-  padding-top: 80px;
   width: 100%;
   height: 100%;
 }
@@ -6177,42 +6178,22 @@ body {
   box-shadow: 0px 0px 5px #333333;
 }
 .navbar div {
-  margin: 0 1rem;
+  height: 80px;
 }
 .navbar div a {
-  float: right;
   line-height: 80px;
-  padding-left: 20px;
+  font-size: 18px;
 }
-.navbar div a i {
-  padding: 10px;
-}
-.navbar .get-app {
-  float: right;
-}
-.navbar .get-app a {
-  line-height: 18px;
-}
-.navbar div.logo-container {
-  margin-left: 30px;
-  float: left;
-  padding: 20.5px;
-}
-.navbar div.logo-container div.logo {
-  border-radius: 50%;
-  width: 39px !important;
-  height: 39px !important;
-  margin: 0;
-}
-.navbar div.logo-container div.logo a {
+.navbar a.logo {
   display: inline-block;
-  width: 100%;
-  height: 100%;
   background: center no-repeat;
   background-image: url(/dist/radar-tail.png);
   background-size: contain;
+  width: 39px !important;
+  height: 39px !important;
+  margin: 20.5px auto;
 }
-.navbar div.logo-container div.logo.spin {
+.navbar a.logo.spin {
   -webkit-animation: spin 1s infinite linear;
 }
 @-webkit-keyframes spin {
@@ -6233,29 +6214,34 @@ body {
 .navbar a:hover {
   color: #1c95f9;
 }
-.landing-container {
-  height: 100%;
-}
-#landing {
-  margin-top: 30px;
-}
 #landing .intro {
-  margin: auto;
-  height: 500px;
-  width: 400px;
+  text-align: left;
   color: #ffffff;
+  padding: 15px;
+  font-size: 24px;
 }
-#landing .intro .span {
-  line-height: 400px;
+#landing .see-classes {
+  cursor: pointer;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
-#landing .intro span.text {
-  top: 0;
-  left: 0;
-  margin-top: 100px;
-  display: block;
+#landing .see-classes a {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  padding-left: 15px;
+  font-size: 18px;
+  color: white;
+  text-transform: uppercase;
+}
+#landing .see-classes a span {
+  float: left;
+}
+#landing .see-classes a i.fa {
+  padding-left: 10px;
 }
 #landing .phone {
-  margin: auto;
+  margin: 15px auto;
   cursor: pointer;
   height: 400px;
   width: 200px;

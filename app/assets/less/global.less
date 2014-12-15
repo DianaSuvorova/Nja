@@ -4,61 +4,44 @@
 @radar-blue: #1c95f9;
 @navbar-background: #fafafa;
 @navbar-unit-size: 30px;
+@navbar-unit-size-small: 10px;
 
 
 body {
-  
   background: @radar-blue; 
-  overflow: hidden;
+  overflow-x: hidden;
+  text-align: center;
+  min-width: @landing-unit-size * 3;
 }
 
 #container {
-  padding-top: 80px;
   width: 100%;
   height: 100%;
 }
 
 .navbar {
   div {
-    margin: 0 1rem;
+    height:@navbar-height;
     a {
-      float: right;
       line-height: @navbar-height;
-      padding-left: 20px;
-    i {padding:10px;}
-    }
-  }
-  .get-app {
-    float: right;
-    a {line-height: 18px;}
-  }
- 
-  div.logo-container {
-    margin-left: @navbar-unit-size; 
-    float: left;  
-    padding: (@navbar-height - @navbar-unit-size*1.3) / 2;
-   div.logo {      
-    border-radius: 50%;
-    width: @navbar-unit-size*1.3 !important;
-    height: @navbar-unit-size*1.3 !important;
-    margin:0;
-    a {
-        display: inline-block;
-        width: 100%;
-        height: 100%;
-        background: center no-repeat;
-        background-image: url(/dist/radar-tail.png);
-        background-size: contain;
-      } 
-      &.spin {
-        -webkit-animation: spin 1s infinite linear;
-      } 
+      font-size: @font-size-h4;
     }
   }
 
+  a.logo {
+      display: inline-block;
+      background: center no-repeat;
+      background-image: url(/dist/radar-tail.png);
+      background-size: contain;
+      width: @navbar-unit-size*1.3 !important;
+      height: @navbar-unit-size*1.3 !important;
+      margin: (@navbar-height - @navbar-unit-size*1.3) / 2 auto;  
+      &.spin { -webkit-animation: spin 1s infinite linear;}    
+    } 
+
   @-webkit-keyframes spin {
-   0%  {-webkit-transform: rotate(0deg);}
-  100% {-webkit-transform: rotate(360deg);} 
+     0%  {-webkit-transform: rotate(0deg);}
+    100% {-webkit-transform: rotate(360deg);} 
   }
 
 

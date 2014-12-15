@@ -4,29 +4,21 @@ Ninja.Views.List = React.createClass({
   onSelect: function (model, listIndex) { this.props.onItemSelect(model, listIndex); },
 
   transition: function (animate) {
-    var margin = 5;
+    var margin = 15;
     var $el = $(this.getDOMNode());
     var offset = this.props.listCount - this.props.listIndex - 1;
-    var left = this.props.mobile ? {'left':  -offset * ($el.width() + margin)  } : {'left':  ($el.width() + margin) * this.props.listIndex }  
-    if (this.props.animate && animate) { $el.animate(left, 500); }
+    var left = this.props.mobile ? {'left':  -offset * ($el.width() + margin )  } : {'left':  ($el.width() + margin ) * this.props.listIndex }  
+    if (this.props.animate && animate && !this.props.mobile) { $el.animate(left, 500); }
     else { $el.css(left);}
   },
 
-  handleResize: function () {
-    this.transition(false);
-  },
 
   componentDidMount: function () { 
     this.transition(true);
-    window.addEventListener("resize",  this.handleResize);
   },
   
   componentDidUpdate: function () {
     this.transition(true); 
-  },
-
-  componentWillUnmount: function() {
-    window.removeEventListener('resize', this.handleResize);
   },
   
   componentWillLeave: function (cb) {
