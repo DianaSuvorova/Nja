@@ -30355,6 +30355,7 @@ Ninja.Router = Backbone.Router.extend({
   inititalize: function () { this.stack = []; this.previousStack = []; },
 
   proceedTo: function (path) {
+    _gaq.push(['_trackPageview', path]);
     var stack;
     this.path = path;
     this.previousStack = this.stack ? this.stack : [];
