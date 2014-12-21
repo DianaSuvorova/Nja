@@ -3,12 +3,12 @@
   opacity: 0;
   pointer-events: none;
   transition: opacity  0.5s ease-out;
-  top: -10px;
   padding: 0;
   margin: 0;
   z-index:1;
   position: absolute;
-  height:  calc(~"100% +  "@navbar-unit-size * 5 );
+  top: @navbar-height;
+  height:  calc(~"100%  -  "@navbar-height);
   width: 100%;
   background-color: rgba(255, 255, 255, 0.6);
   div.logo-container {
@@ -121,7 +121,7 @@ i.fa { transition: transform 0.5s }
   position: absolute;
   padding: 1px;
   width: 100%;
-  height: 100%;
+  height: calc(~"100% - "( @navbar-height + @navbar-unit-size-small * 5 ) );
   overflow: hidden; 
 }
 
