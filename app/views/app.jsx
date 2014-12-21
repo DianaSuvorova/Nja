@@ -6,6 +6,7 @@ Ninja.Views.App = React.createClass({
   componentWillMount: function () {
     Backbone.history.on('route', this.route)
     this.route();
+    document.ontouchmove = function(e) {e.preventDefault()};
     window.addEventListener("resize",  this.handleResize);
   },
 
