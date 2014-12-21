@@ -41,20 +41,30 @@ module.exports = function (grunt) {
         }
       }
     },
-
     concurrent: {
       app: {
         tasks: ['nodemon:fakepi', 'watch'],
         options: {logConcurrentOutput: true}
       }
     },
-
     watch: {
       js: {files: ['app/views/*.jsx', 'app/models/*.js', 'app/helpers/.*js'], tasks: ['react', 'concat:js']},
       css: {files: [' app/assets/less/*.less'], tasks: ['less']},
-
+    },
+    cssmin: {
+      combine: {
+        files: {'dist/build.css': ['dist/build.css']}
+      }
+    },
+   uglify: {
+      options: {
+        mangle: true,
+        compress: true,
+      },
+      target: {
+        files: {'dist/build.js': ['dist/build.js']}
+      }
     }
-  
   });
 
   grunt.loadNpmTasks('grunt-react');
@@ -63,6 +73,9 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-concurrent');
   grunt.loadNpmTasks('grunt-nodemon');
   grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
 
   grunt.registerTask('app', ['react','less', 'concat', 'concurrent:app']);
+  grunt.registerTask('build', ['react', 'less', 'concat', 'cssmin', 'uglify']);
 };
