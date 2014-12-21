@@ -28,7 +28,6 @@ Ninja.Views.Navbar = React.createClass({
   },
 
   getApp: function () {
-    _gaq.push(['_trackPageview', 'itunes', 'navbar']);
     window.location = 'https://itunes.apple.com/us/app/id903690805#';
   },
 
