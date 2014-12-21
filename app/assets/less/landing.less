@@ -1,7 +1,14 @@
 @landing-unit-size: 100px;
 
-#landing{
+.landing-container {
+  position: absolute;
   height: calc(~"100%  -  "@navbar-height + @navbar-unit-size * 2);
+  top: @navbar-height + @navbar-unit-size;
+}
+
+#landing{
+  height: 100%;
+  overflow-x: scroll;
   .intro {
     text-align: left;
     color: #ffffff;
