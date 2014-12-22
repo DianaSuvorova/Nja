@@ -3,6 +3,9 @@ Ninja.Views.List = React.createClass({
 
   onSelect: function (model, listIndex) { this.props.onItemSelect(model, listIndex); },
 
+  onVote: function () { 
+    this.props.onItemSelect(model, listIndex);  },
+
   transition: function (animate) {
     var margin = 15;
     var $el = $(this.getDOMNode());
@@ -28,7 +31,7 @@ Ninja.Views.List = React.createClass({
   },
 
   render: function () {
-    var listClasses = globals.cx({ 'list col-xs-12 col-md-3': true}); 
+    var listClasses = globals.cx({ 'list col-xs-12 col-md-3': true});
     var listView = this.props.model.models.map(function (model, i) {
       var selected = false;
       if (this.props.listIndex < (this.props.listCount - 1 ) && this.props.modelDict[this.props.listIndex+1].cid === model.cid) {
@@ -36,6 +39,13 @@ Ninja.Views.List = React.createClass({
       }
       return ( < Ninja.Views.Item key = {'item_'+i} item = {model} selected = {selected} onSelect = {this.onSelect.bind(this, model, this.props.listIndex)} setSpin = {this.props.setSpin}/> )
     }, this);  
+    
+    if (this.props.model.name === 'schools') {
+      var uVoteItem = new Backbone.Model({name: 'Tell us what we\'ve missed'});
+      var view = (< Ninja.Views.Item key = {'item_vote'} item = {uVoteItem} onSelect = {this.onVote} />);
+      listView.push(view);
+    }
+
     return (<ul key = {this.props.key}  className = {listClasses} > {listView} </ul>);
   }
 });
