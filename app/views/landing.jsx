@@ -15,8 +15,8 @@ Ninja.Views.Landing = React.createClass({
 
   render: function () {
     return (
-      <div className='row landing-container'>
-        <div id = 'landing'>
+      <div className='landing-container'>
+        <div id = 'landing' className = 'row' >
           <div className='col-xs-12 col-md-4 col-md-push-6'>
             <div className ='intro'>
               <strong>Class Radar </strong> keeps track of classes you want to take that are already full and notifies you when a spot opens up for registration.
