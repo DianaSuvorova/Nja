@@ -3,11 +3,12 @@
 @light-gray: #C2C2C2;
 @radar-blue: #1c95f9;
 @navbar-background: #fafafa;
-@navbar-unit-size: 30px;
+@navbar-unit-size: 30px;  
 @navbar-unit-size-small: 10px;
 
 
-body {
+body, html {
+  width: 100%;
   background: @radar-blue; 
   overflow: hidden;
   text-align: center;
@@ -15,6 +16,10 @@ body {
 }
 
 .navbar {
+  width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  overflow: hidden;
   div {
     height:@navbar-height;
     a {
