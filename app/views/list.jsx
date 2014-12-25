@@ -3,8 +3,7 @@ Ninja.Views.List = React.createClass({
 
   onSelect: function (model, listIndex) { this.props.onItemSelect(model, listIndex); },
 
-  onVote: function () { 
-    this.props.onItemSelect(model, listIndex);  },
+  onVote: function () { this.props.onVoteDialog(); },
 
   transition: function (animate) {
     var margin = 15;
