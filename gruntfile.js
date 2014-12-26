@@ -22,6 +22,14 @@ module.exports = function (grunt) {
       js:{
         src: [vendorJs, 'app/helpers/*.js', 'app/models/*.js', 'dist/react/*.js'],
         dest: 'dist/build.js'
+      },
+      ga:{
+        src: ['components/ga.js'],
+        target: 'dist/ga.js'
+      },
+      no_ga:{
+        src: ['components/ga_empty.js'],
+        target: 'dist/ga.js'
       }
     },
     less: {
@@ -76,6 +84,6 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-uglify');
 
-  grunt.registerTask('app', ['react','less', 'concat', 'concurrent:app']);
-  grunt.registerTask('build', ['react', 'less', 'concat', 'cssmin', 'uglify']);
+  grunt.registerTask('app', ['react','less', 'concat:js', 'concat:no_ga', 'concurrent:app']);
+  grunt.registerTask('build', ['react', 'less', 'concat:js', 'concat:ga', 'cssmin', 'uglify']);
 };
