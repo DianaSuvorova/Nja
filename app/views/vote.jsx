@@ -1,31 +1,62 @@
 /** @jsx React.DOM */
 Ninja.Views.Vote = React.createClass({
 
-componentDidUpdate: function () {
-  var $el = $(this.getDOMNode());
-  $el.modal(this.props.modal);
+getInitialState: function () { return {submitted: false}; },
+
+onInputClick: function (e) {
+  e.stopPropagation();
 },
 
+onSubmit: function (e) {
+  var $el = $(this.getDOMNode())
+  var email = $el.find('input#email')[0];
+  var school = $el.find('input#school')[0];
+  var data = {email: email.value, school: school.value};
+  this.setState({submitted: true});
+  return false;
+},
+
+onSubmitForm: function (e) {
+  e.preventDefault();
+  return false;
+},
+
+onInputKeyDown: function (e) { if (e.which === 13) e.preventDefault(); },
+
 render: function () {
-  console.log('renderVote');
+  var itemClass = globals.cx({
+    'list-group-item item-name vote' : true,
+    'active' : this.props.selected
+  });
+
+  var backClass = globals.cx({
+    'block back': true,
+    'hidden' : !this.state.submitted
+  });
+
+  var frontClass = globals.cx({
+    'block front': true,
+    'hidden' : this.state.submitted
+  });
+
+
   return (
-    <div className="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-      <div className="modal-dialog modal-sm">
-        <div className="modal-content">
-          <div className="modal-header">
-            <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 className="modal-title">Modal title</h4>
-          </div>
-          <div className="modal-body">
-            <p>One fine body&hellip;</p>
-          </div>
-          <div className="modal-footer">
-            <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" className="btn btn-primary">Save changes</button>
-          </div>
-        </div>
+    <li className = {itemClass} onClick = {this.props.onSelect} > 
+      <div className = {frontClass} >
+        <div className = 'header'> Don't see your school? </div>
+        <div className = 'header'>Let us know. And we'll notify you once we have it on our list</div>
+        <form onSubmit = {this.onSubmitForm}> 
+          <input type='text' className='form-control' id='email' placeholder='Email' onClick= {this.onInputClick} onKeyDown = {this.onInputKeyDown}/>
+          <input type='text' className='form-control' id='school' placeholder='School'onClick= {this.onInputClick} onKeyDown = {this.onInputKeyDown}/>
+          <button type='submit' className='btn btn-default' onClick= {this.onSubmit}> Submit </button>
+        </form>
       </div>
-    </div>
+      <div className = {backClass} >
+        <div className= 'header'> Thank you!</div>
+        <div className= 'header'> We'll keep you posted. Meanwhile tell your classmates about us.</div>
+        <div className= 'header'> The more requests we have for the school the sooner we'll add it.</div>
+      </div>
+    </li>
     )
   }
 });

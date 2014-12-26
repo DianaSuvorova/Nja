@@ -1,9 +1,14 @@
     /** @jsx React.DOM **/
 Ninja.Views.List = React.createClass({
 
-  onSelect: function (model, listIndex) { this.props.onItemSelect(model, listIndex); },
+  getInitialState: function () { return {voteActive: false} },
 
-  onVote: function () { this.props.onVoteDialog(); },
+  onSelect: function (model, listIndex) { 
+    this.setState({voteActive: false});
+    this.props.onItemSelect(model, listIndex); 
+  },
+
+  onSelectVote: function () {this.setState({voteActive: !this.state.voteActive});},
 
   transition: function (animate) {
     var margin = 15;
@@ -33,16 +38,15 @@ Ninja.Views.List = React.createClass({
     var listClasses = globals.cx({ 'list col-xs-12 col-md-3': true});
     var listView = this.props.model.models.map(function (model, i) {
       var selected = false;
-      if (this.props.listIndex < (this.props.listCount - 1 ) && this.props.modelDict[this.props.listIndex+1].cid === model.cid) {
+      if (this.props.listIndex < (this.props.listCount - 1 ) && this.props.modelDict[this.props.listIndex+1].cid === model.cid && !this.state.voteActive) {
         selected = true;
       }
       return ( < Ninja.Views.Item key = {'item_'+i} item = {model} selected = {selected} onSelect = {this.onSelect.bind(this, model, this.props.listIndex)} setSpin = {this.props.setSpin}/> )
     }, this);  
     
     if (this.props.model.name === 'schools') {
-      var uVoteItem = new Backbone.Model({name: 'Tell us what we\'ve missed'});
-      var view = (< Ninja.Views.Item key = {'item_vote'} item = {uVoteItem} onSelect = {this.onVote} />);
-      listView.push(view);
+      var view = (< Ninja.Views.Vote key = {'item_vote'} selected = {this.state.voteActive} onSelect = {this.onSelectVote}/>);
+      listView.unshift(view);
     }
 
     return (<ul key = {this.props.key}  className = {listClasses} > {listView} </ul>);

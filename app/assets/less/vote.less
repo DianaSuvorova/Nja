@@ -1,0 +1,21 @@
+li.vote {
+  height: auto;
+  max-height: @padding-large-vertical * 4;
+  overflow: hidden; 
+  transition: max-height 0.5s ease-in-out;
+  div.header { padding-bottom: @padding-large-vertical;}
+  .btn{ width: 100%;}
+  &.active {
+    max-height: 100%;
+    background-color: @highlighted-bg;
+    color: #455B8E;
+    
+    .block {
+      height: auto;
+    }
+    .hidden {
+      max-height: 0;
+      overflow: hidden;
+    }
+  }
+}

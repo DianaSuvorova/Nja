@@ -1,7 +1,7 @@
     /** @jsx React.DOM **/
 Ninja.Views.Lists = React.createClass({
 
-  getInitialState: function () { return {modelDict: this.props.model ,listDict: [], animate: true, loading:true, vote: 'hide' }; },
+  getInitialState: function () { return {modelDict: this.props.model ,listDict: [], animate: true, loading:true}; },
 
   syncModel: function (deferred, modelDict, listDict, listId, i) {
     modelDict[i].sublist.hydrate().then(function (sublist) {
@@ -67,7 +67,7 @@ Ninja.Views.Lists = React.createClass({
   render: function () {
     var visible = globals.cx({ 'visible' : this.state.loading});
     var lists = this.state.listDict.map(function (model, i) {
-      return < Ninja.Views.List key = {'list_'+i} listCount = {this.state.listDict.length} listIndex = {i} model = {model} modelDict = {this.state.modelDict}  onItemSelect = {this.handleSelect}  animate = {this.state.animate} mobile = {this.props.mobile} setSpin = {this.props.setSpin} onVoteDialog = {this.voteDialogShow}/>;
+      return < Ninja.Views.List key = {'list_'+i} listCount = {this.state.listDict.length} listIndex = {i} model = {model} modelDict = {this.state.modelDict}  onItemSelect = {this.handleSelect}  animate = {this.state.animate} mobile = {this.props.mobile} setSpin = {this.props.setSpin}/>;
     },this);
     
     var loading =  
@@ -81,7 +81,6 @@ Ninja.Views.Lists = React.createClass({
 
     return (
       <div>
-        <Ninja.Views.Vote modal = {this.state.vote} />
         {loading}
         <div id ='lists'> 
           <globals.ReactTransitionGroup transitionName="list">
