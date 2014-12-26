@@ -13,7 +13,7 @@ onSubmit: function (e) {
   var school = $el.find('input#school')[0];
   var data = {email: email.value, school: school.value};
   this.setState({submitted: true});
-  if (window._gat) _trackEvent('voteForm', email.value + ''+ school.value);
+  if (window._gat) _gaq.push('_trackEvent','voteForm', email.value + ''+ school.value);
   return false;
 },
 
