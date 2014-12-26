@@ -25,11 +25,11 @@ module.exports = function (grunt) {
       },
       ga:{
         src: ['components/ga.js'],
-        target: 'dist/ga.js'
+        dest: 'dist/ga.js'
       },
       no_ga:{
         src: ['components/ga_empty.js'],
-        target: 'dist/ga.js'
+        dest: 'dist/ga.js'
       }
     },
     less: {
