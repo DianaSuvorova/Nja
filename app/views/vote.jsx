@@ -27,7 +27,7 @@ onInputKeyDown: function (e) { if (e.which === 13) e.preventDefault(); },
 render: function () {
   var itemClass = globals.cx({
     'list-group-item item-name vote' : true,
-    'active' : this.props.selected
+    'expanded' : this.props.selected
   });
 
   var backClass = globals.cx({
