@@ -22,40 +22,58 @@ onSubmitForm: function (e) {
   return false;
 },
 
+shareTwitter: function () {
+  window.location = 'https://twitter.com';
+},
+
+shareFacebook: function () {
+  window.location = 'https://www.facebook.com';
+},
+
+
 onInputKeyDown: function (e) { if (e.which === 13) e.preventDefault(); },
 
 render: function () {
   var itemClass = globals.cx({
-    'list-group-item item-name vote' : true,
+    'list-group-item item-name vote flip-container' : true,
     'expanded' : this.props.selected
   });
 
   var backClass = globals.cx({
-    'block': true,
-    'back' : !this.state.submitted
+    'block back': true
   });
 
   var frontClass = globals.cx({
-    'block': true,
-    'back' : this.state.submitted
+    'block front': true
+  });
+
+    var flipClass = globals.cx({
+    'flipper': true,
+    'submitted' : this.state.submitted
   });
 
 
   return (
-    <li className = {itemClass} onClick = {this.props.onSelect} > 
-      <div className = {frontClass} >
-        <div className = 'header'> Don't see your school? </div>
-        <div className = 'header'>Let us know. We'll notify you once we have it on our list.</div>
-        <form onSubmit = {this.onSubmitForm}> 
-          <input type='text' className='form-control' id='email' placeholder='Email' onClick= {this.onInputClick} onKeyDown = {this.onInputKeyDown}/>
-          <input type='text' className='form-control' id='school' placeholder='School'onClick= {this.onInputClick} onKeyDown = {this.onInputKeyDown}/>
-          <button type='submit' className='btn btn-default' onClick= {this.onSubmit}> Submit </button>
-        </form>
-      </div>
-      <div className = {backClass} >
-        <div className= 'header'> Thank you!</div>
-        <div className= 'header'> We'll keep you posted. Meanwhile tell your classmates about us.</div>
-        <div className= 'header'> The more requests we have for the school the sooner we'll add it.</div>
+    <li className = {itemClass} onClick = {this.props.onSelect} >
+      <div className = {flipClass} > 
+        <div className = {frontClass} >
+          <div className = 'header first'> Don't see your school? </div>
+          <div className = 'header'>Let us know. We'll notify you once we have it on our list.</div>
+          <form onSubmit = {this.onSubmitForm}> 
+            <input type='text' className='form-control' id='email' placeholder='Email' onClick= {this.onInputClick} onKeyDown = {this.onInputKeyDown}/>
+            <input type='text' className='form-control' id='school' placeholder='School'onClick= {this.onInputClick} onKeyDown = {this.onInputKeyDown}/>
+            <button type='submit' className='btn btn-default' onClick= {this.onSubmit}> Submit </button>
+          </form>
+        </div>
+        <div className = {backClass} >
+          <div className= 'header first'> Thank you!</div>
+          <div className= 'header'> We'll keep you posted. Meanwhile tell your classmates about us.</div>
+          <div className= 'header'> The more requests we have for the school the sooner we'll add it.</div>
+          <div className= 'header share'>
+            <i className="fa fa-facebook" onClick = {this.shareFacebook} ></i>
+            <i className="fa fa-twitter" onClick = {this.shareTwitter}></i>
+          </div>
+        </div>
       </div>
     </li>
     )
