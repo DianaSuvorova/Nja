@@ -13,7 +13,7 @@ onSubmit: function (e) {
   var school = $el.find('input#school')[0];
   var data = {email: email.value, school: school.value};
   this.setState({submitted: true});
-  if (window._gat) _gaq.push('_trackEvent','voteForm', email.value + ''+ school.value);
+  if (window._gat) _gaq.push(['_trackEvent','voteForm', email.value + ''+ school.value]);
   return false;
 },
 
@@ -23,13 +23,12 @@ onSubmitForm: function (e) {
 },
 
 shareTwitter: function () {
-  window.location = 'https://twitter.com';
+  window.location = 'https://twitter.com/ClassRadar';
 },
 
 shareFacebook: function () {
-  window.location = 'https://www.facebook.com';
+  window.location = 'https://www.facebook.com/pages/Class-Radar/1545837785632805';
 },
-
 
 onInputKeyDown: function (e) { if (e.which === 13) e.preventDefault(); },
 
@@ -58,7 +57,7 @@ render: function () {
       <div className = {flipClass} > 
         <div className = {frontClass} >
           <div className = 'header first'> Don't see your school? </div>
-          <div className = 'header'>Let us know. We'll notify you once we have it on our list.</div>
+          <div className = 'header'>Let us know. <br></br> We'll notify you once we add it.</div>
           <form onSubmit = {this.onSubmitForm}> 
             <input type='text' className='form-control' id='email' placeholder='Email' onClick= {this.onInputClick} onKeyDown = {this.onInputKeyDown}/>
             <input type='text' className='form-control' id='school' placeholder='School'onClick= {this.onInputClick} onKeyDown = {this.onInputKeyDown}/>
@@ -67,8 +66,8 @@ render: function () {
         </div>
         <div className = {backClass} >
           <div className= 'header first'> Thank you!</div>
-          <div className= 'header'> We'll keep you posted. Meanwhile tell your classmates about us.</div>
-          <div className= 'header'> The more requests we have for the school the sooner we'll add it.</div>
+          <div className= 'header'> We'll keep you posted. Meanwhile <br></br> tell your classmates about us.</div>
+          <div className= 'header'> The more requests we have <br></br> the sooner we add the school.</div>
           <div className= 'header share'>
             <i className="fa fa-facebook" onClick = {this.shareFacebook} ></i>
             <i className="fa fa-twitter" onClick = {this.shareTwitter}></i>
