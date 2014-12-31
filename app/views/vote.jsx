@@ -23,11 +23,11 @@ onSubmitForm: function (e) {
 },
 
 shareTwitter: function () {
-  window.location = 'https://twitter.com/ClassRadar';
+  window.open('https://twitter.com/ClassRadar', '_blank');
 },
 
 shareFacebook: function () {
-  window.location = 'https://www.facebook.com/pages/Class-Radar/1545837785632805';
+  window.open('https://www.facebook.com/pages/Class-Radar/1545837785632805', '_blank');
 },
 
 onInputKeyDown: function (e) { if (e.which === 13) e.preventDefault(); },
