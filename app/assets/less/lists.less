@@ -63,21 +63,39 @@
 li.section { 
   padding-top: 0; 
   padding-bottom: 0;
-  cursor: pointer 
+  cursor: pointer;
+  font-size: @font-size-small;
 }
 
 .section-header {
   background-color: #F0F0F0;
   color: @text-gray;
+  padding: 4px inherit;
+  font-family: 'Montserrat', sans-serif;
+  span { float: left;}
+}
+
+.row_info {
+  text-align: left;
+  .detail_tal { 
+    color: @light-gray;
+  }
 }
 
 .section-detail {
   background-color: #FFF;
+   .times_and_location {
+    .row {
+      text-align: left;
+      font-size: @font-size-small;
+    }
+  } 
 }
 .event {
   border-bottom: 1px solid #d5d5d5;
   padding-bottom: 5px;
   .event-detail {
+    padding-top: 3px;
     height: auto;
     max-height:0;
     overflow: hidden;
@@ -94,28 +112,33 @@ i.fa { transition: transform 0.5s }
 
 .status-marker-container{
   position: absolute;
-  top: @navbar-unit-size-small * 1.5 + @line-height-computed ;
-  left: -(@navbar-unit-size-small * 1.5);
+  top: 13px ;
+  left: -1px;
   width: @navbar-unit-size-small * 1.5 !important;
 }
 
-@media (min-width: @screen-md-min) { 
-  .status-marker-container{
-  }
-}
 
 .status-marker {
   border-top: @navbar-unit-size-small * 1.5 solid ;
   border-right: @navbar-unit-size-small * 1.5 solid transparent ;
 }
 
+.arrow {i {float: right;} }
+
 .event-header {
+  position: relative;
   color: @text-gray;
+  padding: 3px inherit;
 }
 .section-header {
   border-bottom: 1px solid #d5d5d5;
 }
-.detail-header { color: @light-gray }
+.detail-header { 
+  span {float: left}
+  color: @light-gray;
+  padding-left: 4px;
+  font-size: @font-size-small;
+}
 
 #lists {
   position: absolute;
