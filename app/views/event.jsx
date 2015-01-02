@@ -3,7 +3,21 @@ Ninja.Views.Event = React.createClass({
 
   getInitialState: function() { return {expanded: false}; },
 
-  onSelect: function () { this.setState({expanded : !this.state.expanded}); },
+  onSelect: function () { 
+    el = $(this.getDOMNode());
+    this.scrollToElelement(el);
+    this.setState({expanded : !this.state.expanded}); 
+  },
+
+  scrollToElelement: function (el) {
+    var list = $('html,body').find('li.section')[0].parentElement;
+    var listOffset = $(list).offset().top;
+    var listheight = $(list).height();
+    var elOffset = $(el).offset().top
+    if (elOffset > listOffset + listheight/2 ){
+      $(list).animate({scrollTop: $(list).scrollTop() + elOffset - listOffset  }, 500);
+    }
+  },
 
   render: function () {
     var model = this.props.model;
