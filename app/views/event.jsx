@@ -5,7 +5,7 @@ Ninja.Views.Event = React.createClass({
 
   onSelect: function () { 
     el = $(this.getDOMNode());
-    this.scrollToElelement(el);
+    if (!this.state.expanded) { this.scrollToElelement(el); }
     this.setState({expanded : !this.state.expanded}); 
   },
 
