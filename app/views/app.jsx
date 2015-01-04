@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 Ninja.Views.App = React.createClass({
 
-  getInitialState: function () {return {route: '', spin: false, mobile: this.isMobile() };},
+  getInitialState: function () {return {route: '', spin: false, mobile: this.isMobile(), login: 'hide' };},
 
   componentWillMount: function () {
     Backbone.history.on('route', this.route)
@@ -26,24 +26,27 @@ Ninja.Views.App = React.createClass({
     this.setState({spin: state})
   },
 
+  onShowLogin: function () {
+    this.setState({login: 'show'})
+  },
+
   route: function () {
     var path =  null;
     if (this.props.router.path) path = this.props.router.path.split(/[//]+/)[0];
     if (!path) this.setState({route: 'landing'});
     else this.setState({route: path})
-
   },
 
   render: function () {
-    var navbar = < Ninja.Views.Navbar router = {this.props.router} spin = {this.state.spin} setSpin = {this.setSpin}/>;  
+    var navbar = < Ninja.Views.Navbar router = {this.props.router} spin = {this.state.spin} setSpin = {this.setSpin} onShowLogin= {this.onShowLogin}/>;  
     var landing = <Ninja.Views.Landing setSpin = {this.setSpin}/> 
     var lists = < Ninja.Views.Lists  model = {[this.props.model]} router = {this.props.router} mobile = {this.state.mobile} setSpin = {this.setSpin}/>
     var footer = < Ninja.Views.Footer mobile = {this.state.mobile}/>
-    var login = <Ninja.Views.Login />
+    var login = <Ninja.Views.Login modal = {this.state.login} />
     var content = landing;
     if (this.state.route === 'classes') content = lists;
-    else if (this.state.route === 'login') content = login;
 
-    return (  <div>{navbar}{content}{footer} </div>);
+    return (  <div>{navbar}{content}{login}{footer} </div>);
+
   }
 });

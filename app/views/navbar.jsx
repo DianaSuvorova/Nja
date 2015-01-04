@@ -8,6 +8,10 @@ Ninja.Views.Navbar = React.createClass({
     return false;
   },
 
+  onClickLogin: function () {
+    this.props.onShowLogin(); 
+  },
+
   setLoaingStateTrue: function () {
     this.props.setSpin(true);
   },
@@ -42,12 +46,15 @@ Ninja.Views.Navbar = React.createClass({
         <div className = "col-xs-6 col-md-2" >
             <a className={logoClass} onMouseEnter = {this.setLoaingStateTrue} onMouseOver = {this.setLoaingStateTrue}  onMouseLeave = {this.setLoaingStateFalse} href="/"></a>
         </div>
-        <div className = "col-md-offset-6 col-xs-6 col-md-2">
+        <div className = "col-md-offset-4 col-xs-6 col-md-2">
           <a href = 'https://itunes.apple.com/us/app/id903690805' > <i className="fa fa-arrow-down"></i> Get App</a>
         </div>
         <div className = "col-md-2 col-xs-12 hidden-xs hidden-sm">
           <a className = "navbar-link" href="/classes" onClick = {this.onClickClasses}> <i className="fa fa-align-justify"> </i> See Classes</a>
-        </div>         
+        </div>  
+        <div className = "col-md-2 col-xs-12 hidden-xs hidden-sm">
+          <a className = "navbar-link" href="javascript:void(0);" onClick = {this.onClickLogin}> <i className="fa  fa-sign-in"> </i> Login </a>
+        </div>              
       </div>
     )
   }

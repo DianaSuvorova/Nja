@@ -30327,7 +30327,7 @@ Ninja.Views.Item = React.createClass({displayName: 'Item',
 /** @jsx React.DOM */
 Ninja.Views.App = React.createClass({displayName: 'App',
 
-  getInitialState: function () {return {route: '', spin: false, mobile: this.isMobile() };},
+  getInitialState: function () {return {route: '', spin: false, mobile: this.isMobile(), login: 'hide' };},
 
   componentWillMount: function () {
     Backbone.history.on('route', this.route)
@@ -30352,25 +30352,28 @@ Ninja.Views.App = React.createClass({displayName: 'App',
     this.setState({spin: state})
   },
 
+  onShowLogin: function () {
+    this.setState({login: 'show'})
+  },
+
   route: function () {
     var path =  null;
     if (this.props.router.path) path = this.props.router.path.split(/[//]+/)[0];
     if (!path) this.setState({route: 'landing'});
     else this.setState({route: path})
-
   },
 
   render: function () {
-    var navbar = Ninja.Views.Navbar({router: this.props.router, spin: this.state.spin, setSpin: this.setSpin});  
+    var navbar = Ninja.Views.Navbar({router: this.props.router, spin: this.state.spin, setSpin: this.setSpin, onShowLogin: this.onShowLogin});  
     var landing = Ninja.Views.Landing({setSpin: this.setSpin}) 
     var lists = Ninja.Views.Lists({model: [this.props.model], router: this.props.router, mobile: this.state.mobile, setSpin: this.setSpin})
     var footer = Ninja.Views.Footer({mobile: this.state.mobile})
-    var login = Ninja.Views.Login(null)
+    var login = Ninja.Views.Login({modal: this.state.login})
     var content = landing;
     if (this.state.route === 'classes') content = lists;
-    else if (this.state.route === 'login') content = login;
 
-    return (  React.DOM.div(null, navbar, content, footer, " "));
+    return (  React.DOM.div(null, navbar, content, login, footer, " "));
+
   }
 });
 
@@ -30706,16 +30709,34 @@ Ninja.Views.Lists = React.createClass({displayName: 'Lists',
 /** @jsx React.DOM */
 Ninja.Views.Login = React.createClass({displayName: 'Login',
 
+  componentDidUpdate: function () {
+    var $el = $(this.getDOMNode());
+    $el.modal(this.props.modal);
+  },
+
+
   render: function () {
     return (
-      React.DOM.span({id: "signinButton"}, 
-        React.DOM.span({
-          className: "g-signin", 
-          'data-callback': "signinCallback", 
-          'data-clientid': "CLIENT_ID", 
-          'data-cookiepolicy': "single_host_origin", 
-          'data-requestvisibleactions': "http://schema.org/AddAction", 
-          'data-scope': "https://www.googleapis.com/auth/profile"}
+      React.DOM.div({className: "modal fade bs-example-modal-sm", tabindex: "-1", role: "dialog", 'aria-labelledby': "login", 'aria-hidden': "true"}, 
+        React.DOM.div({className: "modal-dialog modal-sm"}, 
+          React.DOM.div({className: "modal-content"}, 
+            React.DOM.div({className: "modal-header"}, 
+              React.DOM.button({type: "button", className: "close", 'data-dismiss': "modal", 'aria-label': "Close"}, React.DOM.span({'aria-hidden': "true"}, "×")), 
+              React.DOM.h4({className: "modal-title"}, "Login")
+            ), 
+            React.DOM.div({className: "modal-body"}, 
+              React.DOM.span({id: "signinButton"}, 
+                React.DOM.span({
+                  className: "g-signin", 
+                  'data-callback': "signinCallback", 
+                  'data-clientid': "CLIENT_ID", 
+                  'data-cookiepolicy': "single_host_origin", 
+                  'data-requestvisibleactions': "http://schema.org/AddAction", 
+                  'data-scope': "https://www.googleapis.com/auth/profile"}
+                )
+              )
+            )
+          )
         )
       )
     )
@@ -30731,6 +30752,10 @@ Ninja.Views.Navbar = React.createClass({displayName: 'Navbar',
   onClickClasses: function () {
     this.props.router.navigate('/classes' , {trigger: true, pushState: true});
     return false;
+  },
+
+  onClickLogin: function () {
+    this.props.onShowLogin(); 
   },
 
   setLoaingStateTrue: function () {
@@ -30767,11 +30792,14 @@ Ninja.Views.Navbar = React.createClass({displayName: 'Navbar',
         React.DOM.div({className: "col-xs-6 col-md-2"}, 
             React.DOM.a({className: logoClass, onMouseEnter: this.setLoaingStateTrue, onMouseOver: this.setLoaingStateTrue, onMouseLeave: this.setLoaingStateFalse, href: "/"})
         ), 
-        React.DOM.div({className: "col-md-offset-6 col-xs-6 col-md-2"}, 
+        React.DOM.div({className: "col-md-offset-4 col-xs-6 col-md-2"}, 
           React.DOM.a({href: "https://itunes.apple.com/us/app/id903690805"}, " ", React.DOM.i({className: "fa fa-arrow-down"}), " Get App")
         ), 
         React.DOM.div({className: "col-md-2 col-xs-12 hidden-xs hidden-sm"}, 
           React.DOM.a({className: "navbar-link", href: "/classes", onClick: this.onClickClasses}, " ", React.DOM.i({className: "fa fa-align-justify"}, " "), " See Classes")
+        ), 
+        React.DOM.div({className: "col-md-2 col-xs-12 hidden-xs hidden-sm"}, 
+          React.DOM.a({className: "navbar-link", href: "javascript:void(0);", onClick: this.onClickLogin}, " ", React.DOM.i({className: "fa  fa-sign-in"}, " "), " Login ")
         )
       )
     )
