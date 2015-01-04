@@ -40,7 +40,7 @@ onInputKeyUpSchool: function (e) {
 },
 
 validateSchool: function (value) {
-  if (value.length > 1)  this.setState({schoolValid: true});
+  if (value.length > 2)  this.setState({schoolValid: true});
   else this.setState({schoolValid: false});
 },
 
