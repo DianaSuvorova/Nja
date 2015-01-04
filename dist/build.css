@@ -6586,3 +6586,10 @@ nav#footer.active {
     width: 100%;
   }
 }
+.modal-body {
+  height: 50px;
+}
+.modal-body #signinButton {
+  height: 20px;
+  width: 30px;
+}

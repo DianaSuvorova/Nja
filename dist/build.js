@@ -30730,6 +30730,8 @@ Ninja.Views.Login = React.createClass({displayName: 'Login',
                   className: "g-signin", 
                   'data-callback': "signinCallback", 
                   'data-clientid': "CLIENT_ID", 
+                  'data-height': "standard", 
+                  'data-width': "standard", 
                   'data-cookiepolicy': "single_host_origin", 
                   'data-requestvisibleactions': "http://schema.org/AddAction", 
                   'data-scope': "https://www.googleapis.com/auth/profile"}
