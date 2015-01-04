@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 Ninja.Views.App = React.createClass({
 
-  getInitialState: function () {return {landing:false, spin: false, mobile: this.isMobile() };},
+  getInitialState: function () {return {route: '', spin: false, mobile: this.isMobile() };},
 
   componentWillMount: function () {
     Backbone.history.on('route', this.route)
@@ -27,16 +27,22 @@ Ninja.Views.App = React.createClass({
   },
 
   route: function () {
-    if (!this.props.router.path || this.props.router.path.split(/[//]+/)[0] != "classes") this.setState({landing: true});
-    else this.setState({landing: false});
+    var path =  null;
+    if (this.props.router.path) path = this.props.router.path.split(/[//]+/)[0];
+    if (!path) this.setState({route: 'landing'});
+    else this.setState({route: path})
+
   },
 
   render: function () {
     var navbar = < Ninja.Views.Navbar router = {this.props.router} spin = {this.state.spin} setSpin = {this.setSpin}/>;  
     var landing = <Ninja.Views.Landing setSpin = {this.setSpin}/> 
     var lists = < Ninja.Views.Lists  model = {[this.props.model]} router = {this.props.router} mobile = {this.state.mobile} setSpin = {this.setSpin}/>
-    var content = this.state.landing ? landing : lists;
     var footer = < Ninja.Views.Footer mobile = {this.state.mobile}/>
+    var login = <Ninja.Views.Login />
+    var content = landing;
+    if (this.state.route === 'classes') content = lists;
+    else if (this.state.route === 'login') content = login;
 
     return (  <div>{navbar}{content}{footer} </div>);
   }
