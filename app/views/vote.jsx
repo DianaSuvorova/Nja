@@ -1,11 +1,9 @@
 /** @jsx React.DOM */
 Ninja.Views.Vote = React.createClass({
 
-getInitialState: function () { return {submitted: false}; },
+getInitialState: function () { return {submitted: false, emailValid: false, emailEmpty: true, schoolEmpty: true, schoolValid: false}; },
 
-onInputClick: function (e) {
-  e.stopPropagation();
-},
+onFormClick: function (e) { e.stopPropagation();},
 
 onSubmit: function (e) {
   var $el = $(this.getDOMNode())
@@ -32,6 +30,36 @@ shareFacebook: function () {
 
 onInputKeyDown: function (e) { if (e.which === 13) e.preventDefault(); },
 
+onInputKeyUpSchool: function (e) {
+  this.onInputKeyDown(e);
+  $el = $(this.getDOMNode());
+  var school = $el.find('input#school')[0];
+  if (school.value.length > 0) this.setState({schoolEmpty: false});
+  else this.setState({schoolEmpty: true});
+  this.validateSchool(school.value);
+},
+
+validateSchool: function (value) {
+  if (value.length > 1)  this.setState({schoolValid: true});
+  else this.setState({schoolValid: false});
+},
+
+onInputKeyUpEmail: function (e) {
+  this.onInputKeyDown(e);
+  $el = $(this.getDOMNode());
+  var email = $el.find('input#email')[0];
+  if (email.value.length > 0) this.setState({emailEmpty: false});
+  else this.setState({emailEmpty: true});
+  this.validateEmail(email.value);
+},
+
+
+validateEmail: function (value) {
+  var re = /\S+@\S+\.\S+/;
+  if (re.test(value))  this.setState({emailValid: true});
+  else this.setState({emailValid: false});
+},
+
 render: function () {
   var itemClass = globals.cx({
     'list-group-item item-name vote flip-container' : true,
@@ -46,11 +74,19 @@ render: function () {
     'block front': true
   });
 
-    var flipClass = globals.cx({
+  var flipClass = globals.cx({
     'flipper': true,
     'submitted' : this.state.submitted
   });
 
+  var buttonClass = globals.cx({ 
+    'btn btn-default': true,
+    'active': this.state.emailValid && this.state.schoolValid
+  });
+
+  var buttonLabel = 'submit';
+  if (!this.state.emailEmpty && !this.state.emailValid ) buttonLabel = 'please provide correct email';
+  else if (!this.state.schoolEmpty && !this.state.schoolValid) buttonLabel = 'please provide valid school name';
 
   return (
     <li className = {itemClass} onClick = {this.props.onSelect} >
@@ -58,10 +94,10 @@ render: function () {
         <div className = {frontClass} >
           <div className = 'header first'> Don't see your school? </div>
           <div className = 'header'>Let us know. <br></br> We'll notify you once we add it.</div>
-          <form onSubmit = {this.onSubmitForm}> 
-            <input type='text' className='form-control' id='email' placeholder='Email' onClick= {this.onInputClick} onKeyDown = {this.onInputKeyDown}/>
-            <input type='text' className='form-control' id='school' placeholder='School'onClick= {this.onInputClick} onKeyDown = {this.onInputKeyDown}/>
-            <button type='submit' className='btn btn-default' onClick= {this.onSubmit}> Submit </button>
+          <form onSubmit = {this.onSubmitForm} onClick= {this.onFormClick}> 
+            <input type='text' className='form-control' id='email' placeholder='email' onKeyDown = {this.onInputKeyDown} onKeyUp = {this.onInputKeyUpEmail}/>
+            <input type='text' className='form-control' id='school' placeholder='school' onKeyDown = {this.onInputKeyDown} onKeyUp = {this.onInputKeyUpSchool} onFocus = {this.onInputKeyUpEmail} />
+            <button type='submit' className= {buttonClass} onClick= {this.onSubmit}> {buttonLabel} </button>
           </form>
         </div>
         <div className = {backClass} >

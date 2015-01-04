@@ -28,6 +28,7 @@ li.vote {
   }
 
   form {
+    cursor: auto;
     max-width: 300px;
     margin : auto;
   }
@@ -40,20 +41,28 @@ li.vote {
   }
 
   button {
+    font-family: 'Montserrat', sans-serif;
     width: 100%;
-    box-shadow: none;
     border-radius: 0;
-    color: #555555;
+    pointer-events:none; 
+    background-color: grey;
+    color: white;
+    cursor: auto;
+    &.active {
+      background-color: @radar-blue;
+      cursor: pointer;
+      color: white;
+      pointer-events: all; 
+    }
   }
 
   button:hover, button:focus {
-    background-color: white;
-    color: @radar-blue;
+    background-color: @radar-blue;
+    color: white;
     border: 1px solid #66afe9;
     outline: 0;
     -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
-
   } 
 
   &.expanded {
