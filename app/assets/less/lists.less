@@ -105,8 +105,16 @@ li.section {
   max-height: 2000px;
 } 
 
-i.fa { transition: transform 0.5s }
-
+  i.fa { 
+    transition: transform 0.5s ease-in-out;
+    -webkit-transition: transform 0.5s ease-in-out;
+    -moz-transition: transform 0.5s ease-in-out;
+    -o-transition: transform 0.5s ease-in-out; 
+    -webkit-transition-property: transform;
+    -webkit-transition-duration: 0.5s;
+    -webkit-transition-timing-function: ease-in-out;
+  }
+ 
 
 .status-marker-container{
   position: absolute;
