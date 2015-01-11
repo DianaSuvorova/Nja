@@ -30327,7 +30327,7 @@ Ninja.Views.Item = React.createClass({displayName: 'Item',
 /** @jsx React.DOM */
 Ninja.Views.App = React.createClass({displayName: 'App',
 
-  getInitialState: function () {return {route: '', spin: false, mobile: this.isMobile(), login: 'hide' };},
+  getInitialState: function () {return {route: '', spin: false, mobile: this.isMobile(), loginShow: false };},
 
   componentWillMount: function () {
     Backbone.history.on('route', this.route)
@@ -30352,8 +30352,8 @@ Ninja.Views.App = React.createClass({displayName: 'App',
     this.setState({spin: state})
   },
 
-  onShowLogin: function () {
-    this.setState({login: 'show'})
+  onShowLogin: function (state) {
+    this.setState({loginShow: state})
   },
 
   route: function () {
@@ -30368,7 +30368,7 @@ Ninja.Views.App = React.createClass({displayName: 'App',
     var landing = Ninja.Views.Landing({setSpin: this.setSpin}) 
     var lists = Ninja.Views.Lists({model: [this.props.model], router: this.props.router, mobile: this.state.mobile, setSpin: this.setSpin})
     var footer = Ninja.Views.Footer({mobile: this.state.mobile})
-    var login = Ninja.Views.Login({modal: this.state.login})
+    var login = Ninja.Views.Login({loginShow: this.state.loginShow, onToggleShowLogin: this.onShowLogin})
     var content = landing;
     if (this.state.route === 'classes') content = lists;
 
@@ -30709,34 +30709,27 @@ Ninja.Views.Lists = React.createClass({displayName: 'Lists',
 /** @jsx React.DOM */
 Ninja.Views.Login = React.createClass({displayName: 'Login',
 
-  componentDidUpdate: function () {
-    var $el = $(this.getDOMNode());
-    $el.modal(this.props.modal);
+  onClickContainer: function () {
+    this.props.onToggleShowLogin(false)
   },
 
-
   render: function () {
+    var loginClass = globals.cx({
+      'loginContainer': true,
+      'hidden': !this.props.loginShow
+    });
+
     return (
-      React.DOM.div({className: "modal fade bs-example-modal-sm", tabindex: "-1", role: "dialog", 'aria-labelledby': "login", 'aria-hidden': "true"}, 
-        React.DOM.div({className: "modal-dialog modal-sm"}, 
-          React.DOM.div({className: "modal-content"}, 
-            React.DOM.div({className: "modal-header"}, 
-              React.DOM.button({type: "button", className: "close", 'data-dismiss': "modal", 'aria-label': "Close"}, React.DOM.span({'aria-hidden': "true"}, "×")), 
-              React.DOM.h4({className: "modal-title"}, "Login")
-            ), 
-            React.DOM.div({className: "modal-body"}, 
-              React.DOM.span({id: "signinButton"}, 
-                React.DOM.span({
-                  className: "g-signin", 
-                  'data-callback': "signinCallback", 
-                  'data-clientid': "CLIENT_ID", 
-                  'data-height': "standard", 
-                  'data-width': "standard", 
-                  'data-cookiepolicy': "single_host_origin", 
-                  'data-requestvisibleactions': "http://schema.org/AddAction", 
-                  'data-scope': "https://www.googleapis.com/auth/profile"}
-                )
-              )
+      React.DOM.div({className: loginClass, onClick: this.onClickContainer}, 
+        React.DOM.div({id: "login"}, 
+          React.DOM.span({id: "signinButton"}, 
+            React.DOM.span({
+              className: "g-signin", 
+              'data-callback': "signinCallback", 
+              'data-clientid': "CLIENT_ID", 
+              'data-cookiepolicy': "single_host_origin", 
+              'data-requestvisibleactions': "http://schema.org/AddAction", 
+              'data-scope': "https://www.googleapis.com/auth/profile"}
             )
           )
         )
@@ -30757,7 +30750,7 @@ Ninja.Views.Navbar = React.createClass({displayName: 'Navbar',
   },
 
   onClickLogin: function () {
-    this.props.onShowLogin(); 
+    this.props.onShowLogin(true); 
   },
 
   setLoaingStateTrue: function () {

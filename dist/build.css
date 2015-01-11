@@ -6586,10 +6586,26 @@ nav#footer.active {
     width: 100%;
   }
 }
-.modal-body {
-  height: 50px;
+.loginContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
-.modal-body #signinButton {
+.loginContainer #login {
+  width: 100px;
+  height: 100px;
+  float: right;
+}
+.loginContainer #login #signinButton {
+  display: block;
+  width: 100%;
   height: 20px;
-  width: 30px;
+}
+.loginContainer #login #signinButton span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: yellow;
 }

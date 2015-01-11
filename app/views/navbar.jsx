@@ -9,7 +9,7 @@ Ninja.Views.Navbar = React.createClass({
   },
 
   onClickLogin: function () {
-    this.props.onShowLogin(); 
+    this.props.onShowLogin(true); 
   },
 
   setLoaingStateTrue: function () {
