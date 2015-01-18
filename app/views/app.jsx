@@ -36,7 +36,7 @@ Ninja.Views.App = React.createClass({
     var landing = <Ninja.Views.Landing setSpin = {this.setSpin}/> 
     var lists = < Ninja.Views.Lists  model = {[this.props.model]} router = {this.props.router} mobile = {this.state.mobile} setSpin = {this.setSpin}/>
     var content = this.state.landing ? landing : lists;
-    var footer = < Ninja.Views.Footer />
+    var footer = < Ninja.Views.Footer mobile = {this.state.mobile}/>
 
     return (  <div>{navbar}{content}{footer} </div>);
   }

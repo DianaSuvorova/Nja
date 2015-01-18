@@ -1,26 +1,36 @@
 nav#footer{
     position: fixed;
-    min-height: @font-size-h5 + @padding-base-vertical * 3 ;
-    height: @font-size-h5 + @padding-base-vertical * 3 ;
-    background-color: #f5f5f5;
+    min-height: @font-size-h3 + @padding-base-vertical * 3 ;
+    height: @font-size-h3 + @padding-base-vertical * 3 ;
     box-shadow: none;
     width: 200px !important;
     max-width: ;
-    right:  (@font-size-h5 + @padding-base-vertical * 2 ) - 200  ;
+    right:  (@font-size-h3 + @padding-base-vertical * 2 ) - 200  ;
     transition: right  0.5s ease-in-out;
     bottom: 0;
     margin-bottom: 0;
+    background: none;
+    border: none;
     address {
       span {
         display: block;
         padding: @padding-base-vertical;
-        height: 100%;
-        margin: 0;
-        font-size: @font-size-h5;
+        margin-top: auto ;
       }
       span.icon {
+        font-size: @font-size-h3;
         cursor: pointer;
         float: left;
+        color: #f5f5f5;
+      }
+      span.email {
+        padding-left: 0;
+        line-height: @font-size-h3 + @padding-base-vertical * 2;
+        font-size: @font-size-h5;
+        float: right;
+        width: 200 - (@font-size-h3 + @padding-base-vertical * 3 );
+        color: #f5f5f5 ;
+        a {color: #f5f5f5 ;}
       }
     }
   &.active {
