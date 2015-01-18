@@ -1,25 +1,40 @@
-.loginContainer{
-  position: absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
 
-  #login {
-  width: 100px;
-  height: 100px;
-  float: right;
-  #signinButton {
-    display: block;
+div.modal-dialog{
+  z-index: 1500;
+  .form-control { padding: 0 5px !important;}
+  #phoneInput{
+    padding-top: 5px;
+    height: 50px;
     width: 100%;
-    height: 20px;
-    span {
-      display: block;
-      width: 100%;
-      height: 100%;
-      background-color: yellow;
+  }
+  div.phoneInput {
+    width: 10px;
+    height:20px;
+    float: left;
+  }
+  input.phoneInput {
+    width: 20px;
+    height:20px;
+    float: left;
+  }
+
+  .form-control {
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    box-shadow: none;
+    &:focus{
+      box-shadow:  0 4px 2px -2px rgba(0,0,0,.075),  0 4px 2px -2px rgba(102, 175, 233, 0.6);
+     -webkit-box-shadow: 0 4px 2px -2px rgba(0,0,0,.075),  0 4px 2px -2px rgba(102, 175, 233, 0.6);
+    }
+    &.error {
+     box-shadow:  0 4px 2px -2px rgba(0,0,0,.075),  0 4px 2px -2px rgba(255, 0, 0, 0.6);
+    -webkit-box-shadow: 0 4px 2px -2px rgba(0,0,0,.075),  0 4px 2px -2px rgba(255, 0, 0, 0.6);
+      border-color: rgba(255, 99, 71, 0.6);
+    }
+    &.complete {
+      border: none;
+      box-shadow: none;
     }
   }
 }
-}
-
