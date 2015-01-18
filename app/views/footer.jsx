@@ -12,14 +12,14 @@ Ninja.Views.Footer = React.createClass({
       'active' : this.state.active
     });
 
-    var email =  this.props.mobile ?  <a href="mailto:classradar@gmail.com">classradar@gmail.com</a> : "classradar@gmail.com";
+//  var email =  this.props.mobile ?  <a href="mailto:classradar@gmail.com">classradar@gmail.com</a> : "classradar@gmail.com";
 
     return (<nav id = "footer" className = {footerClass} >
             <address>
               <span className = "icon" onClick = {this.onIconClick}>
                 <i className="fa fa-envelope"></i>
               </span>
-              <span className = 'email'>{email}</span>
+              <span className = 'email'>classradar@gmail.com</span>
             </address>        
      </nav>)
    }
