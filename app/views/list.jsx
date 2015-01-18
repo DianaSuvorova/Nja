@@ -25,7 +25,7 @@ Ninja.Views.List = React.createClass({
   },
   
   componentDidUpdate: function () {
-    this.transition(true); 
+    this.transition(false); 
   },
 
   componentWillLeave: function (cb) {
