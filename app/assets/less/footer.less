@@ -1,0 +1,29 @@
+nav#footer{
+    position: fixed;
+    min-height: @font-size-h5 + @padding-base-vertical * 3 ;
+    height: @font-size-h5 + @padding-base-vertical * 3 ;
+    background-color: #f5f5f5;
+    box-shadow: none;
+    width: 200px !important;
+    max-width: ;
+    right:  (@font-size-h5 + @padding-base-vertical * 2 ) - 200  ;
+    transition: right  0.5s ease-in-out;
+    bottom: 0;
+    margin-bottom: 0;
+    address {
+      span {
+        display: block;
+        padding: @padding-base-vertical;
+        height: 100%;
+        margin: 0;
+        font-size: @font-size-h5;
+      }
+      span.icon {
+        cursor: pointer;
+        float: left;
+      }
+    }
+  &.active {
+    right :0;
+  }
+}
