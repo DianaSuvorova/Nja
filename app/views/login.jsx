@@ -1,9 +1,13 @@
 /** @jsx React.DOM */
 Ninja.Views.Login = React.createClass({displayName: 'Login',
 
-  componentDidUpdate: function () {
-    var $el = $(this.getDOMNode());
-    $el.modal(this.props.modal);
+  componentWillReceiveProps: function (nextProps) {
+    console.log(nextProps);
+    if (nextProps.loginShow) {
+      var $el = $(this.getDOMNode());
+      $el.modal(this.props.modal);
+      $el.css({'z-index': 1500})
+    }
   },
 
   onInputKeyUp: function (e) {
@@ -35,43 +39,40 @@ Ninja.Views.Login = React.createClass({displayName: 'Login',
 
   render: function () {
     return (
-      React.DOM.div({className: "modal fade  bs-example-modal-md", tabIndex: "-1", role: "dialog", 'aria-labelledby': "login", 'aria-hidden': "true"}, 
-        React.DOM.div({className: "modal-dialog modal-sm"}, 
-          React.DOM.div({className: "modal-content"}, 
-            React.DOM.div({className: "modal-header"}, 
-              React.DOM.button({type: "button", className: "close", 'data-dismiss': "modal", 'aria-label': "Close"}, React.DOM.span({'aria-hidden': "true"}, "×")), 
-              React.DOM.h4({className: "modal-title"}, "Login")
-            ), 
-            React.DOM.div({className: "modal-body"}, 
-              React.DOM.div(null, 
-                "we ask for a phone number so we can send you a text message as class spot opens up." + ' ' +
-                "It's proven to be more reliable than email."
-              ), 
-              React.DOM.div({id: "phoneInput"}, 
-               React.DOM.div({className: "phoneInput"}, "("), 
-                React.DOM.input({type: "phone", className: "form-control phoneInput", id: "1", onKeyDown: this.onInputKeyDown, onKeyUp: this.onInputKeyUp}), 
-                React.DOM.input({type: "phone", className: "form-control phoneInput", id: "2", onKeyDown: this.onInputKeyDown, onKeyUp: this.onInputKeyUp}), 
-                React.DOM.input({type: "phone", className: "form-control phoneInput", id: "3", onKeyDown: this.onInputKeyDown, onKeyUp: this.onInputKeyUp}), 
-                React.DOM.div({className: "phoneInput"}, ")"), 
-                React.DOM.div({className: "phoneInput"}, " "), 
-                React.DOM.input({type: "phone", className: "form-control phoneInput", id: "4", onKeyDown: this.onInputKeyDown, onKeyUp: this.onInputKeyUp}), 
-                React.DOM.input({type: "phone", className: "form-control phoneInput", id: "5", onKeyDown: this.onInputKeyDown, onKeyUp: this.onInputKeyUp}), 
-                React.DOM.input({type: "phone", className: "form-control phoneInput", id: "6", onKeyDown: this.onInputKeyDown, onKeyUp: this.onInputKeyUp}), 
-                React.DOM.div({className: "phoneInput"}, " - "), 
-                React.DOM.input({type: "phone", className: "form-control phoneInput", id: "7", onKeyDown: this.onInputKeyDown, onKeyUp: this.onInputKeyUp}), 
-                React.DOM.input({type: "phone", className: "form-control phoneInput", id: "8", onKeyDown: this.onInputKeyDown, onKeyUp: this.onInputKeyUp}), 
-                React.DOM.div({className: "phoneInput"}, " - "), 
-                React.DOM.input({type: "phone", className: "form-control phoneInput", id: "9", onKeyDown: this.onInputKeyDown, onKeyUp: this.onInputKeyUp}), 
-                React.DOM.input({type: "phone", className: "form-control phoneInput", id: "10", onKeyDown: this.onInputKeyDown, onKeyUp: this.onInputKeyUp})
-              ), 
-              React.DOM.div(null, 
-                "We'll send text with a confirmation code."
-              )
-
-            )
-          )
-        )
-      )
+       <div className = "modal fade  bs-example-modal-md" tabIndex= "-1"  role= "dialog" aria-labelledby= "login" aria-hidden= "true">
+        <div className = "modal-dialog modal-sm"> 
+          <div className = "modal-content"> 
+            <div className = "modal-header"> 
+              <button type = "button" className = "close" data-dismiss= "modal" aria-label= "Close"> <span aria-hidden= "true">×</span></button>
+              <h4 className= "modal-title"> Login </h4>
+            </div>
+            <div className= "modal-body"> 
+              <div>
+                we ask for a phone number so we can send you a text message as class spot opens up.
+                It's proven to be more reliable than email.
+              </div> 
+              <div id= "phoneInput"> 
+                <div className= "phoneInput"> ( </div> 
+                <input type="phone" className= "form-control phoneInput" id= "1" onKeyDown = {this.onInputKeyDown} onKeyUp= {this.onInputKeyUp}/>
+                <input type="phone" className= "form-control phoneInput" id= "2" onKeyDown = {this.onInputKeyDown} onKeyUp= {this.onInputKeyUp}/>
+                <input type="phone" className= "form-control phoneInput" id= "3" onKeyDown = {this.onInputKeyDown} onKeyUp= {this.onInputKeyUp}/> 
+                <div className= "phoneInput"> ) </div> 
+                <div className= "phoneInput"> </div>
+                <input type="phone" className= "form-control phoneInput" id= "4" onKeyDown = {this.onInputKeyDown} onKeyUp= {this.onInputKeyUp}/>
+                <input type="phone" className= "form-control phoneInput" id= "5" onKeyDown = {this.onInputKeyDown} onKeyUp= {this.onInputKeyUp}/>
+                <input type="phone" className= "form-control phoneInput" id= "6" onKeyDown = {this.onInputKeyDown} onKeyUp= {this.onInputKeyUp}/> 
+                <div className= "phoneInput"> - </div>  
+                <input type="phone" className= "form-control phoneInput" id= "7" onKeyDown = {this.onInputKeyDown} onKeyUp= {this.onInputKeyUp}/> 
+                <input type="phone" className= "form-control phoneInput" id= "8" onKeyDown = {this.onInputKeyDown} onKeyUp= {this.onInputKeyUp}/>
+                <div className= "phoneInput"> - </div>  
+                <input type="phone" className= "form-control phoneInput" id= "9" onKeyDown = {this.onInputKeyDown} onKeyUp= {this.onInputKeyUp}/>
+                <input type="phone" className= "form-control phoneInput" id= "10" onKeyDown = {this.onInputKeyDown} onKeyUp= {this.onInputKeyUp}/> 
+              </div> 
+              <div> We'll send text with a confirmation code.</div>
+            </div>
+          </div>
+        </div>
+      </div>
     )
   }
 

@@ -53,7 +53,7 @@ Ninja.Views.Navbar = React.createClass({
           <a className = "navbar-link" href="/classes" onClick = {this.onClickClasses}> <i className="fa fa-align-justify"> </i> See Classes</a>
         </div>  
         <div className = "col-md-2 col-xs-12 hidden-xs hidden-sm">
-          <a className = "navbar-link" href="javascript:void(0);" onClick = {this.onClickLogin}> <i className="fa  fa-sign-in"> </i> Login </a>
+          <a className = "navbar-link" href="#" onClick = {this.onClickLogin}> <i className="fa  fa-sign-in"> </i> Login </a>
         </div>              
       </div>
     )
