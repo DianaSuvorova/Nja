@@ -2,9 +2,7 @@ var vendorJs = ['components/vendor/js/jquery-2.1.1.min.js',
                 'components/vendor/js/react.js',
                 'components/vendor/js/underscore.js',
                 'components/vendor/js/backbone.js',
-                'components/vendor/js/d3.v3.js',
-                'components/vendor/js/modal.js'
-                ];
+                'components/vendor/js/d3.v3.js'                ];
 
 
 module.exports = function (grunt) {

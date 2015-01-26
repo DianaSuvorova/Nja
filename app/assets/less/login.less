@@ -1,40 +1,74 @@
-
-div.modal-dialog{
-  display: none;
-  .form-control { padding: 0 5px !important;}
-  #phoneInput{
-    padding-top: 5px;
-    height: 50px;
-    width: 100%;
-  }
-  div.phoneInput {
-    width: 10px;
-    height:20px;
-    float: left;
-  }
-  input.phoneInput {
-    width: 20px;
-    height:20px;
-    float: left;
-  }
-
-  .form-control {
-    border-top: none;
-    border-right: none;
-    border-left: none;
-    box-shadow: none;
-    &:focus{
-      box-shadow:  0 4px 2px -2px rgba(0,0,0,.075),  0 4px 2px -2px rgba(102, 175, 233, 0.6);
-     -webkit-box-shadow: 0 4px 2px -2px rgba(0,0,0,.075),  0 4px 2px -2px rgba(102, 175, 233, 0.6);
+div.login-container{
+  opacity: 1;
+  top: 0;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  &.hidden {opacity: 0;}
+  transition: opacity  0.5s ease-out;
+  .login{
+    background-color: white;
+    margin-right: 25%;
+    margin-top: 30px;
+    .login-header {
+      padding: 9px 15px;
+      border-bottom: 1px solid #eee;
     }
-    &.error {
-     box-shadow:  0 4px 2px -2px rgba(0,0,0,.075),  0 4px 2px -2px rgba(255, 0, 0, 0.6);
-    -webkit-box-shadow: 0 4px 2px -2px rgba(0,0,0,.075),  0 4px 2px -2px rgba(255, 0, 0, 0.6);
-      border-color: rgba(255, 99, 71, 0.6);
+    .login-body {
+      padding-top: 15px;
     }
-    &.complete {
-      border: none;
+    .left {
+      width: 90%;
+      float: left;
+    }
+    .right{
+      margin-bottom: 15px;
+      height: 90px;
+      width: 10%;
+      float: right;
+      i {
+        display: inline-block;
+        margin-top: 20px ;
+        text-align: center;
+        font-size: @font-size-h3
+      }
+    }
+    .form-control { padding: 0 5px !important;}
+    #phoneInput{
+      padding-top: 10px;
+      height: 50px;
+      width: 100%;
+    }
+    div.phoneInput {
+      width: 10px;
+      height:20px;
+      float: left;
+    }
+    input.phoneInput {
+      width: 20px;
+      height:20px;
+      float: left;
+    }
+
+    .form-control {
+      border-top: none;
+      border-right: none;
+      border-left: none;
       box-shadow: none;
+      &:focus{
+        box-shadow:  0 4px 2px -2px rgba(0,0,0,.075),  0 4px 2px -2px rgba(102, 175, 233, 0.6);
+       -webkit-box-shadow: 0 4px 2px -2px rgba(0,0,0,.075),  0 4px 2px -2px rgba(102, 175, 233, 0.6);
+      }
+      &.error {
+       box-shadow:  0 4px 2px -2px rgba(0,0,0,.075),  0 4px 2px -2px rgba(255, 0, 0, 0.6);
+      -webkit-box-shadow: 0 4px 2px -2px rgba(0,0,0,.075),  0 4px 2px -2px rgba(255, 0, 0, 0.6);
+        border-color: rgba(255, 99, 71, 0.6);
+      }
+      &.complete {
+        border: none;
+        box-shadow: none;
+      }
     }
   }
 }
