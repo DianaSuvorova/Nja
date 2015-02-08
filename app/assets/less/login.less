@@ -15,6 +15,10 @@ div.login-container{
       padding: 9px 15px;
       border-bottom: 1px solid #eee;
     }
+    .login-footer {
+      padding: 9px 15px;
+      border-top: 1px solid #eee;
+    }
     .login-body {
       padding-top: 15px;
     }
@@ -49,6 +53,20 @@ div.login-container{
       width: 20px;
       height:20px;
       float: left;
+    }
+    .btn-default{
+      font-family: 'Montserrat', sans-serif;
+      border: none;
+      i {font-weight: 900;}
+      &.active {
+        background: none;
+        box-shadow: none;
+        color: @radar-blue;
+      }
+      &:hover,&:active,&:focus {
+        background: none;
+        box-shadow: none;
+      }
     }
 
     .form-control {
