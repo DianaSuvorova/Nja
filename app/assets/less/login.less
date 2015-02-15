@@ -22,6 +22,14 @@ div.login-container{
       border-top: 1px solid #eee;
     }
     .login-body {
+      div.phone-prompt-text {
+        max-height: 0;
+        transition: max-height 0.5s ease-in-out;
+        overflow: hidden;
+        &.expanded {
+          max-height: 100px;
+        }
+      }
       padding-top: 15px;
       .login-code {
         max-height: 0;
@@ -74,7 +82,7 @@ div.login-container{
       }
     }
     div.login-code{
-      div.text {padding-bottom: 3px;}
+      div.text {padding-top: 7px; padding-bottom: 5px;}
       padding: 9px 15px 0;
       .key {
         input.keyInput {

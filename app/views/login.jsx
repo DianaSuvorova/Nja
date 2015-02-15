@@ -71,9 +71,10 @@ Ninja.Views.Login = React.createClass({
       "expanded" : this.state.phoneSubmitted
     });
 
-    //TODO: figure out how to add new line in text;
-    var phonePromptText = (!this.state.phoneSubmitted) ? 
-      "Please enter your phone number.\nWe\'ll send a text with a login key." : "";
+    var phonePromptText = globals.cx({
+      "phone-prompt-text": true,
+      "expanded": !this.state.phoneSubmitted
+    });
 
 
     return (
@@ -87,7 +88,7 @@ Ninja.Views.Login = React.createClass({
                   <h4 className= "modal-title"> Login </h4>
                 </div>
                 <div className= "login-body"> 
-                  <div>{phonePromptText}</div> 
+                  <div className = {phonePromptText} >Please enter your phone number.We'll send a text with a login key.</div> 
                   <div id= "phoneInput">
                     <input type="phone" className= "form-control phoneInput" onChange = {this.onPhoneInputChange}/>
                     <div className="submit-phone"><i className={submitPhoneClass} onClick = {this.onSubmitPhone}></i></div>
