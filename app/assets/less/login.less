@@ -11,6 +11,8 @@ div.login-container{
     background-color: white;
     margin-right: 25%;
     margin-top: 30px;
+    max-height: 160px;
+    transition: max-height 0.5s ease-in-out;
     .login-header {
       padding: 9px 15px;
       border-bottom: 1px solid #eee;
@@ -21,6 +23,11 @@ div.login-container{
     }
     .login-body {
       padding-top: 15px;
+      .login-code {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s ease-in-out;
+      }
     }
     .left {
       width: 90%;
@@ -39,20 +46,56 @@ div.login-container{
       }
     }
     .form-control { padding: 0 5px !important;}
-    #phoneInput{
-      padding-top: 10px;
-      height: 50px;
-      width: 100%;
+    div#phoneInput {
+      padding: 9px 15px;
+      height: 45px;
+      div.submit-phone {
+       float: right; 
+       width: 20%;
+       border-left: 1px solid #eee;
+       i {
+          pointer-events: none;
+          &.active {
+            cursor: pointer;
+            pointer-events: all;
+            color: @radar-blue;
+            &.fa-check {
+              cursor: default;
+              padding: 0.5rem 0;
+              line-height: 2rem;
+            }
+          }
+        }
+      }
+      input.phoneInput {
+        text-align: center;
+        width: 80%;
+        float: left;
+      }
     }
-    div.phoneInput {
-      width: 10px;
-      height:20px;
-      float: left;
-    }
-    input.phoneInput {
-      width: 20px;
-      height:20px;
-      float: left;
+    div.login-code{
+      div.text {padding-bottom: 3px;}
+      padding: 9px 15px 0;
+      .key {
+        input.keyInput {
+          text-align: center;
+          width: 80%;
+          float: left;          
+        }
+        div.submit-key {
+          float: right; 
+          width: 20%;
+          border-left: 1px solid #eee;
+          i {
+            pointer-events: none;
+            &.active {
+              cursor: pointer;
+              pointer-events: all;
+              color: @radar-blue;
+            }
+          }
+        }
+      }
     }
     button{
       background: none;
@@ -91,6 +134,12 @@ div.login-container{
         box-shadow: none;
       }
     }
+  &.expanded {
+    max-height: 230px;
+    .login-code {
+        max-height: 100px;
+      }
+    } 
   }
   .flipper {
     position: relative;
@@ -106,7 +155,7 @@ div.login-container{
     transition: 0.6s;
     transform-style: preserve-3d;
 
-    height: 200px;
+    height: 230px;
     &.submitted {
       -webkit-transform: rotateY(180deg);
       -moz-transform: rotateY(180deg);
@@ -123,7 +172,7 @@ div.login-container{
   }
 
   .flip-container, .front, .back {
-    height: 200px;
+    height: 230px;
   }
 
   .front, .back {
