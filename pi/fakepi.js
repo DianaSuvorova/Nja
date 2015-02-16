@@ -16,7 +16,18 @@ app.get('/api/login', function (req, res) { res.send(200); });
 app.get('/api/school', function (req, res) { res.send(schools); });
 app.get('/api/school/:id', function (req, res) { res.send(departments); });
 app.get('/api/department/:id', function (req, res) { res.send(courses); });
-app.get('/api/course/:id', function (red, res) { res.send(course); });
+app.get('/api/course/:id', function (req, res) { res.send(course); });
+app.post('/api/user', function (req, res) {
+  if (req.body.phone.length === 10 ) res.send({ "status": "SMS request sent"});
+  else res.send({"error_code": 400,"error": "Invalid phone number"});
+});
+
+app.post('/api/user/:phoneNumber', function(req, res) {
+  if (req.body.confirmation_token === "11") res.send({"error_code": 400,"error": "Invalid confirmation token"});
+  else res.send({"access_token": "58557faa-b04a-43f2-9087-a6a3474fd330"});
+});
+
+
 app.get('/dist/build.js', function (req, res) { res.sendfile('dist/build.js'); });
 app.get('/dist/ga.js', function (req, res) { res.sendfile('dist/ga.js'); });
 app.get('/dist/build.css', function (req, res) { res.sendfile('dist/build.css'); });
