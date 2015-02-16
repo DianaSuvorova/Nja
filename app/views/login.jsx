@@ -5,7 +5,6 @@ Ninja.Views.Login = React.createClass({
     return {phoneSubmitted: false, submitted: false, validPhone: false};
   },
 
-  //TODO the modal close button doesn't work
   onClickContainer: function () { this.props.onToggleShowLogin(false);},
 
   onClickLogin: function (e) { e.stopPropagation();},
@@ -15,7 +14,7 @@ Ninja.Views.Login = React.createClass({
   onSubmitPhone: function (e) {
     var $el = $(this.getDOMNode());  
     var phoneInput = $el.find("input.phoneInput")[0]
-//    $(phoneInput).attr('readonly', true);
+    $(phoneInput).attr('readonly', true);
     this.setState({phoneSubmitted: true});
   },
 
@@ -75,7 +74,6 @@ Ninja.Views.Login = React.createClass({
       "phone-prompt-text": true,
       "expanded": !this.state.phoneSubmitted
     });
-
 
     return (
        <div className = {containerClass} onClick = {this.onClickContainer}>
