@@ -68,11 +68,13 @@ div.login-container{
             cursor: pointer;
             pointer-events: all;
             color: @radar-blue;
-            &.fa-check {
+            //fix a;ignment and spinning
+            &.fa-spin, &.fa-check,&.fa-times {
               cursor: default;
               padding: 0.5rem 0;
               line-height: 2rem;
             }
+            &.fa-times{ color: red; }
           }
         }
       }
@@ -143,10 +145,16 @@ div.login-container{
         box-shadow: none;
       }
     }
-  &.expanded {
+  &.expanded-success {
     max-height: 230px;
     .login-code {
         max-height: 100px;
+      }
+    } 
+  &.expanded-error {
+    max-height: 190px;
+    .login-code {
+        max-height: 60px;
       }
     } 
   }
