@@ -23,7 +23,7 @@ div.login-container{
       border-top: 1px solid #eee;
     }
     .login-body {
-      div.phone-prompt-text {
+      div.phone-prompt-text, div.invalid-key-text {
         max-height: 0;
         transition: max-height 0.5s ease-in-out;
         overflow: hidden;
@@ -31,6 +31,7 @@ div.login-container{
           max-height: 100px;
         }
       }
+      div.invalid-key-text{padding-top: 10px;}
       padding-top: 15px;
       .login-code {
         max-height: 0;
@@ -157,16 +158,22 @@ div.login-container{
         box-shadow: none;
       }
     }
-  &.expanded-success {
+  &.expanded-phone-success {
     max-height: 230px;
     .login-code {
         max-height: 100px;
       }
     } 
-  &.expanded-error {
+  &.expanded-phone-error {
     max-height: 190px;
     .login-code {
         max-height: 60px;
+      }
+    } 
+  &.expanded-key-error {
+    max-height: 290px;
+    .login-code {
+        max-height: 160px;
       }
     } 
   }
@@ -184,7 +191,7 @@ div.login-container{
     transition: 0.6s;
     transform-style: preserve-3d;
 
-    height: 230px;
+    height: 290px;
     &.submitted {
       -webkit-transform: rotateY(180deg);
       -moz-transform: rotateY(180deg);
@@ -201,7 +208,7 @@ div.login-container{
   }
 
   .flip-container, .front, .back {
-    height: 230px;
+    height: 290px;
   }
 
   .front, .back {

@@ -23,7 +23,7 @@ app.post('/api/user', function (req, res) {
 });
 
 app.post('/api/user/:phoneNumber', function(req, res) {
-  if (req.body.confirmation_token === "11") res.send({"error_code": 400,"error": "Invalid confirmation token"});
+  if (req.body.confirmation_token === "11111") res.status(400).send({"error_code": 400, "error": "Invalid confirmation token"});
   else res.send({"access_token": "58557faa-b04a-43f2-9087-a6a3474fd330"});
 });
 

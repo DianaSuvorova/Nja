@@ -15,10 +15,7 @@ Ninja.Views.Login = React.createClass({
   onPhoneInputChange: function (e) {
     var $el = $(this.getDOMNode()).find("#phoneInput");
     var icon = $el.find("i.fa")[0];
-    if (this.state.phoneSubmitted != 0) {
-      $(icon).removeClass("fa fa-times active").addClass("fa fa-angle-right fa-2x");
-      this.setState({phoneSubmitted: 2});
-    }
+    if (this.state.phoneSubmitted != 0) this.setState({phoneSubmitted: 2});
     //TODO there are browsers that don't fire change event on autofill. Periodically check to run this fn.
     var $input = $(e.target);
     var val =  $input.val();
@@ -62,10 +59,7 @@ Ninja.Views.Login = React.createClass({
     //great opportunity for combining onKey/PhoneInputChange into generic fnc
     var $el = $(this.getDOMNode()).find("#keyInput");
     var icon = $el.find("i.fa")[0];
-    if (this.state.keySubmitted != 0) {
-      $(icon).removeClass("fa fa-times active").addClass("fa fa-angle-right fa-2x");
-      this.setState({keySubmitted: 0});
-    }
+    if (this.state.keySubmitted != 0) this.setState({keySubmitted: 0});
     var $input = $(e.target);
     var val =  $input.val();
     var numVal = (val.match(/\d+/g)) ? val.match(/\d+/g)[0] : "";
@@ -100,6 +94,7 @@ Ninja.Views.Login = React.createClass({
 
 
   render: function () {
+
     var containerClass = globals.cx({
       'login-container': true,
       'hidden' : !this.props.loginShow
@@ -111,27 +106,28 @@ Ninja.Views.Login = React.createClass({
 
     var flipClass = globals.cx({
     'flipper': true,
-    'submitted' : this.state.submitted
+    'submitted' : (this.state.keySubmitted === 1)
     });
 
     var submitPhoneClass = globals.cx({
-      "fa fa-angle-right fa-2x": Math.abs(this.state.phoneSubmitted) != 1,
+      "fa fa-angle-right fa-2x": (this.state.phoneSubmitted === 0) || (this.state.phoneSubmitted === 2),
       "fa fa-check": (this.state.phoneSubmitted === 1),
       "fa fa-times": (this.state.phoneSubmitted === -1),
-      "active" : (this.state.phoneSubmitted === 3) 
+      " fa fa-angle-right fa-2x active" : (this.state.phoneSubmitted === 3) 
     });
 
     var submitKeyClass = globals.cx({
-      "fa fa-angle-right fa-2x": (this.state.keySubmitted === 0) || (this.state.keySubmitted === 2) || (this.state.keySubmitted === 3),
+      "fa fa-angle-right fa-2x": (this.state.keySubmitted === 0) || (this.state.keySubmitted === 2),
       "fa fa-check": (this.state.keySubmitted === 1),
       "fa fa-times": (this.state.keySubmitted === -1),
-      "active" : (this.state.keySubmitted === 3)
+      "fa fa-angle-right fa-2x active" : (this.state.keySubmitted === 3)
     });
 
     var loginClass = globals.cx({
       "login col-md-offset-4  col-sm-offset-3 col-xs-12 col-sm-6 col-md-4 col-lg-3" : true,
-      "expanded-success" : (this.state.phoneSubmitted === 1),
-      "expanded-error" : (this.state.phoneSubmitted === -1)
+      "expanded-phone-success" : (this.state.phoneSubmitted === 1),
+      "expanded-phone-error" : (this.state.phoneSubmitted === -1),
+      "expanded-key-error": (this.state.keySubmitted === -1)
 
     });
 
@@ -140,8 +136,13 @@ Ninja.Views.Login = React.createClass({
       "expanded": Math.abs(this.state.phoneSubmitted) != 1
     });
 
+    var invalidKeyText = globals.cx({
+      "invalid-key-text": true,
+      "expanded": this.state.keySubmitted === -1
+    });
+
     var onPhoneSubmittedText = (this.state.phoneSubmitted === 1) ?
-      "Please check your phone.We sent you a text with a login code" :
+      "Please check your phone. We sent you a text with a login code" :
       "Invalid phone number. Please provide 10-digit number with area code";
 
     return (
@@ -167,6 +168,7 @@ Ninja.Views.Login = React.createClass({
                       <input type="text" className= "form-control keyInput" autoComplete="off" id= "key_1" onChange = {this.onKeyInputChange}/>
                       <div className="submit-key"><i className={submitKeyClass} onClick = {this.onSubmitKey}></i></div>
                     </div>
+                    <div className = {invalidKeyText} >Invalid Key. Please try again. If you haven't recieved a text, please check and resubmit you phone number.</div>
                   </div>
                 </div>
               </div>
