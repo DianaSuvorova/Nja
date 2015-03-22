@@ -2,8 +2,8 @@
 Ninja.Views.Login = React.createClass({
 
   getInitialState: function () {
-    //states 0- not yet; 1-success, -1 -error;
-    return {phoneSuubmitted: 0, submitted: false, submitPhoneButton: 'incative', phoneNumber: null};
+    //states 0- not yet; 1-success, -1 -error, 2- typing, 3- ready to be submitted
+    return {phoneSubmitted: 0, keySubmitted: 0, phoneNumber: null, keyCode: null};
   },
 
   onClickContainer: function () { this.props.onToggleShowLogin(false);},
@@ -12,19 +12,37 @@ Ninja.Views.Login = React.createClass({
 
   onSubmit: function (e) {this.setState({submitted: true});},
 
+  onPhoneInputChange: function (e) {
+    var $el = $(this.getDOMNode()).find("#phoneInput");
+    var icon = $el.find("i.fa")[0];
+    if (this.state.phoneSubmitted != 0) {
+      $(icon).removeClass("fa fa-times active").addClass("fa fa-angle-right fa-2x");
+      this.setState({phoneSubmitted: 2});
+    }
+    //TODO there are browsers that don't fire change event on autofill. Periodically check to run this fn.
+    var $input = $(e.target);
+    var val =  $input.val();
+    var numVal = (val.match(/\d+/g)) ? val.match(/\d+/g)[0] : "";
+    if (numVal.length >= 10) {
+      this.setState({phoneSubmitted: 3});
+    }
+    else this.setState({phoneSubmitted: 2})
+  },
+
+
   onSubmitPhone: function (e) {
-    var $el = $(this.getDOMNode());  
-    var phoneInput = $el.find("input.phoneInput")[0];
+    var $el = $(this.getDOMNode()).find("#phoneInput");  
+    var input = $el.find("input")[0];
     var icon = $el.find("i.fa")[0];
     $(icon).removeClass("fa fa-angle-right fa-2x").addClass("fa fa-spinner fa-spin");
-    this.setState({phoneNumber: $(phoneInput).val()});
+    this.setState({phoneNumber: $(input).val()});
 
     $.ajax({
       type: 'POST',
       url: 'api/user',
       contentType: 'application/json',
       dataType: 'json',
-      data: JSON.stringify({phone: $(phoneInput).val()}),
+      data: JSON.stringify({phone: $(input).val()}), //can't use state here ...
       complete: function (xhr, status) {
         var response = JSON.parse(xhr.responseText);
         if (response.error_code) {
@@ -32,37 +50,52 @@ Ninja.Views.Login = React.createClass({
         }
         else {
           this.setState({phoneSubmitted: 1});
-          $(phoneInput).attr('readonly', true);
         }
       }.bind(this)
     });
-  },
-
-  onSubmitKey: function (e) {
-    //TODO before setting submitted state
-    // go to server check verification code.
-    //if correct set submitted to true
-    //if not ask for code again 
-
+  
     return false;
 
-    this.setState({submitted: true});
-
   },
 
-  onPhoneInputChange: function (e) {
-    var $el = $(this.getDOMNode());
+  onKeyInputChange: function (e) {
+    //great opportunity for combining onKey/PhoneInputChange into generic fnc
+    var $el = $(this.getDOMNode()).find("#keyInput");
     var icon = $el.find("i.fa")[0];
-    if (this.state.phoneSubmitted === -1) {
+    if (this.state.keySubmitted != 0) {
       $(icon).removeClass("fa fa-times active").addClass("fa fa-angle-right fa-2x");
-      this.setState({phoneSubmitted: 0});
+      this.setState({keySubmitted: 0});
     }
-    //TODO there are browsers that don't fire change event on autofill. Periodically check to run this fn.
     var $input = $(e.target);
     var val =  $input.val();
     var numVal = (val.match(/\d+/g)) ? val.match(/\d+/g)[0] : "";
-    if (numVal.length >= 10) this.setState({submitPhoneButton: 'active'});
-    else this.setState({submitPhoneButton: 'inactive'})
+    if (numVal.length >= 5) this.setState({keySubmitted: 3});
+    else this.setState({keySubmitted: 2})
+
+  },
+
+  onSubmitKey: function (e) {
+    //first part of this and phone fnc can be one and the same
+    var $el = $(this.getDOMNode()).find("#keyInput");  
+    var input = $el.find("input#key_1");
+    var icon = $el.find("i.fa")[0];
+    $(icon).removeClass("fa fa-angle-right fa-2x").addClass("fa fa-spinner fa-spin");
+    this.setState({keyCode: $(input).val()});
+
+    $.ajax({
+      type: 'POST',
+      url: 'api/user/' + this.state.phoneNumber,
+      contentType: 'application/json',
+      dataType: 'json',
+      data: JSON.stringify({confirmation_token: $(input).val()}),
+      complete: function (xhr, status) {
+        var response = JSON.parse(xhr.responseText);
+        if (response.error_code) this.setState({keySubmitted: -1});
+        else this.setState({keySubmitted: 1});
+      }.bind(this)
+    });
+   
+    return false;
   },
 
 
@@ -82,15 +115,17 @@ Ninja.Views.Login = React.createClass({
     });
 
     var submitPhoneClass = globals.cx({
-      "fa fa-angle-right fa-2x": !this.state.phoneSubmitted,
+      "fa fa-angle-right fa-2x": Math.abs(this.state.phoneSubmitted) != 1,
       "fa fa-check": (this.state.phoneSubmitted === 1),
       "fa fa-times": (this.state.phoneSubmitted === -1),
-      "active" : this.state.submitPhoneButton === 'active',
+      "active" : (this.state.phoneSubmitted === 3) 
     });
 
     var submitKeyClass = globals.cx({
-      "fa fa-angle-right fa-2x": true,
-      "active" : true
+      "fa fa-angle-right fa-2x": (this.state.keySubmitted === 0) || (this.state.keySubmitted === 2) || (this.state.keySubmitted === 3),
+      "fa fa-check": (this.state.keySubmitted === 1),
+      "fa fa-times": (this.state.keySubmitted === -1),
+      "active" : (this.state.keySubmitted === 3)
     });
 
     var loginClass = globals.cx({
@@ -102,7 +137,7 @@ Ninja.Views.Login = React.createClass({
 
     var phonePromptText = globals.cx({
       "phone-prompt-text": true,
-      "expanded": !this.state.phoneSubmitted
+      "expanded": Math.abs(this.state.phoneSubmitted) != 1
     });
 
     var onPhoneSubmittedText = (this.state.phoneSubmitted === 1) ?
@@ -127,9 +162,9 @@ Ninja.Views.Login = React.createClass({
                   </div>
                   <div className = "login-code"> 
                     <div className = "text">{onPhoneSubmittedText}</div>
-                    <div className = "key">
+                    <div id = "keyInput">
                       <input type="text" name="prevent_autofill" id="prevent_autofill-1" value="" className= "hidden" />
-                      <input type="text" className= "form-control keyInput" autoComplete="off" id= "key_1" onKeyDown = {this.onInputKeyDown} onKeyUp= {this.onInputKeyUp}/>
+                      <input type="text" className= "form-control keyInput" autoComplete="off" id= "key_1" onChange = {this.onKeyInputChange}/>
                       <div className="submit-key"><i className={submitKeyClass} onClick = {this.onSubmitKey}></i></div>
                     </div>
                   </div>

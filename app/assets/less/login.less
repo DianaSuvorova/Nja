@@ -63,19 +63,21 @@ div.login-container{
        width: 20%;
        border-left: 1px solid #eee;
        i {
+        &.fa-angle-right {
           pointer-events: none;
           &.active {
             cursor: pointer;
             pointer-events: all;
             color: @radar-blue;
-            //fix a;ignment and spinning
-            &.fa-spin, &.fa-check,&.fa-times {
-              cursor: default;
-              padding: 0.5rem 0;
-              line-height: 2rem;
-            }
-            &.fa-times{ color: red; }
           }
+        }
+        &.fa-spin, &.fa-check, &.fa-times {
+            cursor: default;
+            padding: 0.5rem 0;
+            line-height: 2rem;
+          }
+        &.fa-times{ color: red; }
+        &.fa-spin, &.fa-check {color: @radar-blue;}
         }
       }
       input.phoneInput {
@@ -86,18 +88,15 @@ div.login-container{
     }
     div.login-code{
       div.text {padding-top: 7px; padding-bottom: 5px;}
-      padding: 9px 15px 0;
-      .key {
-        input.keyInput {
-          text-align: center;
-          width: 80%;
-          float: left;          
-        }
+      div#keyInput {
+        padding: 9px 15px;
+        height: 45px;
         div.submit-key {
           float: right; 
           width: 20%;
           border-left: 1px solid #eee;
-          i {
+         i {
+          &.fa-angle-right {
             pointer-events: none;
             &.active {
               cursor: pointer;
@@ -105,6 +104,19 @@ div.login-container{
               color: @radar-blue;
             }
           }
+          &.fa-spin, &.fa-check, &.fa-times {
+              cursor: default;
+              padding: 0.5rem 0;
+              line-height: 2rem;
+            }
+          &.fa-times{ color: red; }
+          &.fa-spin, &.fa-check {color: @radar-blue;}
+          }
+        }
+        input.keyInput {
+          text-align: center;
+          width: 80%;
+          float: left;          
         }
       }
     }
