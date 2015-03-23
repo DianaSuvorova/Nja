@@ -8,8 +8,8 @@ Ninja.Views.Navbar = React.createClass({
     return false;
   },
 
-  onClickLogin: function () {
-    this.props.onShowLogin(true); 
+  onClickAccount: function () {
+    this.props.onShowAccount(true); 
   },
 
   setLoaingStateTrue: function () {
@@ -41,6 +41,12 @@ Ninja.Views.Navbar = React.createClass({
       'spin': this.state.spin
     });
 
+    var accountClassName = globals.cx({
+      'fa  fa-sign-in' : !this.props.user,
+      'fa  fa-user' : this.props.user,
+    });
+    var accountText = (this.props.user) ? 'My Account' : 'Login';
+
     return (
       <div className="row navbar">
         <div className = "col-xs-6 col-md-2" >
@@ -53,7 +59,7 @@ Ninja.Views.Navbar = React.createClass({
           <a className = "navbar-link" href="/classes" onClick = {this.onClickClasses}> <i className="fa fa-align-justify"> </i> See Classes</a>
         </div>  
         <div className = "col-md-2 col-xs-12 hidden-xs hidden-sm">
-          <a className = "navbar-link" href="#" onClick = {this.onClickLogin}> <i className="fa  fa-sign-in"> </i> Login </a>
+          <a className = "navbar-link" href="#" onClick = {this.onClickAccount}> <i className = {accountClassName}> </i> {accountText} </a>
         </div>              
       </div>
     )

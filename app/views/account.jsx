@@ -1,12 +1,12 @@
 /** @jsx React.DOM */
-Ninja.Views.Login = React.createClass({
+Ninja.Views.Account = React.createClass({
 
   getInitialState: function () {
     //states 0- not yet; 1-success, -1 -error, 2- typing, 3- ready to be submitted
     return {phoneSubmitted: 0, keySubmitted: 0, phoneNumber: null, keyCode: null};
   },
 
-  onClickContainer: function () { this.props.onToggleShowLogin(false);},
+  onClickContainer: function () { this.props.onToggleShowAccount(false);},
 
   onClickLogin: function (e) { e.stopPropagation();},
 
@@ -45,12 +45,8 @@ Ninja.Views.Login = React.createClass({
       data: JSON.stringify({phone: $(input).val()}), //can't use state here ...
       complete: function (xhr, status) {
         var response = JSON.parse(xhr.responseText);
-        if (response.error_code) {
-          this.setState({phoneSubmitted: -1});
-        }
-        else {
-          this.setState({phoneSubmitted: 1});
-        }
+        if (response.error_code) this.setState({phoneSubmitted: -1});
+        else  this.setState({phoneSubmitted: 1});
       }.bind(this)
     });
   
@@ -93,7 +89,10 @@ Ninja.Views.Login = React.createClass({
       complete: function (xhr, status) {
         var response = JSON.parse(xhr.responseText);
         if (response.error_code) this.setState({keySubmitted: -1});
-        else this.setState({keySubmitted: 1});
+        else {
+          this.setState({keySubmitted: 1});
+          this.props.setUser(this.state.phoneNumber);
+        }
       }.bind(this)
     });
    
@@ -105,7 +104,7 @@ Ninja.Views.Login = React.createClass({
 
     var containerClass = globals.cx({
       'login-container': true,
-      'hidden' : !this.props.loginShow
+      'hidden' : !this.props.accountShow
     })
 
     var buttonClass = globals.cx({ 
