@@ -26,8 +26,11 @@ Ninja.Views.Login = React.createClass({
     else this.setState({phoneSubmitted: 2})
   },
 
+  onPhoneInputKeyDown: function (e) {
+    if (e.keyCode === 13 && this.state.phoneSubmitted ===3 ) this.onSubmitPhone();
+  },
 
-  onSubmitPhone: function (e) {
+  onSubmitPhone: function () {
     var $el = $(this.getDOMNode()).find("#phoneInput");  
     var input = $el.find("input")[0];
     var icon = $el.find("i.fa")[0];
@@ -68,7 +71,12 @@ Ninja.Views.Login = React.createClass({
 
   },
 
-  onSubmitKey: function (e) {
+  onKeyInputKeyDown: function (e) {
+    if (e.keyCode === 13 && this.state.keySubmitted ===3 ) this.onSubmitKey();
+  },
+
+
+  onSubmitKey: function () {
     //first part of this and phone fnc can be one and the same
     var $el = $(this.getDOMNode()).find("#keyInput");  
     var input = $el.find("input#key_1");
@@ -158,14 +166,14 @@ Ninja.Views.Login = React.createClass({
                 <div className= "login-body"> 
                   <div className = {phonePromptText} >Please enter your phone number.We'll send a text with a login key.</div> 
                   <div id= "phoneInput">
-                    <input type="phone" className= "form-control phoneInput" onChange = {this.onPhoneInputChange}/>
+                    <input type="phone" className= "form-control phoneInput" onChange = {this.onPhoneInputChange} onKeyDown = {this.onPhoneInputKeyDown}/>
                     <div className="submit-phone"><i className={submitPhoneClass} onClick = {this.onSubmitPhone}></i></div>
                   </div>
                   <div className = "login-code"> 
                     <div className = "text">{onPhoneSubmittedText}</div>
                     <div id = "keyInput">
                       <input type="text" name="prevent_autofill" id="prevent_autofill-1" value="" className= "hidden" />
-                      <input type="text" className= "form-control keyInput" autoComplete="off" id= "key_1" onChange = {this.onKeyInputChange}/>
+                      <input type="text" className= "form-control keyInput" autoComplete="off" id= "key_1" onChange = {this.onKeyInputChange} onKeyDown = {this.onKeyInputKeyDown}/>
                       <div className="submit-key"><i className={submitKeyClass} onClick = {this.onSubmitKey}></i></div>
                     </div>
                     <div className = {invalidKeyText} >Invalid Key. Please try again. If you haven't recieved a text, please check and resubmit you phone number.</div>
