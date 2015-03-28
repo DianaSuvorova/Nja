@@ -16,7 +16,7 @@
       document.cookie = name + "=" + value + expires + "; path=/";
     });
 
-    globals.readCookie = (function(name) {
+    globals.readCookie = (function (name) {
       var nameEQ = name + "=";
       var ca = document.cookie.split(';');
       for(var i=0; i < ca.length; i++) {
@@ -26,6 +26,8 @@
       }
       return null;
     });
+
+    globals.eraseCookie = (function (name) { globals.createCookie(name,"",-1); });
 
     globals.app = new Ninja.Models.App();
     globals.router = new Ninja.Router();

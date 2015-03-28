@@ -114,7 +114,7 @@ Ninja.Views.Account = React.createClass({
 
     var flipClass = globals.cx({
     'flipper': true,
-    'submitted' : (this.state.keySubmitted === 1 || this.props.user)
+    'submitted' : this.props.user
     });
 
     var submitPhoneClass = globals.cx({
@@ -181,14 +181,7 @@ Ninja.Views.Account = React.createClass({
                 </div>
               </div>
               <div className = "content block back">
-                <div className = "login-header"> 
-                  <button className = "close" onClick = {this.onClickContainer} > <span >×</span></button>
-                  <h4 className= "modal-title"> Thank you! </h4>
-                </div>
-                <div className= "login-body"> 
-                  You are now can track classes you are intersted in.
-                  You have 1 free target to try out how this works.
-                </div>
+                < Ninja.Views.Profile onClickContainer = {this.onClickContainer} newUser = {(this.state.keySubmitted === 1) ? true : false} user = {this.props.user} token = {this.props.token}/>
               </div>
             </div>
           </div>
