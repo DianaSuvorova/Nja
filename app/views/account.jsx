@@ -3,7 +3,7 @@ Ninja.Views.Account = React.createClass({
 
   getInitialState: function () {
     //states 0- not yet; 1-success, -1 -error, 2- typing, 3- ready to be submitted
-    return {phoneSubmitted: 0, keySubmitted: 0, phoneNumber: null, keyCode: null};
+    return {phoneSubmitted: 0, phoneNumber: null, keySubmitted: 0, keyCode: null};
   },
 
   onClickContainer: function () { this.props.onToggleShowAccount(false);},
@@ -62,7 +62,7 @@ Ninja.Views.Account = React.createClass({
     var $input = $(e.target);
     var val =  $input.val();
     var numVal = (val.match(/\d+/g)) ? val.match(/\d+/g)[0] : "";
-    if (numVal.length >= 5) this.setState({keySubmitted: 3});
+    if (numVal.length >= 6) this.setState({keySubmitted: 3});
     else this.setState({keySubmitted: 2})
 
   },
@@ -92,13 +92,14 @@ Ninja.Views.Account = React.createClass({
         else {
           this.setState({keySubmitted: 1});
           this.props.setUser(this.state.phoneNumber);
+          globals.createCookie("phone_number", this.state.phoneNumber, 365);
+          globals.createCookie("access_token", "58557faa-b04a-43f2-9087-a6a3474fd330", 365);
         }
       }.bind(this)
     });
    
     return false;
   },
-
 
   render: function () {
 
@@ -113,7 +114,7 @@ Ninja.Views.Account = React.createClass({
 
     var flipClass = globals.cx({
     'flipper': true,
-    'submitted' : (this.state.keySubmitted === 1)
+    'submitted' : (this.state.keySubmitted === 1 || this.props.user)
     });
 
     var submitPhoneClass = globals.cx({

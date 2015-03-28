@@ -1,7 +1,10 @@
 /** @jsx React.DOM */
 Ninja.Views.App = React.createClass({
 
-  getInitialState: function () {return {route: '', spin: false, mobile: this.isMobile(), accountShow: false, user: null };},
+  getInitialState: function () { 
+    var user = globals.readCookie("phone_number");
+    return {route: '', spin: false, mobile: this.isMobile(), accountShow: false, user: user };
+  },
 
   componentWillMount: function () {
     Backbone.history.on('route', this.route)
@@ -46,7 +49,7 @@ Ninja.Views.App = React.createClass({
     var landing = <Ninja.Views.Landing setSpin = {this.setSpin}/> 
     var lists = < Ninja.Views.Lists  model = {[this.props.model]} router = {this.props.router} mobile = {this.state.mobile} setSpin = {this.setSpin}/>
     var footer = < Ninja.Views.Footer mobile = {this.state.mobile}/>
-    var account = < Ninja.Views.Account  accountShow = {this.state.accountShow} onToggleShowAccount= {this.onShowAccount} setUser = {this.setUser}/>
+    var account = < Ninja.Views.Account  accountShow = {this.state.accountShow} onToggleShowAccount= {this.onShowAccount} setUser = {this.setUser} user = {this.state.user}/>
     var content = (this.state.route === 'classes') ? lists : landing;
 
     return (  <div>{navbar}{content}{account}{footer} </div>);
