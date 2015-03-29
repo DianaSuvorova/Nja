@@ -3,8 +3,7 @@ Ninja.Views.App = React.createClass({
 
   getInitialState: function () { 
     var user = globals.readCookie("phone_number");
-    var token = globals.readCookie("access_token");
-    return {route: '', spin: false, mobile: this.isMobile(), accountShow: false, user: user, token: token };
+    return {route: '', spin: false, mobile: this.isMobile(), accountShow: false, user: user};
   },
 
   componentWillMount: function () {

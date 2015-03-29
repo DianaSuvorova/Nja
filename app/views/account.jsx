@@ -153,6 +153,9 @@ Ninja.Views.Account = React.createClass({
       "Please check your phone. We sent you a text with a login code" :
       "Invalid phone number. Please provide 10-digit number with area code";
 
+    var accountView = (!this.props.user) ? null 
+      : < Ninja.Views.Profile onClickContainer = {this.onClickContainer} newUser = {(this.state.keySubmitted === 1) ? true : false} user = {this.props.user}/>;
+
     return (
        <div className = {containerClass} onClick = {this.onClickContainer}>
         <div className = "flip-container">
@@ -180,9 +183,7 @@ Ninja.Views.Account = React.createClass({
                   </div>
                 </div>
               </div>
-              <div className = "content block back">
-                < Ninja.Views.Profile onClickContainer = {this.onClickContainer} newUser = {(this.state.keySubmitted === 1) ? true : false} user = {this.props.user} token = {this.props.token}/>
-              </div>
+              <div className = "content block back"> {accountView} </div>
             </div>
           </div>
         </div>
