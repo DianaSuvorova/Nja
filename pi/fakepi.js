@@ -4,6 +4,7 @@ var http = require('http'),
     departments = require('./data/departments.json'),
     courses = require('./data/courses.json'),
     course = require('./data/course.json'),
+    target = require('./data/target.json'),
     port = 8000;
 
 var app = express();
@@ -25,6 +26,14 @@ app.post('/api/user', function (req, res) {
 app.post('/api/user/:phoneNumber', function(req, res) {
   if (req.body.confirmation_token === "11111") res.status(400).send({"error_code": 400, "error": "Invalid confirmation token"});
   else res.send({"access_token": "58557faa-b04a-43f2-9087-a6a3474fd330"});
+});
+
+app.get('/api/target', function(req, res) {
+  if (req.headers.authorization == "58557faa-b04a-43f2-9087-a6a3474fd330") {
+    res.send(target);
+  }
+  else res.status(401).send({"error_code": 401, "error": "You must be logged in to list your targets."});
+
 });
 
 
