@@ -98,6 +98,27 @@ li.section {
     max-height:0;
     overflow: hidden;
     transition: max-height 0.5s ease-in-out;
+    div.download-to-track {
+      background-color: #1c95f9;
+      margin-top: 15px;
+      margin-bottom: 15px;
+      padding: 4px;
+      line-height:@navbar-unit-size-small * 2.5; 
+      font-family: 'Montserrat', sans-serif;
+      border: 1px solid #66afe9;
+      a {
+        color: white;
+        &:hover { text-decoration: none; }
+        display: inline-block;
+        height: 100%;
+        width: 100%;
+      }
+      &:hover {
+        outline: 0;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+      }
+    }
   }
  }
 

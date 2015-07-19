@@ -75,6 +75,11 @@ Ninja.Views.Event = React.createClass({
             <div className = 'row'>  {this.props.sectionId} </div>
             <div className = 'row'> {timeAndLocationDetail()} </div>
           </div>
+          <div className = 'col-xs-offset-1 col-xs-10 download-to-track'>
+            <a href = 'https://itunes.apple.com/us/app/id903690805' >
+              get app to track this class
+            </a>
+          </div>
         </div> 
       </div>
     )
