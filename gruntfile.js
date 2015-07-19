@@ -2,7 +2,7 @@ var vendorJs = ['components/vendor/js/jquery-2.1.1.min.js',
                 'components/vendor/js/react.js',
                 'components/vendor/js/underscore.js',
                 'components/vendor/js/backbone.js',
-                'components/vendor/js/d3.v3.js'                ];
+                'components/vendor/js/d3.v3.js'];
 
 
 module.exports = function (grunt) {
@@ -16,7 +16,6 @@ module.exports = function (grunt) {
         ext: '.js'
       }
     },
-
     concat: {
       js:{
         src: [vendorJs, 'app/helpers/*.js', 'app/models/*.js', 'dist/react/*.js'],
@@ -77,6 +76,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-react');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-concurrent');
   grunt.loadNpmTasks('grunt-nodemon');
   grunt.loadNpmTasks('grunt-contrib-less');

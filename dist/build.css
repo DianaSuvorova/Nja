@@ -6586,26 +6586,267 @@ nav#footer.active {
     width: 100%;
   }
 }
-.loginContainer {
-  position: absolute;
+div.login-container {
+  opacity: 1;
   top: 0;
-  left: 0;
-  width: 100%;
+  position: absolute;
   height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  transition: opacity 0.5s ease-out;
 }
-.loginContainer #login {
-  width: 100px;
-  height: 100px;
+div.login-container.hidden {
+  opacity: 0;
+}
+div.login-container .login {
+  background-color: white;
+  margin-right: 25%;
+  margin-top: 30px;
+  max-height: 160px;
+  transition: max-height 0.5s ease-in-out;
+}
+div.login-container .login .login-header {
+  padding: 9px 15px;
+  border-bottom: 1px solid #eee;
+}
+div.login-container .login .login-header .close {
+  pointer-events: all;
+}
+div.login-container .login .login-footer {
+  padding: 9px 15px;
+  border-top: 1px solid #eee;
+}
+div.login-container .login .login-body {
+  padding-top: 15px;
+}
+div.login-container .login .login-body div.phone-prompt-text,
+div.login-container .login .login-body div.invalid-key-text {
+  max-height: 0;
+  transition: max-height 0.5s ease-in-out;
+  overflow: hidden;
+}
+div.login-container .login .login-body div.phone-prompt-text.expanded,
+div.login-container .login .login-body div.invalid-key-text.expanded {
+  max-height: 100px;
+}
+div.login-container .login .login-body div.invalid-key-text {
+  padding-top: 10px;
+}
+div.login-container .login .login-body .login-code {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out;
+}
+div.login-container .login .left {
+  width: 90%;
+  float: left;
+}
+div.login-container .login .right {
+  margin-bottom: 15px;
+  height: 90px;
+  width: 10%;
   float: right;
 }
-.loginContainer #login #signinButton {
-  display: block;
-  width: 100%;
-  height: 20px;
+div.login-container .login .right i {
+  display: inline-block;
+  margin-top: 20px ;
+  text-align: center;
+  font-size: 24px;
 }
-.loginContainer #login #signinButton span {
-  display: block;
+div.login-container .login .form-control {
+  padding: 0 5px !important;
+}
+div.login-container .login div#phoneInput {
+  padding: 9px 15px;
+  height: 45px;
+}
+div.login-container .login div#phoneInput div.submit-phone {
+  float: right;
+  width: 20%;
+  border-left: 1px solid #eee;
+}
+div.login-container .login div#phoneInput div.submit-phone i.fa-angle-right {
+  pointer-events: none;
+}
+div.login-container .login div#phoneInput div.submit-phone i.fa-angle-right.active {
+  cursor: pointer;
+  pointer-events: all;
+  color: #1c95f9;
+}
+div.login-container .login div#phoneInput div.submit-phone i.fa-spin,
+div.login-container .login div#phoneInput div.submit-phone i.fa-check,
+div.login-container .login div#phoneInput div.submit-phone i.fa-times {
+  cursor: default;
+  padding: 0.5rem 0;
+  line-height: 2rem;
+}
+div.login-container .login div#phoneInput div.submit-phone i.fa-times {
+  color: red;
+}
+div.login-container .login div#phoneInput div.submit-phone i.fa-spin,
+div.login-container .login div#phoneInput div.submit-phone i.fa-check {
+  color: #1c95f9;
+}
+div.login-container .login div#phoneInput input.phoneInput {
+  text-align: center;
+  width: 80%;
+  float: left;
+}
+div.login-container .login div.login-code div.text {
+  padding-top: 7px;
+  padding-bottom: 5px;
+}
+div.login-container .login div.login-code div#keyInput {
+  padding: 9px 15px;
+  height: 45px;
+}
+div.login-container .login div.login-code div#keyInput div.submit-key {
+  float: right;
+  width: 20%;
+  border-left: 1px solid #eee;
+}
+div.login-container .login div.login-code div#keyInput div.submit-key i.fa-angle-right {
+  pointer-events: none;
+}
+div.login-container .login div.login-code div#keyInput div.submit-key i.fa-angle-right.active {
+  cursor: pointer;
+  pointer-events: all;
+  color: #1c95f9;
+}
+div.login-container .login div.login-code div#keyInput div.submit-key i.fa-spin,
+div.login-container .login div.login-code div#keyInput div.submit-key i.fa-check,
+div.login-container .login div.login-code div#keyInput div.submit-key i.fa-times {
+  cursor: default;
+  padding: 0.5rem 0;
+  line-height: 2rem;
+}
+div.login-container .login div.login-code div#keyInput div.submit-key i.fa-times {
+  color: red;
+}
+div.login-container .login div.login-code div#keyInput div.submit-key i.fa-spin,
+div.login-container .login div.login-code div#keyInput div.submit-key i.fa-check {
+  color: #1c95f9;
+}
+div.login-container .login div.login-code div#keyInput input.keyInput {
+  text-align: center;
+  width: 80%;
+  float: left;
+}
+div.login-container .login button {
+  background: none;
+  pointer-events: none;
+  font-family: 'Montserrat', sans-serif;
+  border: none;
+}
+div.login-container .login button i {
+  font-weight: 900;
+}
+div.login-container .login button.active {
+  background: none;
+  box-shadow: none;
+  color: #1c95f9;
+  pointer-events: all;
+}
+div.login-container .login button:hover,
+div.login-container .login button:active,
+div.login-container .login button:focus {
+  background: none;
+  box-shadow: none;
+}
+div.login-container .login .form-control {
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  box-shadow: none;
+}
+div.login-container .login .form-control:focus {
+  box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.075), 0 4px 2px -2px rgba(102, 175, 233, 0.6);
+  -webkit-box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.075), 0 4px 2px -2px rgba(102, 175, 233, 0.6);
+}
+div.login-container .login .form-control.error {
+  box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.075), 0 4px 2px -2px rgba(255, 0, 0, 0.6);
+  -webkit-box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.075), 0 4px 2px -2px rgba(255, 0, 0, 0.6);
+  border-color: rgba(255, 99, 71, 0.6);
+}
+div.login-container .login .form-control.complete {
+  border: none;
+  box-shadow: none;
+}
+div.login-container .login.expanded-phone-success {
+  max-height: 230px;
+}
+div.login-container .login.expanded-phone-success .login-code {
+  max-height: 100px;
+}
+div.login-container .login.expanded-phone-error {
+  max-height: 190px;
+}
+div.login-container .login.expanded-phone-error .login-code {
+  max-height: 60px;
+}
+div.login-container .login.expanded-key-error {
+  max-height: 290px;
+}
+div.login-container .login.expanded-key-error .login-code {
+  max-height: 160px;
+}
+div.login-container .flipper {
+  position: relative;
+  -webkit-transition: 0.6s;
+  -webkit-transform-style: preserve-3d;
+  -moz-transition: 0.6s;
+  -moz-transform-style: preserve-3d;
+  -o-transition: 0.6s;
+  -o-transform-style: preserve-3d;
+  transition: 0.6s;
+  transform-style: preserve-3d;
+  height: 290px;
+}
+div.login-container .flipper.submitted {
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+  -o-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+}
+div.login-container .flip-container {
+  -webkit-perspective: 1000;
+  -moz-perspective: 1000;
+  -o-perspective: 1000;
+  perspective: 1000;
+}
+div.login-container .flip-container,
+div.login-container .front,
+div.login-container .back {
+  height: 290px;
+}
+div.login-container .front,
+div.login-container .back {
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -o-backface-visibility: hidden;
+  backface-visibility: hidden;
   width: 100%;
-  height: 100%;
-  background-color: yellow;
+  position: absolute;
+  top: 10px;
+  left: 0;
+}
+div.login-container .front {
+  z-index: 2;
+  transform: rotateY(0deg);
+}
+div.login-container .back {
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+  -o-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+}
+.profile-header {
+  padding: 9px 15px;
+  border-bottom: 1px solid #eee;
+}
+.profile-header .close {
+  pointer-events: all;
+}
+.profile-body {
+  padding-top: 15px;
 }

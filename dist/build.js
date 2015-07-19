@@ -29812,331 +29812,6 @@ d3 = function() {
   });
   return d3;
 }();
-/* ========================================================================
- * Bootstrap: modal.js v3.3.1
- * http://getbootstrap.com/javascript/#modals
- * ========================================================================
- * Copyright 2011-2014 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- * ======================================================================== */
-
-
-+function ($) {
-  'use strict';
-
-  // MODAL CLASS DEFINITION
-  // ======================
-
-  var Modal = function (element, options) {
-    this.options        = options
-    this.$body          = $(document.body)
-    this.$element       = $(element)
-    this.$backdrop      =
-    this.isShown        = null
-    this.scrollbarWidth = 0
-
-    if (this.options.remote) {
-      this.$element
-        .find('.modal-content')
-        .load(this.options.remote, $.proxy(function () {
-          this.$element.trigger('loaded.bs.modal')
-        }, this))
-    }
-  }
-
-  Modal.VERSION  = '3.3.1'
-
-  Modal.TRANSITION_DURATION = 300
-  Modal.BACKDROP_TRANSITION_DURATION = 150
-
-  Modal.DEFAULTS = {
-    backdrop: true,
-    keyboard: true,
-    show: true
-  }
-
-  Modal.prototype.toggle = function (_relatedTarget) {
-    return this.isShown ? this.hide() : this.show(_relatedTarget)
-  }
-
-  Modal.prototype.show = function (_relatedTarget) {
-    var that = this
-    var e    = $.Event('show.bs.modal', { relatedTarget: _relatedTarget })
-
-    this.$element.trigger(e)
-
-    if (this.isShown || e.isDefaultPrevented()) return
-
-    this.isShown = true
-
-    this.checkScrollbar()
-    this.setScrollbar()
-    this.$body.addClass('modal-open')
-
-    this.escape()
-    this.resize()
-
-    this.$element.on('click.dismiss.bs.modal', '[data-dismiss="modal"]', $.proxy(this.hide, this))
-
-    this.backdrop(function () {
-      var transition = $.support.transition && that.$element.hasClass('fade')
-
-      if (!that.$element.parent().length) {
-        that.$element.appendTo(that.$body) // don't move modals dom position
-      }
-
-      that.$element
-        .show()
-        .scrollTop(0)
-
-      if (that.options.backdrop) that.adjustBackdrop()
-      that.adjustDialog()
-
-      if (transition) {
-        that.$element[0].offsetWidth // force reflow
-      }
-
-      that.$element
-        .addClass('in')
-        .attr('aria-hidden', false)
-
-      that.enforceFocus()
-
-      var e = $.Event('shown.bs.modal', { relatedTarget: _relatedTarget })
-
-      transition ?
-        that.$element.find('.modal-dialog') // wait for modal to slide in
-          .one('bsTransitionEnd', function () {
-            that.$element.trigger('focus').trigger(e)
-          })
-          .emulateTransitionEnd(Modal.TRANSITION_DURATION) :
-        that.$element.trigger('focus').trigger(e)
-    })
-  }
-
-  Modal.prototype.hide = function (e) {
-    if (e) e.preventDefault()
-
-    e = $.Event('hide.bs.modal')
-
-    this.$element.trigger(e)
-
-    if (!this.isShown || e.isDefaultPrevented()) return
-
-    this.isShown = false
-
-    this.escape()
-    this.resize()
-
-    $(document).off('focusin.bs.modal')
-
-    this.$element
-      .removeClass('in')
-      .attr('aria-hidden', true)
-      .off('click.dismiss.bs.modal')
-
-    $.support.transition && this.$element.hasClass('fade') ?
-      this.$element
-        .one('bsTransitionEnd', $.proxy(this.hideModal, this))
-        .emulateTransitionEnd(Modal.TRANSITION_DURATION) :
-      this.hideModal()
-  }
-
-  Modal.prototype.enforceFocus = function () {
-    $(document)
-      .off('focusin.bs.modal') // guard against infinite focus loop
-      .on('focusin.bs.modal', $.proxy(function (e) {
-        if (this.$element[0] !== e.target && !this.$element.has(e.target).length) {
-          this.$element.trigger('focus')
-        }
-      }, this))
-  }
-
-  Modal.prototype.escape = function () {
-    if (this.isShown && this.options.keyboard) {
-      this.$element.on('keydown.dismiss.bs.modal', $.proxy(function (e) {
-        e.which == 27 && this.hide()
-      }, this))
-    } else if (!this.isShown) {
-      this.$element.off('keydown.dismiss.bs.modal')
-    }
-  }
-
-  Modal.prototype.resize = function () {
-    if (this.isShown) {
-      $(window).on('resize.bs.modal', $.proxy(this.handleUpdate, this))
-    } else {
-      $(window).off('resize.bs.modal')
-    }
-  }
-
-  Modal.prototype.hideModal = function () {
-    var that = this
-    this.$element.hide()
-    this.backdrop(function () {
-      that.$body.removeClass('modal-open')
-      that.resetAdjustments()
-      that.resetScrollbar()
-      that.$element.trigger('hidden.bs.modal')
-    })
-  }
-
-  Modal.prototype.removeBackdrop = function () {
-    this.$backdrop && this.$backdrop.remove()
-    this.$backdrop = null
-  }
-
-  Modal.prototype.backdrop = function (callback) {
-    var that = this
-    var animate = this.$element.hasClass('fade') ? 'fade' : ''
-
-    if (this.isShown && this.options.backdrop) {
-      var doAnimate = $.support.transition && animate
-
-      this.$backdrop = $('<div class="modal-backdrop ' + animate + '" />')
-        .prependTo(this.$element)
-        .on('click.dismiss.bs.modal', $.proxy(function (e) {
-          if (e.target !== e.currentTarget) return
-          this.options.backdrop == 'static'
-            ? this.$element[0].focus.call(this.$element[0])
-            : this.hide.call(this)
-        }, this))
-
-      if (doAnimate) this.$backdrop[0].offsetWidth // force reflow
-
-      this.$backdrop.addClass('in')
-
-      if (!callback) return
-
-      doAnimate ?
-        this.$backdrop
-          .one('bsTransitionEnd', callback)
-          .emulateTransitionEnd(Modal.BACKDROP_TRANSITION_DURATION) :
-        callback()
-
-    } else if (!this.isShown && this.$backdrop) {
-      this.$backdrop.removeClass('in')
-
-      var callbackRemove = function () {
-        that.removeBackdrop()
-        callback && callback()
-      }
-      $.support.transition && this.$element.hasClass('fade') ?
-        this.$backdrop
-          .one('bsTransitionEnd', callbackRemove)
-          .emulateTransitionEnd(Modal.BACKDROP_TRANSITION_DURATION) :
-        callbackRemove()
-
-    } else if (callback) {
-      callback()
-    }
-  }
-
-  // these following methods are used to handle overflowing modals
-
-  Modal.prototype.handleUpdate = function () {
-    if (this.options.backdrop) this.adjustBackdrop()
-    this.adjustDialog()
-  }
-
-  Modal.prototype.adjustBackdrop = function () {
-    this.$backdrop
-      .css('height', 0)
-      .css('height', this.$element[0].scrollHeight)
-  }
-
-  Modal.prototype.adjustDialog = function () {
-    var modalIsOverflowing = this.$element[0].scrollHeight > document.documentElement.clientHeight
-
-    this.$element.css({
-      paddingLeft:  !this.bodyIsOverflowing && modalIsOverflowing ? this.scrollbarWidth : '',
-      paddingRight: this.bodyIsOverflowing && !modalIsOverflowing ? this.scrollbarWidth : ''
-    })
-  }
-
-  Modal.prototype.resetAdjustments = function () {
-    this.$element.css({
-      paddingLeft: '',
-      paddingRight: ''
-    })
-  }
-
-  Modal.prototype.checkScrollbar = function () {
-    this.bodyIsOverflowing = document.body.scrollHeight > document.documentElement.clientHeight
-    this.scrollbarWidth = this.measureScrollbar()
-  }
-
-  Modal.prototype.setScrollbar = function () {
-    var bodyPad = parseInt((this.$body.css('padding-right') || 0), 10)
-    if (this.bodyIsOverflowing) this.$body.css('padding-right', bodyPad + this.scrollbarWidth)
-  }
-
-  Modal.prototype.resetScrollbar = function () {
-    this.$body.css('padding-right', '')
-  }
-
-  Modal.prototype.measureScrollbar = function () { // thx walsh
-    var scrollDiv = document.createElement('div')
-    scrollDiv.className = 'modal-scrollbar-measure'
-    this.$body.append(scrollDiv)
-    var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth
-    this.$body[0].removeChild(scrollDiv)
-    return scrollbarWidth
-  }
-
-
-  // MODAL PLUGIN DEFINITION
-  // =======================
-
-  function Plugin(option, _relatedTarget) {
-    return this.each(function () {
-      var $this   = $(this)
-      var data    = $this.data('bs.modal')
-      var options = $.extend({}, Modal.DEFAULTS, $this.data(), typeof option == 'object' && option)
-
-      if (!data) $this.data('bs.modal', (data = new Modal(this, options)))
-      if (typeof option == 'string') data[option](_relatedTarget)
-      else if (options.show) data.show(_relatedTarget)
-    })
-  }
-
-  var old = $.fn.modal
-
-  $.fn.modal             = Plugin
-  $.fn.modal.Constructor = Modal
-
-
-  // MODAL NO CONFLICT
-  // =================
-
-  $.fn.modal.noConflict = function () {
-    $.fn.modal = old
-    return this
-  }
-
-
-  // MODAL DATA-API
-  // ==============
-
-  $(document).on('click.bs.modal.data-api', '[data-toggle="modal"]', function (e) {
-    var $this   = $(this)
-    var href    = $this.attr('href')
-    var $target = $($this.attr('data-target') || (href && href.replace(/.*(?=#[^\s]+$)/, ''))) // strip for ie7
-    var option  = $target.data('bs.modal') ? 'toggle' : $.extend({ remote: !/#/.test(href) && href }, $target.data(), $this.data())
-
-    if ($this.is('a')) e.preventDefault()
-
-    $target.one('show.bs.modal', function (showEvent) {
-      if (showEvent.isDefaultPrevented()) return // only register focus restorer if modal will actually get shown
-      $target.one('hidden.bs.modal', function () {
-        $this.is(':visible') && $this.trigger('focus')
-      })
-    })
-    Plugin.call($target, option, this)
-  })
-
-}(jQuery);
-
 var Ninja = {Models: {}, Views: {}};
 var globals = {};
 
@@ -30216,6 +29891,25 @@ Ninja.Models.Events = Backbone.Collection.extend ({
   model: Ninja.Models.Event
 });
 
+Ninja.Models.Profile = Backbone.Model.extend ({
+
+  url: function () { return '/api/target';},
+
+  hydrate: function () {
+    var deferred = $.Deferred();
+    this.fetch({
+      headers: {'Authorization' : globals.readCookie('access_token')},
+      success: function(model, response, options) { this.onHydrate(); deferred.resolve(model, null); }.bind(this),
+      error: function(model, response, options) { deferred.resolve(model, response.responseJSON); },
+    });
+    return deferred.promise();
+  },
+
+  onHydrate: function () {
+   if (this.get('targets').length) this.targets = new Ninja.Models.Targets(this.get('targets'));
+  }
+
+});
 Ninja.Models.School = Backbone.Model.extend ({
 
   initialize: function () {
@@ -30277,6 +29971,14 @@ Ninja.Models.Sections = Backbone.Collection.extend ({
 
 });
 
+Ninja.Models.Target = Backbone.Model.extend ({
+
+  initialize : function () {
+    this.url = '/classes/' + this.get('school_id') + '/' + this.get('department_id') + '/'  + this.get('course_id');
+  }
+
+});
+Ninja.Models.Targets = Backbone.Collection.extend ({ model: Ninja.Models.Target });
 /** @jsx React.DOM **/
 Ninja.Views.Item = React.createClass({displayName: 'Item',
 
@@ -30325,9 +30027,206 @@ Ninja.Views.Item = React.createClass({displayName: 'Item',
 });
 
 /** @jsx React.DOM */
+Ninja.Views.Account = React.createClass({displayName: 'Account',
+
+  getInitialState: function () {
+    //states 0- not yet; 1-success, -1 -error, 2- typing, 3- ready to be submitted
+    return {phoneSubmitted: 0, phoneNumber: null, keySubmitted: 0, keyCode: null};
+  },
+
+  onClickContainer: function () { this.props.onToggleShowAccount(false);},
+
+  onClickLogin: function (e) { e.stopPropagation();},
+
+  onSubmit: function (e) {this.setState({submitted: true});},
+
+  onPhoneInputChange: function (e) {
+    var $el = $(this.getDOMNode()).find("#phoneInput");
+    var icon = $el.find("i.fa")[0];
+    if (this.state.phoneSubmitted != 0) this.setState({phoneSubmitted: 2});
+    //TODO there are browsers that don't fire change event on autofill. Periodically check to run this fn.
+    var $input = $(e.target);
+    var val =  $input.val();
+    var numVal = (val.match(/\d+/g)) ? val.match(/\d+/g)[0] : "";
+    if (numVal.length >= 10) {
+      this.setState({phoneSubmitted: 3});
+    }
+    else this.setState({phoneSubmitted: 2})
+  },
+
+  onPhoneInputKeyDown: function (e) {
+    if (e.keyCode === 13 && this.state.phoneSubmitted ===3 ) this.onSubmitPhone();
+  },
+
+  onSubmitPhone: function () {
+    var $el = $(this.getDOMNode()).find("#phoneInput");  
+    var input = $el.find("input")[0];
+    var icon = $el.find("i.fa")[0];
+    $(icon).removeClass("fa fa-angle-right fa-2x").addClass("fa fa-spinner fa-spin");
+    this.setState({phoneNumber: $(input).val()});
+
+    $.ajax({
+      type: 'POST',
+      url: 'api/user',
+      contentType: 'application/json',
+      dataType: 'json',
+      data: JSON.stringify({phone: $(input).val()}), //can't use state here ...
+      complete: function (xhr, status) {
+        var response = JSON.parse(xhr.responseText);
+        if (response.error_code) this.setState({phoneSubmitted: -1});
+        else  this.setState({phoneSubmitted: 1});
+      }.bind(this)
+    });
+  
+    return false;
+
+  },
+
+  onKeyInputChange: function (e) {
+    //great opportunity for combining onKey/PhoneInputChange into generic fnc
+    var $el = $(this.getDOMNode()).find("#keyInput");
+    var icon = $el.find("i.fa")[0];
+    if (this.state.keySubmitted != 0) this.setState({keySubmitted: 0});
+    var $input = $(e.target);
+    var val =  $input.val();
+    var numVal = (val.match(/\d+/g)) ? val.match(/\d+/g)[0] : "";
+    if (numVal.length >= 6) this.setState({keySubmitted: 3});
+    else this.setState({keySubmitted: 2})
+
+  },
+
+  onKeyInputKeyDown: function (e) {
+    if (e.keyCode === 13 && this.state.keySubmitted ===3 ) this.onSubmitKey();
+  },
+
+
+  onSubmitKey: function () {
+    //first part of this and phone fnc can be one and the same
+    var $el = $(this.getDOMNode()).find("#keyInput");  
+    var input = $el.find("input#key_1");
+    var icon = $el.find("i.fa")[0];
+    $(icon).removeClass("fa fa-angle-right fa-2x").addClass("fa fa-spinner fa-spin");
+    this.setState({keyCode: $(input).val()});
+
+    $.ajax({
+      type: 'POST',
+      url: 'api/user/' + this.state.phoneNumber,
+      contentType: 'application/json',
+      dataType: 'json',
+      data: JSON.stringify({confirmation_token: $(input).val()}),
+      complete: function (xhr, status) {
+        var response = JSON.parse(xhr.responseText);
+        if (response.error_code) this.setState({keySubmitted: -1});
+        else {
+          this.setState({keySubmitted: 1});
+          this.props.setUser(this.state.phoneNumber);
+          globals.createCookie("phone_number", this.state.phoneNumber, 365);
+          globals.createCookie("access_token", "58557faa-b04a-43f2-9087-a6a3474fd330", 365);
+        }
+      }.bind(this)
+    });
+   
+    return false;
+  },
+
+  render: function () {
+
+    var containerClass = globals.cx({
+      'login-container': true,
+      'hidden' : !this.props.accountShow
+    })
+
+    var buttonClass = globals.cx({ 
+      'active': false
+     });
+
+    var flipClass = globals.cx({
+    'flipper': true,
+    'submitted' : this.props.user
+    });
+
+    var submitPhoneClass = globals.cx({
+      "fa fa-angle-right fa-2x": (this.state.phoneSubmitted === 0) || (this.state.phoneSubmitted === 2),
+      "fa fa-check": (this.state.phoneSubmitted === 1),
+      "fa fa-times": (this.state.phoneSubmitted === -1),
+      " fa fa-angle-right fa-2x active" : (this.state.phoneSubmitted === 3) 
+    });
+
+    var submitKeyClass = globals.cx({
+      "fa fa-angle-right fa-2x": (this.state.keySubmitted === 0) || (this.state.keySubmitted === 2),
+      "fa fa-check": (this.state.keySubmitted === 1),
+      "fa fa-times": (this.state.keySubmitted === -1),
+      "fa fa-angle-right fa-2x active" : (this.state.keySubmitted === 3)
+    });
+
+    var loginClass = globals.cx({
+      "login col-md-offset-4  col-sm-offset-3 col-xs-12 col-sm-6 col-md-4 col-lg-3" : true,
+      "expanded-phone-success" : (this.state.phoneSubmitted === 1),
+      "expanded-phone-error" : (this.state.phoneSubmitted === -1),
+      "expanded-key-error": (this.state.keySubmitted === -1)
+
+    });
+
+    var phonePromptText = globals.cx({
+      "phone-prompt-text": true,
+      "expanded": Math.abs(this.state.phoneSubmitted) != 1
+    });
+
+    var invalidKeyText = globals.cx({
+      "invalid-key-text": true,
+      "expanded": this.state.keySubmitted === -1
+    });
+
+    var onPhoneSubmittedText = (this.state.phoneSubmitted === 1) ?
+      "Please check your phone. We sent you a text with a login code" :
+      "Invalid phone number. Please provide 10-digit number with area code";
+
+    var accountView = (!this.props.user) ? null 
+      : Ninja.Views.Profile({onClickContainer: this.onClickContainer, newUser: (this.state.keySubmitted === 1) ? true : false, user: this.props.user});
+
+    return (
+       React.DOM.div({className: containerClass, onClick: this.onClickContainer}, 
+        React.DOM.div({className: "flip-container"}, 
+          React.DOM.div({className: loginClass, onClick: this.onClickLogin}, 
+            React.DOM.div({className: flipClass}, 
+              React.DOM.div({className: "content block front"}, 
+                React.DOM.div({className: "login-header"}, 
+                  React.DOM.button({className: "close", onClick: this.onClickContainer}, " ", React.DOM.span(null, "×")), 
+                  React.DOM.h4({className: "modal-title"}, " Login ")
+                ), 
+                React.DOM.div({className: "login-body"}, 
+                  React.DOM.div({className: phonePromptText}, "Please enter your phone number.We'll send a text with a login key."), 
+                  React.DOM.div({id: "phoneInput"}, 
+                    React.DOM.input({type: "phone", className: "form-control phoneInput", onChange: this.onPhoneInputChange, onKeyDown: this.onPhoneInputKeyDown}), 
+                    React.DOM.div({className: "submit-phone"}, React.DOM.i({className: submitPhoneClass, onClick: this.onSubmitPhone}))
+                  ), 
+                  React.DOM.div({className: "login-code"}, 
+                    React.DOM.div({className: "text"}, onPhoneSubmittedText), 
+                    React.DOM.div({id: "keyInput"}, 
+                      React.DOM.input({type: "text", name: "prevent_autofill", id: "prevent_autofill-1", value: "", className: "hidden"}), 
+                      React.DOM.input({type: "text", className: "form-control keyInput", autoComplete: "off", id: "key_1", onChange: this.onKeyInputChange, onKeyDown: this.onKeyInputKeyDown}), 
+                      React.DOM.div({className: "submit-key"}, React.DOM.i({className: submitKeyClass, onClick: this.onSubmitKey}))
+                    ), 
+                    React.DOM.div({className: invalidKeyText}, "Invalid Key. Please try again. If you haven't recieved a text, please check and resubmit you phone number.")
+                  )
+                )
+              ), 
+              React.DOM.div({className: "content block back"}, " ", accountView, " ")
+            )
+          )
+        )
+      ) 
+    )
+  }
+
+});
+/** @jsx React.DOM */
 Ninja.Views.App = React.createClass({displayName: 'App',
 
-  getInitialState: function () {return {route: '', spin: false, mobile: this.isMobile(), loginShow: false };},
+  getInitialState: function () { 
+    var user = globals.readCookie("phone_number");
+    return {route: '', spin: false, mobile: this.isMobile(), accountShow: false, user: user};
+  },
 
   componentWillMount: function () {
     Backbone.history.on('route', this.route)
@@ -30352,8 +30251,12 @@ Ninja.Views.App = React.createClass({displayName: 'App',
     this.setState({spin: state})
   },
 
-  onShowLogin: function (state) {
-    this.setState({loginShow: state})
+  onShowAccount: function (state) {
+    this.setState({accountShow: state})
+  },
+
+  setUser: function (user){
+    this.setState({user: user});
   },
 
   route: function () {
@@ -30364,15 +30267,14 @@ Ninja.Views.App = React.createClass({displayName: 'App',
   },
 
   render: function () {
-    var navbar = Ninja.Views.Navbar({router: this.props.router, spin: this.state.spin, setSpin: this.setSpin, onShowLogin: this.onShowLogin});  
+    var navbar = Ninja.Views.Navbar({router: this.props.router, spin: this.state.spin, setSpin: this.setSpin, onShowAccount: this.onShowAccount, user: this.state.user});  
     var landing = Ninja.Views.Landing({setSpin: this.setSpin}) 
     var lists = Ninja.Views.Lists({model: [this.props.model], router: this.props.router, mobile: this.state.mobile, setSpin: this.setSpin})
     var footer = Ninja.Views.Footer({mobile: this.state.mobile})
-    var login = Ninja.Views.Login({loginShow: this.state.loginShow, onToggleShowLogin: this.onShowLogin})
-    var content = landing;
-    if (this.state.route === 'classes') content = lists;
+    var account = Ninja.Views.Account({accountShow: this.state.accountShow, onToggleShowAccount: this.onShowAccount, setUser: this.setUser, user: this.state.user})
+    var content = (this.state.route === 'classes') ? lists : landing;
 
-    return (  React.DOM.div(null, navbar, content, login, footer, " "));
+    return (  React.DOM.div(null, navbar, content, account, footer, " "));
 
   }
 });
@@ -30508,6 +30410,28 @@ Ninja.Views.Footer = React.createClass({displayName: 'Footer',
     globals.csst = React.addons.CSSTransitionGroup;
     globals.ReactTransitionGroup = React.addons.TransitionGroup;
     globals.isBreakpoint = (function (alias) {return $('.device-' + alias).css('display')!=='none';});
+    globals.createCookie = (function(name, value, days) {
+      if (days) {
+          var date = new Date();
+          date.setTime(date.getTime() + (days*24*60*60*1000));
+          var expires = "; expires=" + date.toGMTString();
+      }
+      else var expires = "";
+      document.cookie = name + "=" + value + expires + "; path=/";
+    });
+
+    globals.readCookie = (function (name) {
+      var nameEQ = name + "=";
+      var ca = document.cookie.split(';');
+      for(var i=0; i < ca.length; i++) {
+          var c = ca[i];
+          while (c.charAt(0) === ' ') c = c.substring(1,c.length);
+          if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+      }
+      return null;
+    });
+
+    globals.eraseCookie = (function (name) { globals.createCookie(name,"",-1); });
 
     globals.app = new Ninja.Models.App();
     globals.router = new Ninja.Router();
@@ -30515,6 +30439,7 @@ Ninja.Views.Footer = React.createClass({displayName: 'Footer',
     React.renderComponent(Ninja.Views.App({model: globals.app, router: globals.router}), document.body);
   
 });
+
 /** @jsx React.DOM **/
 Ninja.Views.Landing = React.createClass({displayName: 'Landing',
 
@@ -30706,39 +30631,6 @@ Ninja.Views.Lists = React.createClass({displayName: 'Lists',
 
 });
 
-/** @jsx React.DOM */
-Ninja.Views.Login = React.createClass({displayName: 'Login',
-
-  onClickContainer: function () {
-    this.props.onToggleShowLogin(false)
-  },
-
-  render: function () {
-    var loginClass = globals.cx({
-      'loginContainer': true,
-      'hidden': !this.props.loginShow
-    });
-
-    return (
-      React.DOM.div({className: loginClass, onClick: this.onClickContainer}, 
-        React.DOM.div({id: "login"}, 
-          React.DOM.span({id: "signinButton"}, 
-            React.DOM.span({
-              className: "g-signin", 
-              'data-callback': "signinCallback", 
-              'data-clientid': "CLIENT_ID", 
-              'data-cookiepolicy': "single_host_origin", 
-              'data-requestvisibleactions': "http://schema.org/AddAction", 
-              'data-scope': "https://www.googleapis.com/auth/profile"}
-            )
-          )
-        )
-      )
-    )
-  }
-
-});
-
 /** @jsx React.DOM **/
 Ninja.Views.Navbar = React.createClass({displayName: 'Navbar',
 
@@ -30749,8 +30641,8 @@ Ninja.Views.Navbar = React.createClass({displayName: 'Navbar',
     return false;
   },
 
-  onClickLogin: function () {
-    this.props.onShowLogin(true); 
+  onClickAccount: function () {
+    this.props.onShowAccount(true); 
   },
 
   setLoaingStateTrue: function () {
@@ -30782,6 +30674,12 @@ Ninja.Views.Navbar = React.createClass({displayName: 'Navbar',
       'spin': this.state.spin
     });
 
+    var accountClassName = globals.cx({
+      'fa  fa-sign-in' : !this.props.user,
+      'fa  fa-user' : this.props.user,
+    });
+    var accountText = (this.props.user) ? 'My Account' : 'Login';
+
     return (
       React.DOM.div({className: "row navbar"}, 
         React.DOM.div({className: "col-xs-6 col-md-2"}, 
@@ -30794,12 +30692,58 @@ Ninja.Views.Navbar = React.createClass({displayName: 'Navbar',
           React.DOM.a({className: "navbar-link", href: "/classes", onClick: this.onClickClasses}, " ", React.DOM.i({className: "fa fa-align-justify"}, " "), " See Classes")
         ), 
         React.DOM.div({className: "col-md-2 col-xs-12 hidden-xs hidden-sm"}, 
-          React.DOM.a({className: "navbar-link", href: "javascript:void(0);", onClick: this.onClickLogin}, " ", React.DOM.i({className: "fa  fa-sign-in"}, " "), " Login ")
+          React.DOM.a({className: "navbar-link", href: "#", onClick: this.onClickAccount}, " ", React.DOM.i({className: accountClassName}, " "), " ", accountText, " ")
         )
       )
     )
   }
 })
+/** @jsx React.DOM */
+Ninja.Views.Profile = React.createClass({displayName: 'Profile',
+
+  //TODO logout 
+  //close window doesn' work
+
+  getInitialState: function () { return {model: null, error: null}; }, 
+
+  componentWillMount: function () {
+    this.model = new Ninja.Models.Profile();
+    this.model.hydrate().then(function (model, error) {
+      if (error) this.setState({error: error});
+      else this.setState({model: model});
+    }.bind(this));
+  },
+
+  render: function () {
+    var bodyText;
+    var targetsList;
+
+    if (!this.state.model) bodyText = "Something went wrong. Please logout and login again";
+    else if (this.state.model.get("credits")) bodyText = "You can track classes you are intersted in. You have " + this.state.model.get("credits") + " free target" + (this.state.model.get("credits") > 1 ? "s" : "");
+    else bodyText = "You have no targets left. You can purchase targets to track classes you are intersted in";
+
+    if (this.state.model) {
+      console.log(this.state.model.targets);
+      targetsList = _.map(this.state.model.targets.models, function (target) {
+        console.log(target);
+      return React.DOM.a({href: target.url}, " ", target.get('name'), " ")
+      });
+    }
+
+    return (
+      React.DOM.div(null, 
+        React.DOM.div({className: "profile-header"}, 
+          React.DOM.button({className: "close", onClick: this.props.onClickContainer}, " ", React.DOM.span(null, "×")), 
+          React.DOM.h4({className: "modal-title"}, " Welcome to your profile ")
+        ), 
+        React.DOM.div({className: "profile-body"}, " ", bodyText, " "), 
+        React.DOM.div(null, " ", targetsList, " ")
+      )
+    );
+  }
+
+});
+
 Ninja.Router = Backbone.Router.extend({
   routes: { '*anyRoute': 'proceedTo'},
 

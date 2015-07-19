@@ -1,0 +1,1 @@
+Ninja.Models.Targets = Backbone.Collection.extend ({ model: Ninja.Models.Target });

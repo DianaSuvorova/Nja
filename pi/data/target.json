@@ -2,49 +2,43 @@
     "credits": 9,
     "targets": [
         {
-            "index_within_department": 1,
+            "index_within_department": 0,
             "name": "Comparative Racialization and Indigeneity",
             "course_sections": [
-                {
-                    "staff_name": "HONG, K.",
-                    "section_id": "UCLA_AF_AMER_AF_AMER_M124_LEC_1",
-                    "school_id": 1,
-                    "section_name": "LEC 1",
-                    "course_id": "UCLA_AF_AMER_AF_AMER_M124",
-                    "events": [
-                        {
-                            "status": "Closed",
-                            "event_type": "LEC 1",
-                            "school_specific_event_id": "413444200",
-                            "event_id": "UCLA_AF_AMER_AF_AMER_M124_LEC_1_413444200",
-                            "times_and_locations": [
-                                {
-                                    "timeInterval": "2:00P - 3:15P",
-                                    "weekdays": "TUE",
-                                    "location": "DODD 167"
-                                },
-                                {
-                                    "timeInterval": "2:00P - 3:15P",
-                                    "weekdays": "THU",
-                                    "location": "DODD 167"
-                                }
-                            ],
-                            "target_id": "3265",
-                            "section_id": "UCLA_AF_AMER_AF_AMER_M124_LEC_1",
-                            "enrollment_cap": 15,
-                            "number_waitlisted": 0,
-                            "number_enrolled": 15,
-                            "waitlist_capacity": 0,
-                            "school_id": 1
-                        }
-                    ]
-                }
+              {
+                "staff_name": "REYES, A.L.",
+                "section_id": "UCLA_AERO_ST_AERO_ST_1A_LEC_1",
+                "school_id": 1,
+                "section_name": "LEC 1",
+                "course_id": "UCLA_AERO_ST_AERO_ST_1A",
+                "events": [
+                  {
+                    "status": "Open",
+                    "event_type": "LEC 1",
+                    "school_specific_event_id": "102048200",
+                    "event_id": "UCLA_AERO_ST_AERO_ST_1A_LEC_1_102048200",
+                    "times_and_locations": [
+                      {
+                        "timeInterval": "12:00P - 1:50P",
+                        "weekdays": "FRI",
+                        "location": "HAINES A18"
+                      }
+                    ],
+                    "section_id": "UCLA_AERO_ST_AERO_ST_1A_LEC_1",
+                    "enrollment_cap": 20,
+                    "number_waitlisted": 0,
+                    "number_enrolled": 14,
+                    "waitlist_capacity": 0,
+                    "school_id": 1
+                  }
+                ]
+              }
             ],
-            "context": "http://www.registrar.ucla.edu/schedule/detselect.aspx?termsel=15S&subareasel=AF%20AMER&idxcrs=0124%20%20M%20",
-            "course_id": "UCLA_AF_AMER_AF_AMER_M124",
-            "department_specific_course_id": "AF AMER M124",
+            "context": "http://www.registrar.ucla.edu/schedule/detselect.aspx?termsel=14F&subareasel=AERO%20ST&idxcrs=0001A%20%20%20",
+            "course_id": "UCLA_AERO_ST_AERO_ST_1A",
+            "department_specific_course_id": "AERO ST 1A",
             "school_id": 1,
-            "department_id": "UCLA_AF_AMER"
+            "department_id": "UCLA_AERO_ST"
         }
     ],
     "user_profile": {
