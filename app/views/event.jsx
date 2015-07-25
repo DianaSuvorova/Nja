@@ -15,8 +15,12 @@ Ninja.Views.Event = React.createClass({
     var listheight = $(list).height();
     var elOffset = $(el).offset().top
     if (elOffset > listOffset + listheight/2 ){
-      $(list).animate({scrollTop: $(list).scrollTop() + elOffset - listOffset  }, 500);
+      $(list).animate({scrollTop: $(list).scrollTop() + elOffset - lisstOffset  }, 500);
     }
+  },
+
+  trackiTunesLinkClickEvent: function () {
+    if (window._gat) _gaq.push(['_trackEvent', 'appStoreClick', 'from event']);
   },
 
   render: function () {
@@ -76,7 +80,7 @@ Ninja.Views.Event = React.createClass({
             <div className = 'row'> {timeAndLocationDetail()} </div>
           </div>
           <div className = 'col-xs-offset-1 col-xs-10 download-to-track'>
-            <a href = 'https://itunes.apple.com/us/app/id903690805' >
+            <a href = 'https://itunes.apple.com/us/app/id903690805' onClick = {this.trackiTunesLinkClickEvent}>
               get app to track this class
             </a>
           </div>
