@@ -44,6 +44,10 @@ Ninja.Views.List = React.createClass({
       return ( < Ninja.Views.Item key = {'item_'+i} item = {model} selected = {selected} onSelect = {this.onSelect.bind(this, model, this.props.listIndex)} setSpin = {this.props.setSpin}/> )
     }, this);  
     
+    if (!listView.length) {
+      listView = < Ninja.Views.Item key = {'item_'+0} selected = {false} item = {'empty'} setSpin = {this.props.setSpin}/>
+    }
+
     if (this.props.model.name === 'schools') {
       var view = (< Ninja.Views.Vote key = {'item_vote'} selected = {this.state.voteActive} onSelect = {this.onSelectVote}/>);
       listView.unshift(view);
